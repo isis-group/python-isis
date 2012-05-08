@@ -15,7 +15,6 @@ ADD_DEFINITIONS(-D_ENABLE_LOG=1)
 ADD_DEFINITIONS(-D_ENABLE_DEBUG=0)
 
 find_package(PythonInterp)
-include_directories(${CMAKE_SOURCE_DIR}/lib/Core)
 
 set(PYTHON_VERSIONS ${PYTHON_EXECUTABLE} CACHE STRING "Python interpreters to install the python interace for")
 
