@@ -1,0 +1,5 @@
+isis-python (0.1.0-1) UNRELEASED; urgency=low
+
+  * first debian package of the separate python-isis package
+
+ -- ISIS Group (The friendly isis team) <gr_isis@cbs.mpg.de>  Tue, 08 May 2012 12:43:07 +0100

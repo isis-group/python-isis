@@ -1,0 +1,21 @@
+Source: isis-python
+Section: science
+Priority: extra
+Maintainer: ISIS Group <gr_isis@cbs.mpg.de>
+Uploaders: Erik Tuerke <tuerke@cbs.mpg.de>, Enrico Reimer <reimer@cbs.mpg.de>, Michael Hanke <mih@debian.org>
+Build-Depends: debhelper (>= 7.0.50~), doxygen, cmake, libboost-python-dev, python-all-dev
+Standards-Version: 3.9.2
+Homepage: https://github.com/isis-group
+Vcs-Browser: http://git.debian.org/?p=pkg-exppsy/isis.git
+Vcs-Git: git://git.debian.org/git/pkg-exppsy/isis.git
+
+Package: python-isis
+Section: python
+Architecture: any
+Conflicts: isis-python
+Replaces: isis-python
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}
+Description: Python bindings for ISIS data I/O framework (development headers)
+ This framework aids access of and conversion between various established
+ neuro-imaging data formats, like  Nifti, Analyze, DICOM and VISTA. ISIS
+ is extensible with plugins to add support for additional data formats.
