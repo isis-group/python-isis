@@ -13,9 +13,9 @@
 #include "CoreUtils/vector.hpp"
 #include <vector>
 #include <boost/algorithm/string.hpp>
-#include "../core/common.hpp"
+#include "core/common.hpp"
 #include "common.hpp"
-#include "../core/_convertToPython.hpp"
+#include "core/_convertToPython.hpp"
 
 #include "core/_propmap.hpp"
 #include "DataStorage/chunk.hpp"

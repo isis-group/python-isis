@@ -1,14 +1,5 @@
-############################################################
-# The ISIS project
-# 
-# Sub configuration file of the ISIS datastorage python extension
-#
-# Author: Thomas Proeger <thomasproeger@googlemail.com>
-# Date: Thu, 07 Apr 2011 15:49:23 +0200
-# 
-############################################################
 
-include_directories(${CMAKE_SOURCE_DIR}/python/isis)
+include_directories(${CMAKE_SOURCE_DIR}/isis)
 
 ############################################################
 # configure targets
@@ -24,7 +15,7 @@ set(DATA_FILES	 data.cpp
 
 add_library(_data SHARED ${DATA_FILES})
 set_target_properties(_data PROPERTIES PREFIX "")
-target_link_libraries( _data isis_core _core ${PYTHON_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries( _data _core ${PYTHON_LIBRARIES} ${Boost_LIBRARIES} ${ISIS_LIBRARY})
 
 configure_file(__init__.py 
   ${CMAKE_BINARY_DIR}/python/isis/data/__init__.py COPYONLY)
