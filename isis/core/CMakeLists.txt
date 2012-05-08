@@ -12,7 +12,7 @@ set( CORE_FILES core.cpp
 
 add_library(_core SHARED ${CORE_FILES} )
 set_target_properties(_core PROPERTIES PREFIX "")
-target_link_libraries( _core ${ISIS_LIBRARIY} ${PYTHON_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries( _core ${ISIS_LIB} ${ISIS_LIB_DEPENDS} ${PYTHON_LIBRARIES} ${Boost_LIBRARIES})
 
 configure_file(__init__.py 
   ${CMAKE_BINARY_DIR}/python/isis/core/__init__.py COPYONLY)

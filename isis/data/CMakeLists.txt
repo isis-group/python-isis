@@ -15,7 +15,7 @@ set(DATA_FILES	 data.cpp
 
 add_library(_data SHARED ${DATA_FILES})
 set_target_properties(_data PROPERTIES PREFIX "")
-target_link_libraries( _data _core ${PYTHON_LIBRARIES} ${Boost_LIBRARIES} ${ISIS_LIBRARY})
+target_link_libraries( _data _core ${PYTHON_LIBRARIES} ${Boost_LIBRARIES} ${ISIS_LIB} ${ISIS_LIB_DEPENDS})
 
 configure_file(__init__.py 
   ${CMAKE_BINARY_DIR}/python/isis/data/__init__.py COPYONLY)
