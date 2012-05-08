@@ -20,12 +20,12 @@ _WritingValueAdapter::_WritingValueAdapter ( PyObject *p, const isis::data::_int
 
 object _WritingValueAdapter::_get ( ) const
 {
-	return isis::util::Singletons::get<isis::python::core::_internal::TypesMap, 10>().at ( ( *this )->getTypeID() )->convert ( ( *this ).operator * () );
+	return isis::util::Singletons::get<isis::python::util::_internal::TypesMap, 10>().at ( ( *this )->getTypeID() )->convert ( ( *this ).operator * () );
 }
 
 void _WritingValueAdapter::_set ( const object &val )
 {
-	WritingValueAdapter::operator=( isis::python::core::_internal::ConvertFromPython::convert( val ) );
+	WritingValueAdapter::operator=( isis::python::util::_internal::ConvertFromPython::convert( val ) );
 }
 
 }}}

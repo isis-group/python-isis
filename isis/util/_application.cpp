@@ -4,38 +4,38 @@ namespace isis
 {
 namespace python
 {
-namespace core
+namespace util
 {
 namespace Application
 {
 void _addParameter( isis::util::Application &base, const std::string &name, boost::python::api::object value )
 {
-	static_cast<util::PropertyValue &>( base.parameters[name] ) = _internal::ConvertFromPython::convert( value );
+	static_cast<isis::util::PropertyValue &>( base.parameters[name] ) = _internal::ConvertFromPython::convert( value );
 }
 
 boost::python::api::object _getParameter( const isis::util::Application &base, const std::string &name )
 {
-	return util::Singletons::get<_internal::TypesMap, 10>().at(
+	return isis::util::Singletons::get< python::util::_internal::TypesMap, 10>().at(
 			   base.parameters.at( name.c_str() ).getTypeID() )->convert( *base.parameters.at( name.c_str() ) );
 }
 
 
-void _setDescription( util::Application &base, const std::string &name, const std::string &desc )
+void _setDescription( isis::util::Application &base, const std::string &name, const std::string &desc )
 {
 	base.parameters.at( name ).setDescription( desc );
 }
 
-void _setHidden( util::Application &base, const std::string &name, const bool &hidden )
+void _setHidden( isis::util::Application &base, const std::string &name, const bool &hidden )
 {
 	base.parameters.at( name ).hidden() = hidden;
 }
 
-void _setNeeded( util::Application &base, const std::string &name, const bool &needed )
+void _setNeeded( isis::util::Application &base, const std::string &name, const bool &needed )
 {
 	base.parameters.at( name ).needed() = needed;
 }
 
-bool _init( util::Application &base, boost::python::list pyargv, bool exitOnError )
+bool _init( isis::util::Application &base, boost::python::list pyargv, bool exitOnError )
 {
 	size_t n = boost::python::len( pyargv );
 	char *argv[n];

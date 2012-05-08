@@ -15,22 +15,22 @@ namespace isis
 {
 namespace python
 {
-namespace core
+namespace util
 {
 namespace _internal
 {
 
 template<typename TYPE>
-void getValueFromPyObject( util::Value<TYPE> &ref, api::object value )
+void getValueFromPyObject( isis::util::Value<TYPE> &ref, api::object value )
 {
-	ref = util::Value<TYPE>( static_cast<TYPE>( boost::python::extract<TYPE>( value ) ) );
+	ref = isis::util::Value<TYPE>( static_cast<TYPE>( boost::python::extract<TYPE>( value ) ) );
 }
 
 template<>
-void getValueFromPyObject<boost::gregorian::date> ( util::Value<boost::gregorian::date> &ref, api::object value );
+void getValueFromPyObject<boost::gregorian::date> ( isis::util::Value<boost::gregorian::date> &ref, api::object value );
 
 template<>
-void getValueFromPyObject<boost::posix_time::ptime> ( util::Value<boost::posix_time::ptime> &ref, api::object value );
+void getValueFromPyObject<boost::posix_time::ptime> ( isis::util::Value<boost::posix_time::ptime> &ref, api::object value );
 
 
 class ConvertFromPython
@@ -38,12 +38,12 @@ class ConvertFromPython
 
 public:
 	static const std::list<std::string> knownTypes;
-	static util::PropertyValue convert( api::object value );
+	static isis::util::PropertyValue convert( api::object value );
 
 private:
 
 
-	static util::PropertyValue getList( api::object value );
+	static isis::util::PropertyValue getList( api::object value );
 
 	template<typename TYPE>
 	static std::list<TYPE> extractFromList( api::object value ) {

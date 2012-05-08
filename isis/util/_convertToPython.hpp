@@ -13,6 +13,7 @@
 #include <datetime.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
+
 using namespace boost::python;
 
 namespace isis
@@ -20,7 +21,7 @@ namespace isis
 
 namespace python
 {
-namespace core
+namespace util
 {
 namespace _internal
 {
@@ -28,7 +29,7 @@ namespace _internal
 
 
 struct PyObjectGeneratorBase {
-	virtual api::object convert( util::ValueBase &value ) = 0;
+	virtual api::object convert( isis::util::ValueBase &value ) = 0;
 };
 
 template<bool ISNUM, typename T>
@@ -38,14 +39,14 @@ struct PyObjectGenerator : PyObjectGeneratorBase {};
 //conversion for all numeric values
 template<typename T>
 struct PyObjectGenerator<true, T> : PyObjectGeneratorBase {
-	virtual api::object convert( util::ValueBase &value ) {
+	virtual api::object convert( isis::util::ValueBase &value ) {
 		return  api::object( value.as<T>() );
 	}
 };
 
 template<typename T>
 struct PyObjectGenerator<false, T> : PyObjectGeneratorBase {
-	virtual api::object convert( util::ValueBase &value ) {
+	virtual api::object convert( isis::util::ValueBase &value ) {
 		return api::object( value.as<T>() );
 	}
 };
@@ -53,7 +54,7 @@ struct PyObjectGenerator<false, T> : PyObjectGeneratorBase {
 //dates
 template<>
 struct PyObjectGenerator<false, boost::gregorian::date> : PyObjectGeneratorBase {
-	virtual api::object convert( util::ValueBase &value ) {
+	virtual api::object convert( isis::util::ValueBase &value ) {
 		PyDateTime_IMPORT;
 		const boost::gregorian::date date = value.as<boost::gregorian::date>();
 		return api::object( handle<>( borrowed( PyDate_FromDate( static_cast<int>( date.year() ),
@@ -67,7 +68,7 @@ struct PyObjectGenerator<false, boost::gregorian::date> : PyObjectGeneratorBase 
 //ptime
 template<>
 struct  PyObjectGenerator<false, boost::posix_time::ptime> : PyObjectGeneratorBase {
-	virtual api::object convert( util::ValueBase &value ) {
+	virtual api::object convert( isis::util::ValueBase &value ) {
 		PyDateTime_IMPORT;
 		const boost::posix_time::ptime datetime = value.as<boost::posix_time::ptime>();
 		const boost::posix_time::ptime min( boost::gregorian::min_date_time );
@@ -99,31 +100,31 @@ struct  PyObjectGenerator<false, boost::posix_time::ptime> : PyObjectGeneratorBa
 
 //vectors
 template<>
-struct PyObjectGenerator<false, util::ivector4> : PyObjectGeneratorBase {
-	virtual api::object convert( util::ValueBase &value ) {
-		return api::object( value.as<util::ivector4>() );
+struct PyObjectGenerator<false, isis::util::ivector4> : PyObjectGeneratorBase {
+	virtual api::object convert( isis::util::ValueBase &value ) {
+		return api::object( value.as<isis::util::ivector4>() );
 	}
 };
 
 template<>
-struct PyObjectGenerator<false, util::dvector4> : PyObjectGeneratorBase {
-	virtual api::object convert( util::ValueBase &value ) {
-		return api::object( value.as<util::dvector4>() );
+struct PyObjectGenerator<false, isis::util::dvector4> : PyObjectGeneratorBase {
+	virtual api::object convert( isis::util::ValueBase &value ) {
+		return api::object( value.as<isis::util::dvector4>() );
 	}
 };
 
 template<>
-struct PyObjectGenerator<false, util::fvector4> : PyObjectGeneratorBase {
-	virtual api::object convert( util::ValueBase &value ) {
-		return api::object( value.as<util::fvector4>() );
+struct PyObjectGenerator<false, isis::util::fvector4> : PyObjectGeneratorBase {
+	virtual api::object convert( isis::util::ValueBase &value ) {
+		return api::object( value.as<isis::util::fvector4>() );
 	}
 };
 
 template<>
-struct PyObjectGenerator<false, util::ilist> : PyObjectGeneratorBase {
-	virtual api::object convert( util::ValueBase &value ) {
+struct PyObjectGenerator<false, isis::util::ilist> : PyObjectGeneratorBase {
+	virtual api::object convert( isis::util::ValueBase &value ) {
 		list retList;
-		BOOST_FOREACH( util::ilist::const_reference ref, value.as<util::ilist>() ) {
+		BOOST_FOREACH( isis::util::ilist::const_reference ref, value.as<isis::util::ilist>() ) {
 			retList.append<int32_t>( ref );
 		}
 		return retList;
@@ -131,10 +132,10 @@ struct PyObjectGenerator<false, util::ilist> : PyObjectGeneratorBase {
 };
 
 template<>
-struct PyObjectGenerator<false, util::dlist> : PyObjectGeneratorBase {
-	virtual api::object convert( util::ValueBase &value ) {
+struct PyObjectGenerator<false, isis::util::dlist> : PyObjectGeneratorBase {
+	virtual api::object convert( isis::util::ValueBase &value ) {
 		list retList;
-		BOOST_FOREACH( util::dlist::const_reference ref, value.as<util::dlist>() ) {
+		BOOST_FOREACH( isis::util::dlist::const_reference ref, value.as<isis::util::dlist>() ) {
 			retList.append<double>( ref );
 		}
 		return retList;
@@ -142,10 +143,10 @@ struct PyObjectGenerator<false, util::dlist> : PyObjectGeneratorBase {
 };
 
 template<>
-struct PyObjectGenerator<false, util::slist> : PyObjectGeneratorBase {
-	virtual api::object convert( util::ValueBase &value ) {
+struct PyObjectGenerator<false, isis::util::slist> : PyObjectGeneratorBase {
+	virtual api::object convert( isis::util::ValueBase &value ) {
 		list retList;
-		BOOST_FOREACH( util::slist::const_reference ref, value.as<util::slist>() ) {
+		BOOST_FOREACH( isis::util::slist::const_reference ref, value.as<isis::util::slist>() ) {
 			retList.append<std::string>( ref );
 		}
 		return retList;
@@ -157,7 +158,7 @@ struct Generator {
 
 	template<typename T>
 	void operator() ( const T & ) {
-		typeMap[( unsigned short )util::Value<T>::staticID] =
+		typeMap[( unsigned short )isis::util::Value<T>::staticID] =
 			boost::shared_ptr<PyObjectGeneratorBase>(
 				new PyObjectGenerator<boost::is_arithmetic<T>::value, T>() );
 
@@ -170,7 +171,7 @@ class TypesMap : public std::map<unsigned short, boost::shared_ptr<PyObjectGener
 {
 public:
 	void create() {
-		boost::mpl::for_each<util::_internal::types>( Generator( *this ) );
+		boost::mpl::for_each<isis::util::_internal::types>( Generator( *this ) );
 	}
 };
 

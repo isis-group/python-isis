@@ -14,15 +14,15 @@
 #include "CoreUtils/singletons.hpp"
 
 using namespace boost::python;
-using namespace isis::python::core;
+using namespace isis::python::util;
 
-BOOST_PYTHON_MODULE( _core )
+BOOST_PYTHON_MODULE( _util )
 {
-	isis::util::Singletons::get<isis::python::core::_internal::TypesMap, 10>().create();
+	isis::util::Singletons::get<isis::python::util::_internal::TypesMap, 10>().create();
 	//#######################################################################################
 	//  Application
 	//#######################################################################################
-	using namespace isis::python::core::Application;
+	using namespace isis::python::util::Application;
 	class_<isis::util::Application>( "Application", init<const char *>() )
 	//virtual void printHelp()const;
 	.def( "printHelp", &isis::util::Application::printHelp )
@@ -40,7 +40,7 @@ BOOST_PYTHON_MODULE( _core )
 	//#######################################################################################
 	//  PropertyMap
 	//#######################################################################################
-	using namespace isis::python::core::PropertyMap;
+	using namespace isis::python::util::PropertyMap;
 	class_<isis::util::PropertyMap>( "PropertyMap", init<>() )
 	.def( "hasProperty", &_hasProperty )
 	.def( "hasBranch", &_hasBranch )
@@ -86,7 +86,7 @@ BOOST_PYTHON_MODULE( _core )
 	//#######################################################################################
 	//  enums for types
 	//#######################################################################################
-	using namespace isis::python::core::_internal;
+	using namespace isis::python::util::_internal;
 	enum_<types>( "types" )
 	.value( "INT8_T", INT8_T )
 	.value( "UINT8_T", UINT8_T )

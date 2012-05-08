@@ -2,7 +2,7 @@
 # configure targets
 ############################################################
 
-set( CORE_FILES core.cpp
+set( CORE_FILES util.cpp
 				_vector.hpp
 				_application.cpp
 				_propmap.cpp
@@ -10,12 +10,12 @@ set( CORE_FILES core.cpp
 				_convertToPython.hpp )
 
 
-add_library(_core SHARED ${CORE_FILES} )
-set_target_properties(_core PROPERTIES PREFIX "")
-target_link_libraries( _core ${ISIS_LIB} ${ISIS_LIB_DEPENDS} ${PYTHON_LIBRARIES} ${Boost_LIBRARIES})
+add_library(_util SHARED ${CORE_FILES} )
+set_target_properties(_util PROPERTIES PREFIX "")
+target_link_libraries( _util ${ISIS_LIB} ${ISIS_LIB_DEPENDS} ${PYTHON_LIBRARIES} ${Boost_LIBRARIES})
 
 configure_file(__init__.py 
-  ${CMAKE_BINARY_DIR}/python/isis/core/__init__.py COPYONLY)
+  ${CMAKE_BINARY_DIR}/python/isis/util/__init__.py COPYONLY)
 
 ############################################################
 # configure installation
@@ -25,9 +25,9 @@ execute_process ( COMMAND ${pv} -c "from distutils.sysconfig import get_python_l
 set(PYTHON_INSTALL_PATH "${CMAKE_INSTALL_PREFIX}/${PYTHON_SITE_PACKAGES}")
 
 install(FILES __init__.py 
-  DESTINATION  ${PYTHON_INSTALL_PATH}/isis/core)
+  DESTINATION  ${PYTHON_INSTALL_PATH}/isis/util)
 
-install(TARGETS _core
-     LIBRARY DESTINATION  ${PYTHON_INSTALL_PATH}/isis/core
+install(TARGETS _util
+     LIBRARY DESTINATION  ${PYTHON_INSTALL_PATH}/isis/util
      COMPONENT RuntimeLibraries)
 endforeach(pv)

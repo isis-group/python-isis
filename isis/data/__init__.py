@@ -1,2 +1,2 @@
-import isis.core
+import isis.util
 from _data import *
