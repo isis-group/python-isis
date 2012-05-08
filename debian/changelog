@@ -1,3 +1,9 @@
+isis-python (0.6.0-1) UNRELEASED; urgency=low
+
+  * renamed isis.core -> isis.util module
+
+ -- ISIS Group (The friendly isis team) <gr_isis@cbs.mpg.de>  Tue, 08 May 2012 13:56:32 +0100
+
 isis-python (0.5.5-1) UNRELEASED; urgency=low
 
   * first debian package of the separate python-isis package
