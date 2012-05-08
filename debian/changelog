@@ -1,4 +1,4 @@
-isis-python (0.1.0-1) UNRELEASED; urgency=low
+isis-python (0.5.5-1) UNRELEASED; urgency=low
 
   * first debian package of the separate python-isis package
 
