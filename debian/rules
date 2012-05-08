@@ -25,29 +25,7 @@ CMAKE_FLAGS=-DCMAKE_INSTALL_PREFIX:PATH=/usr \
             -DBUILD_SHARED_LIBS:BOOL=ON \
             -DCMAKE_SHARED_LINKER_FLAGS="-Wl,--no-undefined" \
             -DCMAKE_EXE_LINKER_FLAGS="-Wl,--no-undefined" \
-            -DISIS_APPS_CALC:BOOL=ON \
-            -DISIS_BUILD_TESTS:BOOL=OFF \
-            -DISIS_BUILD_TOOLS:BOOL=ON \
-            -DISIS_BUILD_PYTHON_EXT:BOOL=ON \
-            -DISIS_IOPLUGIN_DICOM:BOOL=ON \
-            -DISIS_IOPLUGIN_GZ:BOOL=ON \
-            -DISIS_IOPLUGIN_NIFTI:BOOL=OFF \
-            -DISIS_IOPLUGIN_NIFTI_SA:BOOL=ON \
-            -DISIS_IOPLUGIN_NULL:BOOL=ON \
-            -DISIS_IOPLUGIN_PNG:BOOL=ON \
-            -DISIS_IOPLUGIN_TAR:BOOL=ON \
-            -DISIS_IOPLUGIN_VISTA:BOOL=ON \
-	    -DISIS_IOPLUGIN_VISTA_SA:BOOL=OFF \
-            -DISIS_IOPLUGIN_FLIST:BOOL=ON \
-            -DISIS_IOPLUGIN_PROCESS:BOOL=ON \
-            -DISIS_ITK:BOOL=OFF \
-            -DISIS_QT4:BOOL=ON \
-            -DISIS_USE_LIBOIL:BOOL=ON \
             -DISIS_RUNTIME_LOG:BOOL=ON \
-            -DISIS_BUILD_PYTHON_EXT:BOOL=ON \
-            -DISIS_DEBUG_LOG:BOOL=OFF \
-            -DMANPAGES:BOOL=OFF \
-            -DQT_QMAKE_EXECUTABLE=/usr/bin/qmake-qt4 \
             -DGIT_REVISION="Debian-$(debver)"
 
 override_dh_auto_test:
@@ -61,11 +39,6 @@ override_dh_auto_configure:
 #        -DCMAKE_SKIP_RPATH=true \
 #        -DCMAKE_PYTHON_VERSION=$*-dbg \
 #        -DCMAKE_PYTHONLIB_VERSION="$*_d;$*" \
-
-# ignore the plugins, as they are for private consumption by the binaries in
-# this package only
-override_dh_makeshlibs:
-	dh_makeshlibs -XlibisisImageFormat
 
 get-orig-source:
 	# orig tarball, turn directory into something nicer
