@@ -36,5 +36,7 @@ private:
 	PyObject *self;
 
 };
-}}}
+}
+}
+}
 #endif

@@ -28,4 +28,6 @@ void _WritingValueAdapter::_set ( const object &val )
 	WritingValueAdapter::operator=( isis::python::util::_internal::ConvertFromPython::convert( val ) );
 }
 
-}}}
+}
+}
+}
