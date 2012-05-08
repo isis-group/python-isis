@@ -12,7 +12,6 @@ INCLUDE_DIRECTORIES(${ISIS_INCLUDE_DIRS})
 # add global options
 ###############################################################################
 ADD_DEFINITIONS(-D_ENABLE_LOG=1)
-ADD_DEFINITIONS(-D_ENABLE_DEBUG=1)
 
 find_package(PythonInterp)
 include_directories(${CMAKE_SOURCE_DIR}/lib/Core)
