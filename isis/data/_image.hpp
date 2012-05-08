@@ -13,11 +13,11 @@
 #include "CoreUtils/vector.hpp"
 #include <vector>
 #include <boost/algorithm/string.hpp>
-#include "core/common.hpp"
+#include "util/common.hpp"
 #include "common.hpp"
-#include "core/_convertToPython.hpp"
+#include "util/_convertToPython.hpp"
 
-#include "core/_propmap.hpp"
+#include "util/_propmap.hpp"
 #include "DataStorage/chunk.hpp"
 #include "CoreUtils/singletons.hpp"
 
@@ -75,11 +75,11 @@ public:
 	}
 
 	api::object _getMin( ) {
-		return  util::Singletons::get<isis::python::core::_internal::TypesMap, 10>().at (
+		return  util::Singletons::get<isis::python::util::_internal::TypesMap, 10>().at (
 					getMinMax().first->getTypeID() )->convert ( *getMinMax().first );
 	}
 	api::object _getMax( ) {
-		return  util::Singletons::get<isis::python::core::_internal::TypesMap, 10>().at (
+		return  util::Singletons::get<isis::python::util::_internal::TypesMap, 10>().at (
 					getMinMax().second->getTypeID() )->convert ( *getMinMax().second );
 	}
 

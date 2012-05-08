@@ -10,7 +10,7 @@ namespace isis
 {
 namespace python
 {
-namespace core
+namespace util
 {
 
 using namespace isis::util;

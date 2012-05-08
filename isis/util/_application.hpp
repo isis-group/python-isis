@@ -18,7 +18,7 @@ namespace isis
 {
 namespace python
 {
-namespace core
+namespace util
 {
 namespace Application
 {

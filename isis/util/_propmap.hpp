@@ -23,13 +23,13 @@ namespace isis
 {
 namespace python
 {
-namespace core
+namespace util
 {
 
 namespace PropertyMap
 {
 
-void _setPropertyAs( isis::util::PropertyMap &base, const std::string &key, api::object value, isis::python::core::types type );
+void _setPropertyAs( isis::util::PropertyMap &base, const std::string &key, api::object value, isis::python::util::types type );
 
 void _setProperty( isis::util::PropertyMap &base, const std::string &key, api::object value );
 

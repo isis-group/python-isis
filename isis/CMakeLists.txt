@@ -17,5 +17,5 @@ message(STATUS "Installing python modules to ${PYTHON_INSTALL_PATH}")
 install(FILES __init__.py DESTINATION ${PYTHON_INSTALL_PATH}/isis)
 endforeach(pv)
 
-add_subdirectory(core)
+add_subdirectory(util)
 add_subdirectory(data)

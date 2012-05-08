@@ -10,8 +10,8 @@
 
 #include "DataStorage/valuearray_base.hpp"
 #include "common.hpp"
-#include "../core/_convertToPython.hpp"
-#include "../core/_convertFromPython.hpp"
+#include "util/_convertToPython.hpp"
+#include "util/_convertFromPython.hpp"
 #include "_types.hpp"
 #include "CoreUtils/vector.hpp"
 

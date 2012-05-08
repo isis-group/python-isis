@@ -9,7 +9,7 @@ namespace isis
 {
 namespace python
 {
-namespace core
+namespace util
 {
 
 // helper class vector

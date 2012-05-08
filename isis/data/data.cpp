@@ -19,8 +19,8 @@
 #include "_chunk.hpp"
 #include "_iofactory.hpp"
 #include "std_item.hpp"
-#include "../core/_application.hpp"
-#include "../core/_propmap.hpp"
+#include "util/_application.hpp"
+#include "util/_propmap.hpp"
 
 using namespace boost::python;
 using namespace isis::python::data;

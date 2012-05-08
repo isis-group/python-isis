@@ -10,7 +10,7 @@
 
 #include "DataStorage/chunk.hpp"
 #include <boost/python.hpp>
-#include "../core/_convertToPython.hpp"
+#include "util/_convertToPython.hpp"
 #include "common.hpp"
 
 using namespace isis::data;
