@@ -27,7 +27,6 @@ using namespace isis::python::data;
 
 BOOST_PYTHON_MODULE ( _data )
 {
-
 	//#######################################################################################
 	//  IOApplication
 	//#######################################################################################
@@ -81,39 +80,47 @@ BOOST_PYTHON_MODULE ( _data )
 	//#######################################################################################
 	//  Image
 	//#######################################################################################
+	//function pointer
+	api::object ( *_getVoxel1 ) ( const isis::data::Image &, const isis::util::ivector4 & ) = isis::python::data::Image::_voxel;
+	api::object ( *_getVoxel2 ) ( const isis::data::Image &, const size_t &, const size_t &, const size_t &, const size_t & ) = isis::python::data::Image::_voxel;
+	bool ( *_setVoxel1 ) ( const isis::data::Image &, const isis::util::ivector4 &, const api::object & ) = isis::python::data::Image::_setVoxel;
+	bool ( *_setVoxel2 ) ( const isis::data::Image &, const size_t &, const size_t &, const size_t &, const size_t &, const api::object & ) = isis::python::data::Image::_setVoxel;
+	isis::data::Chunk ( *_getChunk ) ( const isis::data::Image &, const isis::util::ivector4 &, bool ) = isis::python::data::Image::_getChunk;
+	isis::data::Chunk ( *_getChunkAs1 ) ( const isis::data::Image &, const isis::util::ivector4 &, const isis::python::data::image_types & ) = isis::python::data::Image::_getChunkAs;
+	isis::data::Chunk ( *_getChunkAs2 ) ( const isis::data::Image &, const size_t &, const size_t &, const size_t &, const size_t &, const isis::python::data::image_types & ) = isis::python::data::Image::_getChunkAs;
 	class_<isis::data::Image, _Image, bases< isis::data::_internal::NDimensional<4>, isis::util::PropertyMap > > ( "Image", init<>() )
 	.def ( init<isis::data::Image>() )
 	.def ( "checkMakeClean", &isis::data::Image::checkMakeClean )
-	.def ( "getVoxel", ( api::object ( ::_Image:: * ) ( const isis::util::ivector4 & ) ) ( &_Image::_voxel ), ( arg ( "coord" ) ) )
-	.def ( "getVoxel", ( api::object ( ::_Image:: * ) ( const size_t &, const size_t &, const size_t &, const size_t & ) ) ( &_Image::_voxel ), ( arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ) ) )
-	.def ( "setVoxel", ( bool ( ::_Image:: * ) ( const isis::util::ivector4 &, const api::object & ) ) ( &_Image::_setVoxel ), ( arg ( "coord" ), arg ( "value" ) ) )
-	.def ( "setVoxel", ( bool ( ::_Image:: * ) ( const size_t &, const size_t &, const size_t &, const size_t &, const api::object & ) ) ( &_Image::_setVoxel ), ( arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ), arg ( "value" ) ) )
-	.def ( "getChunkList", &_Image::_getChunksAsVector )
-	.def ( "getChunksAsList", &_Image::_getChunksAsVector )
+	.def ( "getVoxel", _getVoxel1, ( arg ( "coords" ) ) )
+	.def ( "getVoxel", _getVoxel2, ( arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ) ) )
+	.def ( "setVoxel", _setVoxel1, ( arg ( "coords" ), arg ( "value" ) ) )
+	.def ( "setVoxel", _setVoxel2, ( arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ), arg ( "value" ) ) )
+	.def ( "getChunkList", &isis::python::data::Image::_getChunksAsVector )
+	.def ( "getChunksAsList", &isis::python::data::Image::_getChunksAsVector )
 	.def ( "getMajorTypeID", &isis::data::Image::getMajorTypeID )
 	.def ( "getChunkAt", &isis::data::Image::getChunkAt )
 	.def ( "getChunk", ( isis::data::Chunk ( ::isis::data::Image:: * ) ( size_t, size_t, size_t, size_t, bool ) ) ( &isis::data::Image::getChunk ), ( arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ), arg ( "copy_metadata" ) ) )
-	.def ( "getChunk", ( isis::data::Chunk ( ::_Image:: * ) ( const isis::util::ivector4 &, bool ) ) ( &_Image::_getChunk ), ( arg ( "coord" ), arg ( "copy_metadata" ) ) )
-	.def ( "getChunkAs", ( isis::data::Chunk ( ::_Image:: * ) ( const size_t &, const size_t &, const size_t &, const size_t &, const std::string & ) ) ( &_Image::_getChunk ), ( arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ), arg ( "type" ) ) )
-	.def ( "getChunkAs", ( isis::data::Chunk ( ::_Image:: * ) ( const isis::util::ivector4 &, const std::string & ) ) ( &_Image::_getChunk ), ( arg ( "coords" ), arg ( "type" ) ) )
+	.def ( "getChunk", _getChunk, ( arg ( "coords" ), arg ( "copy_metadata" ) ) )
+	.def ( "getChunkAs", _getChunkAs1, ( arg ( "coords" ), arg ( "type" ) ) )
+	.def ( "getChunkAs", _getChunkAs2, ( arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ), arg ( "type" ) ) )
 	.def ( "insertChunk", &isis::data::Image::insertChunk )
 	.def ( "reIndex", &isis::data::Image::reIndex )
 	.def ( "isEmpty", &isis::data::Image::isEmpty )
 	.def ( "bytesPerVoxel", &isis::data::Image::getMaxBytesPerVoxel )
-	.def ( "getMin", &_Image::_getMin )
-	.def ( "getMax", &_Image::_getMax )
+	.def ( "getMin", &isis::python::data::Image::_getMin )
+	.def ( "getMax", &isis::python::data::Image::_getMax )
 	.def ( "compare", &isis::data::Image::compare )
-	.def ( "transformCoords", &_Image::_transformCoords )
-	.def ( "getMainOrientationAsString", &_Image::_getMainOrientationAsString )
-	.def ( "getMainOrientation", &Image::getMainOrientation )
-	.def ( "getPhysicalCoordsFromIndex", &Image::getPhysicalCoordsFromIndex )
-	.def ( "getIndexFromPhysicalCoords", &Image::getIndexFromPhysicalCoords )
-	.def ( "convertToType", &_Image::_makeOfType )
-	.def ( "spliceDownTo", &_Image::_spliceDownTo )
-	.def ( "getDeepCopy", ( isis::data::Image ( ::_Image:: * ) ( void ) ) ( &_Image::_deepCopy ) )
-	.def ( "getDeepCopyAs", ( isis::data::Image ( ::_Image:: * ) ( isis::python::data::image_types ) ) ( &_Image::_deepCopy ), ( arg ( "type" ) ) )
-	.def ( "getCheapCopy", ( isis::data::Image ( ::_Image:: * ) ( void ) ) ( &_Image::_cheapCopy ) )
-	.def ( "createImage", &_Image::_createImage )
+	.def ( "transformCoords", &isis::python::data::Image::_transformCoords )
+	.def ( "getMainOrientationAsString", &isis::python::data::Image::_getMainOrientationAsString )
+	.def ( "getMainOrientation", &isis::data::Image::getMainOrientation )
+	.def ( "getPhysicalCoordsFromIndex", &isis::data::Image::getPhysicalCoordsFromIndex )
+	.def ( "getIndexFromPhysicalCoords", &isis::data::Image::getIndexFromPhysicalCoords )
+	.def ( "convertToType", &isis::python::data::Image::_convertToType )
+	.def ( "spliceDownTo", &isis::python::data::Image::_spliceDownTo )
+	.def ( "getDeepCopy", &isis::python::data::Image::_deepCopy )
+	.def ( "getDeepCopyAs", &isis::python::data::Image::_deepCopyAs )
+	.def ( "getCheapCopy", &isis::python::data::Image::_cheapCopy )
+	.def ( "createImage", &isis::python::data::Image::_createImage )
 	.staticmethod ( "createImage" )
 	.def ( "__iter__", iterator<isis::data::Image>() )
 	;
