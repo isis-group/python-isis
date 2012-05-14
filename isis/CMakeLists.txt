@@ -13,8 +13,11 @@ foreach(pv ${PYTHON_VERSIONS})
 ############################################################
 # installation
 ############################################################
+set( INSTALL_FILES 	__init__.py
+					)
+
 message(STATUS "Installing python modules to ${PYTHON_INSTALL_PATH}")
-install(FILES __init__.py DESTINATION ${PYTHON_INSTALL_PATH}/isis)
+install(FILES ${INSTALL_FILES} DESTINATION ${PYTHON_INSTALL_PATH}/isis)
 endforeach(pv)
 
 add_subdirectory(util)

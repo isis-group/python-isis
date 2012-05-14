@@ -21,7 +21,6 @@
 #include "DataStorage/chunk.hpp"
 #include "CoreUtils/singletons.hpp"
 
-using namespace isis::data;
 
 namespace isis
 {
@@ -38,92 +37,66 @@ public:
 	_Image ( PyObject *p );
 	_Image ( PyObject *p, const Image &base );
 
-	api::object _voxel ( const size_t &first, const size_t &second, const size_t &third, const size_t &fourth ) {
-		const Chunk &ch = getChunk ( first, second, third, fourth, false );
-		return isis::python::data::_internal::VoxelOp::getVoxelAsPyObject ( ch, first, second, third, fourth );
-	}
-	api::object _voxel ( const isis::util::ivector4 &coord ) {
-		return _voxel ( coord[0], coord[1], coord[2], coord[3] );
-	}
-
-
-	bool _setVoxel ( const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const api::object &value ) {
-		Chunk ch = getChunk ( first, second, third, fourth, false );
-		return isis::python::data::_internal::VoxelOp::setVoxelAsPyObject ( ch, first, second, third, fourth, value );
-
-
-	}
-
-	bool _setVoxel ( const isis::util::ivector4 &coord, const api::object &value ) {
-		return _setVoxel ( coord[0], coord[1], coord[2], coord[3], value );
-	}
-
-	list _getChunksAsVector ( void );
-
-	const isis::util::ivector4 _getSizeAsVector( ) {
-		return this->getSizeAsVector();
-	}
-
-	Chunk _getChunk ( const isis::util::ivector4 &coord, bool copy_metadata ) {
-		return getChunk ( coord[0], coord[1], coord[2], coord[3], copy_metadata );
-	}
-
-	Chunk _getChunkAs ( const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const std::string &type );
-
-	Chunk _getChunkAs ( const isis::util::ivector4 &coord, const std::string &type ) {
-		return _getChunkAs ( coord[0], coord[1], coord[2], coord[3], type );
-	}
-
-	api::object _getMin( ) {
-		return  util::Singletons::get<isis::python::util::_internal::TypesMap, 10>().at (
-					getMinMax().first->getTypeID() )->convert ( *getMinMax().first );
-	}
-	api::object _getMax( ) {
-		return  util::Singletons::get<isis::python::util::_internal::TypesMap, 10>().at (
-					getMinMax().second->getTypeID() )->convert ( *getMinMax().second );
-	}
-
-	std::string _getMainOrientationAsString();
-
-	void _transformCoords ( boost::python::list matrix, const bool &center );
-
-	bool _makeOfType ( isis::python::data::image_types type );
-
-	size_t _spliceDownTo ( const isis::data::dimensions dims );
-
-	Image _deepCopy();
-
-	Image _deepCopy ( isis::python::data::image_types type );
-
-	Image _cheapCopy ( void ) {
-		return *this;
-	}
-
-	static Image _createImage ( isis::python::data::image_types type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
-
 private:
 	PyObject *self;
-
-	template<typename TYPE>
-	static Image _internCreateImage ( const size_t &first, const size_t &second, const size_t &third, const size_t &fourth ) {
-		data::MemChunk<TYPE> chunk ( first, second, third, fourth );
-		chunk.setPropertyAs<uint32_t> ( "acquisitionNumber", 0 );
-		chunk.setPropertyAs<util::fvector4> ( "rowVec", util::fvector4 ( 1, 0, 0, 0 ) );
-		chunk.setPropertyAs<util::fvector4> ( "columnVec", util::fvector4 ( 0, 1, 0, 0 ) );
-		chunk.setPropertyAs<util::fvector4> ( "sliceVec", util::fvector4 ( 0, 0, 1, 0 ) );
-		chunk.setPropertyAs<util::fvector4> ( "voxelSize", util::fvector4 ( 1, 1, 1, 1 ) );
-		chunk.setPropertyAs<util::fvector4> ( "indexOrigin", util::fvector4() );
-		return Image ( chunk );
-	}
-
 };
 
-
-class _ImageList : public std::list<Image>
+namespace _internal
 {
 
+template<typename TYPE>
+static isis::data::Image _internCreateImage ( const size_t &first, const size_t &second, const size_t &third, const size_t &fourth )
+{
+	isis::data::MemChunk<TYPE> chunk ( first, second, third, fourth );
+	static_cast<isis::data::Chunk>( chunk ).setPropertyAs<uint32_t> ( "acquisitionNumber", 0 );
+	static_cast<isis::data::Chunk>( chunk ).setPropertyAs<util::fvector4> ( "rowVec", util::fvector4 ( 1, 0, 0, 0 ) );
+	static_cast<isis::data::Chunk>( chunk ).setPropertyAs<util::fvector4> ( "columnVec", util::fvector4 ( 0, 1, 0, 0 ) );
+	static_cast<isis::data::Chunk>( chunk ).setPropertyAs<util::fvector4> ( "sliceVec", util::fvector4 ( 0, 0, 1, 0 ) );
+	static_cast<isis::data::Chunk>( chunk ).setPropertyAs<util::fvector4> ( "voxelSize", util::fvector4 ( 1, 1, 1, 1 ) );
+	static_cast<isis::data::Chunk>( chunk ).setPropertyAs<util::fvector4> ( "indexOrigin", util::fvector4() );
+	return isis::data::Image ( chunk );
+}
+}
+namespace Image
+{
 
-};
+api::object _voxel ( const isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
+api::object _voxel ( const isis::data::Image &base, const isis::util::ivector4 &coord );
+
+bool _setVoxel ( const isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const api::object &value );
+bool _setVoxel ( const isis::data::Image &base, const isis::util::ivector4 &coord, const api::object &value );
+
+list _getChunksAsVector ( const isis::data::Image &base );
+
+
+Chunk _getChunk ( const isis::data::Image &base, const isis::util::ivector4 &coord, bool copy_metadata );
+
+Chunk _getChunkAs ( const isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const isis::python::data::image_types &type );
+Chunk _getChunkAs ( const isis::data::Image &base, const isis::util::ivector4 &coord, const isis::python::data::image_types &type  );
+
+api::object _getMin( const isis::data::Image &base );
+api::object _getMax( const isis::data::Image &base );
+
+std::string _getMainOrientationAsString( const isis::data::Image &base );
+
+void _transformCoords ( isis::data::Image &base, boost::python::list matrix, const bool &center );
+
+bool _convertToType ( isis::data::Image &base, isis::python::data::image_types type );
+
+size_t _spliceDownTo ( isis::data::Image &base, const isis::data::dimensions dims );
+
+isis::data::Image _deepCopy( const isis::data::Image &base );
+
+isis::data::Image _deepCopyAs ( const isis::data::Image &base, isis::python::data::image_types type );
+
+isis::data::Image _cheapCopy ( const isis::data::Image &base );
+
+isis::data::Image _createImage ( const isis::data::Image &base, isis::python::data::image_types type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
+
+
+
+}
+
 
 }
 }
