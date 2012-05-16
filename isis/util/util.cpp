@@ -24,12 +24,9 @@ BOOST_PYTHON_MODULE( _util )
 	//#######################################################################################
 	using namespace isis::python::util::Application;
 	class_<isis::util::Application>( "Application", init<const char *>() )
-	//virtual void printHelp()const;
 	.def( "printHelp", &isis::util::Application::printHelp )
-	//static const std::string getCoreVersion( void );
 	.def( "getCoreVersion", &isis::util::Application::getCoreVersion )
 	.staticmethod( "getCoreVersion" )
-	//virtual bool init( int argc, char **argv, bool exitOnError = true );
 	.def( "init", &_init )
 	.def( "addParameter", &_addParameter )
 	.def( "getParameter", &_getParameter )
@@ -41,17 +38,20 @@ BOOST_PYTHON_MODULE( _util )
 	//  PropertyMap
 	//#######################################################################################
 	using namespace isis::python::util::PropertyMap;
+	void ( *_join1 ) ( isis::util::PropertyMap &, const isis::util::PropertyMap&, bool ) = isis::python::util::PropertyMap::_join;
+	void ( *_join2 ) ( isis::util::PropertyMap &, const isis::data::Image&, bool ) = isis::python::util::PropertyMap::_join;
 	class_<isis::util::PropertyMap>( "PropertyMap", init<>() )
 	.def( "hasProperty", &_hasProperty )
 	.def( "hasBranch", &_hasBranch )
 	.def( "getBranch", &_branch )
-	//  .def( "remove", ( bool ( ::isis::util::PropertyMap:: * )( const isis::util::istring & ) ) ( &isis::util::PropertyMap::remove ), ( arg( "key" ) ) ) //TODO adapt this to the new api
-	.def( "remove", ( bool ( ::isis::util::PropertyMap:: * )( const isis::util::PropertyMap &, bool ) ) ( &isis::util::PropertyMap::remove ), ( arg( "removeMap" ), arg( "keep_needed" ) ) )
+	.def( "removeProperty", &_removeProperty )
 	.def( "isValid", &isis::util::PropertyMap::isValid )
 	.def( "isEmpty", &isis::util::PropertyMap::isEmpty )
 	.def( "setProperty", &_setProperty )
 	.def( "getProperty", &_getProperty )
 	.def( "setPropertyAs", &_setPropertyAs )
+	.def( "join", _join1, ( arg ( "PropertyMap" ), arg( "overwrite") ) )
+	.def( "join", _join2, ( arg ( "Image" ), arg( "overwrite" ) ) )
 	;
 	//#######################################################################################
 	//  Selection

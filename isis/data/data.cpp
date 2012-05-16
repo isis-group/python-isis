@@ -120,8 +120,10 @@ BOOST_PYTHON_MODULE ( _data )
 	.def ( "getDeepCopy", &isis::python::data::Image::_deepCopy )
 	.def ( "getDeepCopyAs", &isis::python::data::Image::_deepCopyAs )
 	.def ( "getCheapCopy", &isis::python::data::Image::_cheapCopy )
-	.def ( "createImage", &isis::python::data::Image::_createImage )
-	.staticmethod ( "createImage" )
+	.def ( "createEmpty", &isis::python::data::Image::_createImage )
+	.staticmethod ( "createEmpty" )
+	.def ( "createFromChunks", &isis::python::data::Image::_createImageFromChunks )
+	.staticmethod( "createFromChunks" )
 	.def ( "__iter__", iterator<isis::data::Image>() )
 	;
 	//#######################################################################################

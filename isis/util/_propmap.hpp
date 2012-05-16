@@ -15,6 +15,7 @@
 #include "_convertFromPython.hpp"
 #include "_convertToPython.hpp"
 #include "CoreUtils/singletons.hpp"
+#include "DataStorage/image.hpp"
 
 
 using namespace boost::python;
@@ -39,6 +40,12 @@ bool _hasProperty( const isis::util::PropertyMap &base, const std::string &key )
 bool _hasBranch( const isis::util::PropertyMap &base, const std::string &key );
 
 isis::util::PropertyMap _branch( const isis::util::PropertyMap &base, const std::string &key );
+
+void _join( isis::util::PropertyMap &base, const isis::data::Image &, bool overwrite );
+
+void _join( isis::util::PropertyMap &base, const isis::util::PropertyMap &, bool overwrite );
+
+bool _removeProperty( isis::util::PropertyMap &base, const std::string & );
 
 } // end namespace PropertyMap
 }

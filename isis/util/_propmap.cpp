@@ -1,6 +1,5 @@
 #include "_propmap.hpp"
 
-
 namespace isis
 {
 namespace python
@@ -46,6 +45,22 @@ isis::util::PropertyMap _branch( const isis::util::PropertyMap &base, const std:
 {
 	return base.branch( key.c_str() );
 }
+
+void _join ( isis::util::PropertyMap& base, const isis::data::Image& image, bool overwrite )
+{
+	base.join( static_cast<const isis::util::PropertyMap&>( image ), overwrite);
+}
+
+void _join ( isis::util::PropertyMap& base, const isis::util::PropertyMap& map, bool overwrite )
+{
+	base.join( map, overwrite );
+}
+
+bool _removeProperty( isis::util::PropertyMap &base, const std::string &path )
+{
+	return base.remove(path.c_str());
+}
+
 
 
 } // end namespace PropertyMap
