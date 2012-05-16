@@ -22,4 +22,4 @@ endforeach(pv)
 
 add_subdirectory(util)
 add_subdirectory(data)
-add_subdirectory(convenience)
+add_subdirectory(tools)
