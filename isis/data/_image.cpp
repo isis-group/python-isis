@@ -180,7 +180,7 @@ isis::data::Image _deepCopyAs ( const isis::data::Image &base, image_types type 
 }
 
 
-isis::data::Image _createImage ( const isis::data::Image &base, image_types type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth )
+isis::data::Image _createImage ( image_types type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth )
 {
 	switch ( type ) {
 	case BOOL:
@@ -220,7 +220,6 @@ isis::data::Image _createImage ( const isis::data::Image &base, image_types type
 		LOG ( Runtime, error ) << "Unregistered pixel type ";
 		break;
 	}
-
 	return isis::data::Image ( isis::data::MemChunk<bool> ( 0, 0, 0, 0 ) );
 }
 
@@ -228,6 +227,13 @@ isis::data::Image _cheapCopy ( const isis::data::Image &base )
 {
 	return base;
 }
+
+isis::data::Image _createImageFromChunks ( const list& chunks )
+{
+	std::list<isis::data::Chunk> chunkList = isis::python::data::_internal::pyList2StdList<isis::data::Chunk>( chunks );
+	return isis::data::Image( chunkList );
+}
+
 
 
 }
