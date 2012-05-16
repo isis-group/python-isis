@@ -1,3 +1,10 @@
+isis-python (0.7.0-1) UNRELEASED; urgency=low
+
+  * add isis.tools module
+  * some fixes and cosmetics
+
+ -- ISIS Group (The friendly isis team) <gr_isis@cbs.mpg.de>  Tue, 16 May 2012 13:14:41 +0100
+
 isis-python (0.6.1-1) UNRELEASED; urgency=low
 
   * add isis.getVersion for python binding version information
