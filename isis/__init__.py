@@ -1,7 +1,7 @@
-__version__ = '0.7.0'
-VERSION = tuple(map(int, __version__.split('.')))
+VERSION = '0.7.0'
+VERSION_AS_LIST = tuple(map(int, VERSION.split('.')))
 
 __all__=['util','data','tools']
 
 def getVersion():
-	return VERSION
+	return VERSION_AS_LIST

@@ -234,6 +234,12 @@ isis::data::Image _createImageFromChunks ( const list& chunks )
 	return isis::data::Image( chunkList );
 }
 
+numeric::array _getArray()
+{
+	
+}
+
+
 
 
 }

@@ -13,6 +13,7 @@
 #include "CoreUtils/vector.hpp"
 #include <vector>
 #include <boost/algorithm/string.hpp>
+#include <boost/python/numeric.hpp>
 #include "util/common.hpp"
 #include "common.hpp"
 #include "util/_convertToPython.hpp"
@@ -93,6 +94,8 @@ isis::data::Image _cheapCopy ( const isis::data::Image &base );
 
 isis::data::Image _createImage ( isis::python::data::image_types type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
 isis::data::Image _createImageFromChunks( const list &chunks );
+
+numeric::array _getArray();
 
 
 
