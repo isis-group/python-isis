@@ -38,8 +38,8 @@ BOOST_PYTHON_MODULE( _util )
 	//  PropertyMap
 	//#######################################################################################
 	using namespace isis::python::util::PropertyMap;
-	void ( *_join1 ) ( isis::util::PropertyMap &, const isis::util::PropertyMap&, bool ) = isis::python::util::PropertyMap::_join;
-	void ( *_join2 ) ( isis::util::PropertyMap &, const isis::data::Image&, bool ) = isis::python::util::PropertyMap::_join;
+	void ( *_join1 ) ( isis::util::PropertyMap &, const isis::util::PropertyMap &, bool ) = isis::python::util::PropertyMap::_join;
+	void ( *_join2 ) ( isis::util::PropertyMap &, const isis::data::Image &, bool ) = isis::python::util::PropertyMap::_join;
 	class_<isis::util::PropertyMap>( "PropertyMap", init<>() )
 	.def( "hasProperty", &_hasProperty )
 	.def( "hasBranch", &_hasBranch )
@@ -50,7 +50,7 @@ BOOST_PYTHON_MODULE( _util )
 	.def( "setProperty", &_setProperty )
 	.def( "getProperty", &_getProperty )
 	.def( "setPropertyAs", &_setPropertyAs )
-	.def( "join", _join1, ( arg ( "PropertyMap" ), arg( "overwrite") ) )
+	.def( "join", _join1, ( arg ( "PropertyMap" ), arg( "overwrite" ) ) )
 	.def( "join", _join2, ( arg ( "Image" ), arg( "overwrite" ) ) )
 	;
 	//#######################################################################################

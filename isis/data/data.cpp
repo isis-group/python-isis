@@ -27,7 +27,7 @@ using namespace isis::python::data;
 
 BOOST_PYTHON_MODULE ( _data )
 {
-	boost::python::numeric::array::set_module_and_type("numpy", "ndarray");	
+	boost::python::numeric::array::set_module_and_type( "numpy", "ndarray" );
 	//#######################################################################################
 	//  IOApplication
 	//#######################################################################################
@@ -93,7 +93,7 @@ BOOST_PYTHON_MODULE ( _data )
 	boost::python::numeric::array ( *_getArray2 ) ( isis::python::data::_Image &, isis::python::data::image_types ) = isis::python::data::Image::_getArray;
 	isis::data::Image ( *_createFromArray1 ) ( const boost::python::numeric::array & ) = isis::python::data::Image::_createFromArray;
 	isis::data::Image ( *_createFromArray2 ) ( const boost::python::numeric::array &, const isis::data::Image & ) = isis::python::data::Image::_createFromArray;
-	
+
 	class_<isis::data::Image, _Image, bases< isis::data::_internal::NDimensional<4>, isis::util::PropertyMap > > ( "Image", init<>() )
 	.def ( init<isis::data::Image>() )
 	.def ( "checkMakeClean", &isis::data::Image::checkMakeClean )

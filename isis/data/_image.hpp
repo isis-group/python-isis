@@ -44,7 +44,7 @@ public:
 	void makeContiguousChunk() {
 		contiguousChunk_ = boost::shared_ptr<data::Chunk>( new data::Chunk( copyAsMemChunk<TYPE>() ) );
 	}
-	
+
 private:
 	PyObject *self;
 };
@@ -95,13 +95,13 @@ isis::data::Image _deepCopyAs ( const isis::data::Image &base, isis::python::dat
 
 isis::data::Image _cheapCopy ( const isis::data::Image &base );
 
-numeric::array _getArray ( isis::python::data::_Image& base );
+numeric::array _getArray ( isis::python::data::_Image &base );
 numeric::array _getArray( isis::python::data::_Image &base, isis::python::data::image_types image_type = isis::python::data::DOUBLE );
 
 isis::data::Image _createImage ( isis::python::data::image_types type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
 isis::data::Image _createImageFromChunks( const list &chunks );
 
-isis::data::Image _createFromArray( const boost::python::numeric::array &arr);
+isis::data::Image _createFromArray( const boost::python::numeric::array &arr );
 isis::data::Image _createFromArray(  const boost::python::numeric::array &arr, const isis::data::Image &image );
 
 
