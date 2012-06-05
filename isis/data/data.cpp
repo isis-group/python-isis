@@ -27,6 +27,7 @@ using namespace isis::python::data;
 
 BOOST_PYTHON_MODULE ( _data )
 {
+	boost::python::numeric::array::set_module_and_type("numpy", "ndarray");	
 	//#######################################################################################
 	//  IOApplication
 	//#######################################################################################
@@ -90,6 +91,8 @@ BOOST_PYTHON_MODULE ( _data )
 	isis::data::Chunk ( *_getChunkAs2 ) ( const isis::data::Image &, const size_t &, const size_t &, const size_t &, const size_t &, const isis::python::data::image_types & ) = isis::python::data::Image::_getChunkAs;
 	boost::python::numeric::array ( *_getArray1 ) ( isis::python::data::_Image & ) = isis::python::data::Image::_getArray;
 	boost::python::numeric::array ( *_getArray2 ) ( isis::python::data::_Image &, isis::python::data::image_types ) = isis::python::data::Image::_getArray;
+	isis::data::Image ( *_createFromArray1 ) ( const boost::python::numeric::array & ) = isis::python::data::Image::_createFromArray;
+	isis::data::Image ( *_createFromArray2 ) ( const boost::python::numeric::array &, const isis::data::Image & ) = isis::python::data::Image::_createFromArray;
 	
 	class_<isis::data::Image, _Image, bases< isis::data::_internal::NDimensional<4>, isis::util::PropertyMap > > ( "Image", init<>() )
 	.def ( init<isis::data::Image>() )
@@ -124,11 +127,14 @@ BOOST_PYTHON_MODULE ( _data )
 	.def ( "getDeepCopyAs", &isis::python::data::Image::_deepCopyAs )
 	.def ( "getCheapCopy", &isis::python::data::Image::_cheapCopy )
 	.def ( "createEmpty", &isis::python::data::Image::_createImage )
-	.def ( "getArray",  _getArray1 )
-	.def ( "getArray",  _getArray2, args( "type" ) )
 	.staticmethod ( "createEmpty" )
+	.def ( "getArray",  _getArray1 )
+	.def ( "getArray",  _getArray2, arg( "type" ) )
 	.def ( "createFromChunks", &isis::python::data::Image::_createImageFromChunks )
 	.staticmethod( "createFromChunks" )
+	.def ( "createFromArray", _createFromArray1, arg ( "array" ) )
+	.def ( "createFromArray", _createFromArray2, arg( "array" ), arg( "template_image" ) )
+	.staticmethod( "createFromArray" )
 	.def ( "__iter__", iterator<isis::data::Image>() )
 	;
 	//#######################################################################################
@@ -187,6 +193,10 @@ BOOST_PYTHON_MODULE ( _data )
 	.value ( "UINT64_T", UINT64_T )
 	.value ( "FLOAT", FLOAT )
 	.value ( "DOUBLE", DOUBLE )
+	.value ( "CFLOAT", CFLOAT )
+	.value ( "CDOUBLE", CDOUBLE )
+	.value ( "COLOR_24", COLOR_24 )
+	.value ( "COLOR_48", COLOR_48 )
 	;
 	//#######################################################################################
 	//  enums for orientations

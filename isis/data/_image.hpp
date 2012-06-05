@@ -51,17 +51,13 @@ private:
 
 namespace _internal
 {
+void setInitialProperties( isis::data::Chunk &chunk );
 
 template<typename TYPE>
 static isis::data::Image _internCreateImage ( const size_t &first, const size_t &second, const size_t &third, const size_t &fourth )
 {
 	isis::data::MemChunk<TYPE> chunk ( first, second, third, fourth );
-	static_cast<isis::data::Chunk&>( chunk ).setPropertyAs<uint32_t> ( "acquisitionNumber", 0 );
-	static_cast<isis::data::Chunk&>( chunk ).setPropertyAs<util::fvector4> ( "rowVec", util::fvector4 ( 1, 0, 0, 0 ) );
-	static_cast<isis::data::Chunk&>( chunk ).setPropertyAs<util::fvector4> ( "columnVec", util::fvector4 ( 0, 1, 0, 0 ) );
-	static_cast<isis::data::Chunk&>( chunk ).setPropertyAs<util::fvector4> ( "sliceVec", util::fvector4 ( 0, 0, 1, 0 ) );
-	static_cast<isis::data::Chunk&>( chunk ).setPropertyAs<util::fvector4> ( "voxelSize", util::fvector4 ( 1, 1, 1, 1 ) );
-	static_cast<isis::data::Chunk&>( chunk ).setPropertyAs<util::fvector4> ( "indexOrigin", util::fvector4() );
+	setInitialProperties ( chunk );
 	return isis::data::Image ( chunk );
 }
 }
@@ -104,6 +100,11 @@ numeric::array _getArray( isis::python::data::_Image &base, isis::python::data::
 
 isis::data::Image _createImage ( isis::python::data::image_types type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
 isis::data::Image _createImageFromChunks( const list &chunks );
+
+isis::data::Image _createFromArray( const boost::python::numeric::array &arr);
+isis::data::Image _createFromArray(  const boost::python::numeric::array &arr, const isis::data::Image &image );
+
+
 
 }
 
