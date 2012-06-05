@@ -1,5 +1,6 @@
 __author__ = 'tuerke'
-from isis import data
+
+from .. import data
 import os
 
 def loadFromPathList( pathList ):

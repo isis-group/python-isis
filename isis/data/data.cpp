@@ -88,6 +88,9 @@ BOOST_PYTHON_MODULE ( _data )
 	isis::data::Chunk ( *_getChunk ) ( const isis::data::Image &, const isis::util::ivector4 &, bool ) = isis::python::data::Image::_getChunk;
 	isis::data::Chunk ( *_getChunkAs1 ) ( const isis::data::Image &, const isis::util::ivector4 &, const isis::python::data::image_types & ) = isis::python::data::Image::_getChunkAs;
 	isis::data::Chunk ( *_getChunkAs2 ) ( const isis::data::Image &, const size_t &, const size_t &, const size_t &, const size_t &, const isis::python::data::image_types & ) = isis::python::data::Image::_getChunkAs;
+	boost::python::numeric::array ( *_getArray1 ) ( isis::python::data::_Image & ) = isis::python::data::Image::_getArray;
+	boost::python::numeric::array ( *_getArray2 ) ( isis::python::data::_Image &, isis::python::data::image_types ) = isis::python::data::Image::_getArray;
+	
 	class_<isis::data::Image, _Image, bases< isis::data::_internal::NDimensional<4>, isis::util::PropertyMap > > ( "Image", init<>() )
 	.def ( init<isis::data::Image>() )
 	.def ( "checkMakeClean", &isis::data::Image::checkMakeClean )
@@ -121,7 +124,8 @@ BOOST_PYTHON_MODULE ( _data )
 	.def ( "getDeepCopyAs", &isis::python::data::Image::_deepCopyAs )
 	.def ( "getCheapCopy", &isis::python::data::Image::_cheapCopy )
 	.def ( "createEmpty", &isis::python::data::Image::_createImage )
-	.def ( "getArray",  &isis::python::data::Image::_getArray )
+	.def ( "getArray",  _getArray1 )
+	.def ( "getArray",  _getArray2, args( "type" ) )
 	.staticmethod ( "createEmpty" )
 	.def ( "createFromChunks", &isis::python::data::Image::_createImageFromChunks )
 	.staticmethod( "createFromChunks" )

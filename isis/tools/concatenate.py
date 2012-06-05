@@ -1,5 +1,6 @@
 __author__ = 'tuerke'
-from isis import data
+
+from .. import data
 
 def _concatenateTimeDim( imageList ):
     allChunks = []
@@ -13,7 +14,6 @@ def _concatenateTimeDim( imageList ):
             acquisitionNumber+=1
         allChunks.extend(chunks)
     return data.Image.createFromChunks( allChunks )
-
 
 
 

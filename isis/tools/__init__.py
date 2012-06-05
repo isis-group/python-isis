@@ -1,3 +1,3 @@
-from concatenate import *
-from split import *
-from convenience import *
+import convenience
+from split import split
+from concatenate import concatenate

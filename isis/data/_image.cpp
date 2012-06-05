@@ -1,4 +1,5 @@
 #include "_image.hpp"
+#include <numpy/oldnumeric.h>
 
 namespace isis
 {
@@ -234,9 +235,88 @@ isis::data::Image _createImageFromChunks ( const list& chunks )
 	return isis::data::Image( chunkList );
 }
 
-numeric::array _getArray()
+numeric::array _getArray ( _Image& base )
 {
+	return _getArray( base, isis::python::data::DOUBLE );
+}
+
+
+numeric::array _getArray( isis::python::data::_Image &base, isis::python::data::image_types image_type )
+{
+	import_array();
+	boost::python::numeric::array::set_module_and_type("numpy", "ndarray");
+	const isis::util::ivector4 size = base.getSizeAsVector();
+	npy_intp dims[4] = { size[0], size[1], size[2], size[3] };
+	switch( image_type ) {
+		case isis::python::data::DOUBLE: {
+			base.makeContiguousChunk<double>();
+			const boost::python::object obj( boost::python::handle<>( PyArray_SimpleNewFromData(4, dims, PyArray_DOUBLE, &base.contiguousChunk_->voxel<double>(0) ) ) );
+			return boost::python::extract<boost::python::numeric::array>( obj );
+			break;
+		}
+		case isis::python::data::FLOAT: {
+			base.makeContiguousChunk<float>();
+			const boost::python::object obj( boost::python::handle<>( PyArray_SimpleNewFromData(4, dims, PyArray_FLOAT, &base.contiguousChunk_->voxel<float>(0) ) ) );
+			return boost::python::extract<boost::python::numeric::array>( obj );
+			break;
+		}
+		case isis::python::data::INT8_T: {
+			base.makeContiguousChunk<int8_t>();
+			const boost::python::object obj( boost::python::handle<>( PyArray_SimpleNewFromData(4, dims, PyArray_INT8, &base.contiguousChunk_->voxel<int8_t>(0) ) ) );
+			return boost::python::extract<boost::python::numeric::array>( obj );
+			break;
+		}
+		case isis::python::data::UINT8_T: {
+			base.makeContiguousChunk<uint8_t>();
+			const boost::python::object obj( boost::python::handle<>( PyArray_SimpleNewFromData(4, dims, PyArray_UINT8, &base.contiguousChunk_->voxel<uint8_t>(0) ) ) );
+			return boost::python::extract<boost::python::numeric::array>( obj );
+			break;
+		}
+		case isis::python::data::INT16_T: {
+			base.makeContiguousChunk<int16_t>();
+			const boost::python::object obj( boost::python::handle<>( PyArray_SimpleNewFromData(4, dims, PyArray_INT16, &base.contiguousChunk_->voxel<int16_t>(0) ) ) );
+			return boost::python::extract<boost::python::numeric::array>( obj );
+			break;
+		}
+		case isis::python::data::UINT16_T: {
+			base.makeContiguousChunk<uint16_t>();
+			const boost::python::object obj( boost::python::handle<>( PyArray_SimpleNewFromData(4, dims, PyArray_UINT16, &base.contiguousChunk_->voxel<uint16_t>(0) ) ) );
+			return boost::python::extract<boost::python::numeric::array>( obj );
+			break;
+		}
+		case isis::python::data::INT32_T: {
+			base.makeContiguousChunk<int32_t>();
+			const boost::python::object obj( boost::python::handle<>( PyArray_SimpleNewFromData(4, dims, PyArray_INT32, &base.contiguousChunk_->voxel<int32_t>(0) ) ) );
+			return boost::python::extract<boost::python::numeric::array>( obj );
+			break;
+		}
+		case isis::python::data::UINT32_T: {
+			base.makeContiguousChunk<uint32_t>();
+			const boost::python::object obj( boost::python::handle<>( PyArray_SimpleNewFromData(4, dims, PyArray_UINT32, &base.contiguousChunk_->voxel<uint32_t>(0) ) ) );
+			return boost::python::extract<boost::python::numeric::array>( obj );
+			break;
+		}
+		case isis::python::data::INT64_T: {
+			base.makeContiguousChunk<int64_t>();
+			const boost::python::object obj( boost::python::handle<>( PyArray_SimpleNewFromData(4, dims, PyArray_INT64, &base.contiguousChunk_->voxel<int64_t>(0) ) ) );
+			return boost::python::extract<boost::python::numeric::array>( obj );
+			break;
+		}
+		case isis::python::data::UINT64_T: {
+			base.makeContiguousChunk<uint64_t>();
+			const boost::python::object obj( boost::python::handle<>( PyArray_SimpleNewFromData(4, dims, PyArray_UINT64, &base.contiguousChunk_->voxel<uint64_t>(0) ) ) );
+			return boost::python::extract<boost::python::numeric::array>( obj );
+			break;
+		}
+		case isis::python::data::BOOL: {
+			base.makeContiguousChunk<bool>();
+			const boost::python::object obj( boost::python::handle<>( PyArray_SimpleNewFromData(4, dims, PyArray_BOOL, &base.contiguousChunk_->voxel<bool>(0) ) ) );
+			return boost::python::extract<boost::python::numeric::array>( obj );
+			break;
+		}
 	
+
+	}
 }
 
 

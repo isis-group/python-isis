@@ -58,7 +58,7 @@ public:
 		return IOFactory::write( _internal::pyList2StdList<isis::data::Image>( images ), path, suffix_override.c_str(), "" );
 	}
 	static bool _write( const boost::python::list &images, const std::string &path ) {
-		return IOFactory::write( _internal::pyList2StdList<isis::data::Image>( images ), path, "", "" );
+		return IOFactory::write( _internal::pyList2StdList<isis::data::Image>( images ), path);
 	}
 
 	static boost::python::list _getFormats() {
