@@ -59,6 +59,8 @@ BOOST_PYTHON_MODULE( _util )
 	//#######################################################################################
 	class_<isis::util::Selection>( "Selection", init<const char *>() )
 	.def( init<>() )
+	.def( "set", ( bool ( ::isis::util::Selection:: * ) ( const char *) ) ( &isis::util::Selection::set ), ( arg( "entry" ) ) )
+	.def( "set", ( bool ( ::isis::util::Selection:: * ) ( unsigned short ) ) ( &isis::util::Selection::set ) , ( arg( "entry" ) ) )
 	;
 	//#######################################################################################
 	//  Vector4
