@@ -235,6 +235,9 @@ size_t _spliceDownTo ( isis::data::Image &base, const isis::data::dimensions dim
 isis::data::Image _deepCopy( const isis::data::Image &base )
 {
 	switch ( base.getMajorTypeID() ) {
+	case ValueArray<bool>::staticID:
+		return MemImage<bool> ( base );
+		break;
 	case ValueArray<int8_t>::staticID:
 		return MemImage<int8_t> ( base );
 		break;
@@ -253,11 +256,29 @@ isis::data::Image _deepCopy( const isis::data::Image &base )
 	case ValueArray<uint32_t>::staticID:
 		return MemImage<uint32_t> ( base );
 		break;
+	case ValueArray<int64_t>::staticID:
+		return MemImage<int64_t> ( base );
+		break;
+	case ValueArray<uint64_t>::staticID:
+		return MemImage<uint64_t> ( base );
+		break;
 	case ValueArray<float>::staticID:
 		return MemImage<float> ( base );
 		break;
 	case ValueArray<double>::staticID:
 		return MemImage<double> ( base );
+		break;
+	case ValueArray<std::complex<float> >::staticID:
+		return MemImage<std::complex<float> > ( base );
+		break;
+	case ValueArray<std::complex<double> >::staticID:
+		return MemImage<std::complex<double> > ( base );
+		break;
+	case ValueArray<isis::util::color24>::staticID:
+		return MemImage<isis::util::color24> ( base );
+		break;
+	case ValueArray<isis::util::color48>::staticID:
+		return MemImage<isis::util::color48> ( base );
 		break;
 	default:
 		LOG ( Runtime, error ) << "Unregistered pixel type " << util::getTypeMap() [base.getMajorTypeID()] << ".";
@@ -310,6 +331,19 @@ isis::data::Image _createImage ( image_types type, const size_t &first, const si
 	case DOUBLE:
 		return _internal::_internCreateImage<double> ( first, second, third, fourth );
 		break;
+	case CFLOAT:
+		return _internal::_internCreateImage<std::complex<float> > ( first, second, third, fourth );
+		break;
+	case CDOUBLE:
+		return _internal::_internCreateImage<std::complex<double> > ( first, second, third, fourth );
+		break;
+	case COLOR_24:
+		return _internal::_internCreateImage< isis::util::color24 > ( first, second, third, fourth );
+		break;
+	case COLOR_48:
+		return _internal::_internCreateImage< isis::util::color48 > ( first, second, third, fourth );
+		break;
+		
 	default:
 		LOG ( Runtime, error ) << "Unregistered pixel type ";
 		break;
