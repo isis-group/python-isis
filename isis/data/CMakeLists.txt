@@ -1,5 +1,17 @@
 
 include_directories(${CMAKE_SOURCE_DIR}/isis)
+############################################################
+# muparser support
+############################################################
+
+option(ISIS_PYTHON_MUPARSER_SUPPORT "Enable muparser support for isis python. This enables the function Image::applyOperation()" OFF)
+
+if( ISIS_PYTHON_MUPARSER_SUPPORT )
+	find_library(LIB_MUPARSER "muparser" REQUIRED)
+	find_path(INCPATH_MUPARSER "muParser.h" PATH_SUFFIXES "muParser")
+	include_directories(${INCPATH_MUPARSER})
+	add_definitions(-DISIS_PYTHON_MUPARSER_SUPPORT=1)
+endif( ISIS_PYTHON_MUPARSER_SUPPORT)
 
 ############################################################
 # configure targets
@@ -16,7 +28,7 @@ set(DATA_FILES	 data.cpp
 
 add_library(_data SHARED ${DATA_FILES})
 set_target_properties(_data PROPERTIES PREFIX "")
-target_link_libraries( _data _util ${PYTHON_LIBRARIES} ${Boost_LIBRARIES} ${ISIS_LIB} ${ISIS_LIB_DEPENDS})
+target_link_libraries( _data _util ${PYTHON_LIBRARIES} ${Boost_LIBRARIES} ${ISIS_LIB} ${ISIS_LIB_DEPENDS} ${LIB_MUPARSER})
 
 ############################################################
 # configure installation

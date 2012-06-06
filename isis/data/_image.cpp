@@ -1,6 +1,9 @@
 #include "_image.hpp"
 #include <numpy/oldnumeric.h>
 
+#ifdef ISIS_PYTHON_MUPARSER_SUPPORT
+#include <muParser.h>
+#endif
 namespace isis
 {
 namespace python
@@ -24,6 +27,43 @@ _Image::_Image ( PyObject *p, const isis::data::Image &base )
 namespace Image
 {
 
+#ifdef ISIS_PYTHON_MUPARSER_SUPPORT
+class VoxelOp : public isis::data::VoxelOp<double>
+{
+	mu::Parser parser;
+	double voxBuff;
+	isis::util::FixedVector<double, 4> posBuff;
+public:
+	VoxelOp( std::string expr ) {
+		parser.SetExpr( expr );
+		parser.DefineVar( std::string( "vox" ), &voxBuff );
+		parser.DefineVar( std::string( "pos_x" ), &posBuff[data::rowDim] );
+		parser.DefineVar( std::string( "pos_y" ), &posBuff[data::columnDim] );
+		parser.DefineVar( std::string( "pos_z" ), &posBuff[data::sliceDim] );
+		parser.DefineVar( std::string( "pos_t" ), &posBuff[data::timeDim] );
+	}
+	bool operator()( double &vox, const isis::util::vector4<size_t>& pos ) {
+		voxBuff = vox; //using parser.DefineVar every time would slow down the evaluation
+		posBuff = pos;
+		vox = parser.Eval();
+		return true;
+	}
+
+};
+
+bool _applyOperation( isis::data::Image &base, const std::string &operation ) {
+	try {
+		VoxelOp vop( operation );
+		base.foreachVoxel<double>( vop );
+	} catch( mu::Parser::exception_type &e ) {
+		std::cerr << e.GetMsg() << std::endl;
+		return false;
+	}
+	return true;
+}
+
+#endif
+	
 api::object _voxel ( const isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth )
 {
 	const unsigned int typeID = base.getChunk ( first, second, third, fourth, false ).getTypeID();

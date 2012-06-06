@@ -64,6 +64,11 @@ static isis::data::Image _internCreateImage ( const size_t &first, const size_t 
 namespace Image
 {
 
+#ifdef ISIS_PYTHON_MUPARSER_SUPPORT
+bool _applyOperation( isis::data::Image &base, const std::string &operation );
+#endif
+
+	
 api::object _voxel ( const isis::data::Image &base, const isis::util::ivector4 &coord );
 api::object _voxel ( const isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
 

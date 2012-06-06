@@ -154,6 +154,10 @@ BOOST_PYTHON_MODULE ( _data )
 	.def ( "getCheapCopy", &isis::python::data::Image::_cheapCopy )
 	.def ( "createEmpty", &isis::python::data::Image::_createImage )
 	.staticmethod ( "createEmpty" )
+#ifdef ISIS_PYTHON_MUPARSER_SUPPORT
+	.def( "applyOperation", &isis::python::data::Image::_applyOperation, arg( "operation" ) )
+#endif
+	
 	.def ( "getArray",  _getArray1 )
 	.def ( "getArray",  _getArray2, arg( "type" ) )
 	.def ( "createFromChunks", &isis::python::data::Image::_createImageFromChunks )
