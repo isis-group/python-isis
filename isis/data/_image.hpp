@@ -38,13 +38,15 @@ public:
 	_Image ( PyObject *p );
 	_Image ( PyObject *p, const Image &base );
 
-	boost::shared_ptr<data::Chunk> contiguousChunk_;
+	boost::shared_ptr<isis::data::Chunk> contiguousChunk_;
 
 	template<typename TYPE>
 	void makeContiguousChunk() {
-		contiguousChunk_ = boost::shared_ptr<data::Chunk>( new data::Chunk( copyAsMemChunk<TYPE>() ) );
+		contiguousChunk_ = boost::shared_ptr<isis::data::Chunk>( new isis::data::Chunk( copyAsMemChunk<TYPE>() ) );
 	}
 
+	unsigned int majorTypeID_;
+	
 private:
 	PyObject *self;
 };
@@ -67,19 +69,21 @@ namespace Image
 api::object _voxel ( const isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
 api::object _voxel ( const isis::data::Image &base, const isis::util::ivector4 &coord );
 
-bool _setVoxel ( const isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const api::object &value );
-bool _setVoxel ( const isis::data::Image &base, const isis::util::ivector4 &coord, const api::object &value );
+bool _setVoxel ( isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const api::object &value );
+bool _setVoxel ( isis::data::Image &base, const isis::util::ivector4 &coord, const api::object &value );
 
 list _getChunksAsVector ( const isis::data::Image &base );
 
 
-Chunk _getChunk ( const isis::data::Image &base, const isis::util::ivector4 &coord, bool copy_metadata );
+isis::data::Chunk _getChunk ( const isis::data::Image &base, const isis::util::ivector4 &coord, bool copy_metadata );
 
-Chunk _getChunkAs ( const isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const isis::python::data::image_types &type );
-Chunk _getChunkAs ( const isis::data::Image &base, const isis::util::ivector4 &coord, const isis::python::data::image_types &type  );
+isis::data::Chunk _getChunkAs ( const isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const isis::python::data::image_types &type );
+isis::data::Chunk _getChunkAs ( const isis::data::Image &base, const isis::util::ivector4 &coord, const isis::python::data::image_types &type  );
 
 api::object _getMin( const isis::data::Image &base );
 api::object _getMax( const isis::data::Image &base );
+
+api::object _getMinMax( const isis::data::Image &base );
 
 std::string _getMainOrientationAsString( const isis::data::Image &base );
 

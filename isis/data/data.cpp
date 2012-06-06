@@ -84,8 +84,8 @@ BOOST_PYTHON_MODULE ( _data )
 	//function pointer
 	api::object ( *_getVoxel1 ) ( const isis::data::Image &, const isis::util::ivector4 & ) = isis::python::data::Image::_voxel;
 	api::object ( *_getVoxel2 ) ( const isis::data::Image &, const size_t &, const size_t &, const size_t &, const size_t & ) = isis::python::data::Image::_voxel;
-	bool ( *_setVoxel1 ) ( const isis::data::Image &, const isis::util::ivector4 &, const api::object & ) = isis::python::data::Image::_setVoxel;
-	bool ( *_setVoxel2 ) ( const isis::data::Image &, const size_t &, const size_t &, const size_t &, const size_t &, const api::object & ) = isis::python::data::Image::_setVoxel;
+	bool ( *_setVoxel1 ) ( isis::data::Image &, const isis::util::ivector4 &, const api::object & ) = isis::python::data::Image::_setVoxel;
+	bool ( *_setVoxel2 ) ( isis::data::Image &, const size_t &, const size_t &, const size_t &, const size_t &, const api::object & ) = isis::python::data::Image::_setVoxel;
 	isis::data::Chunk ( *_getChunk ) ( const isis::data::Image &, const isis::util::ivector4 &, bool ) = isis::python::data::Image::_getChunk;
 	isis::data::Chunk ( *_getChunkAs1 ) ( const isis::data::Image &, const isis::util::ivector4 &, const isis::python::data::image_types & ) = isis::python::data::Image::_getChunkAs;
 	isis::data::Chunk ( *_getChunkAs2 ) ( const isis::data::Image &, const size_t &, const size_t &, const size_t &, const size_t &, const isis::python::data::image_types & ) = isis::python::data::Image::_getChunkAs;
@@ -104,6 +104,7 @@ BOOST_PYTHON_MODULE ( _data )
 	.def ( "getChunkList", &isis::python::data::Image::_getChunksAsVector )
 	.def ( "getChunksAsList", &isis::python::data::Image::_getChunksAsVector )
 	.def ( "getMajorTypeID", &isis::data::Image::getMajorTypeID )
+	.def ( "getMajorTypeName", &isis::data::Image::getMajorTypeName )
 	.def ( "getChunkAt", &isis::data::Image::getChunkAt )
 	.def ( "getChunk", ( isis::data::Chunk ( ::isis::data::Image:: * ) ( size_t, size_t, size_t, size_t, bool ) ) ( &isis::data::Image::getChunk ), ( arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ), arg ( "copy_metadata" ) ) )
 	.def ( "getChunk", _getChunk, ( arg ( "coords" ), arg ( "copy_metadata" ) ) )
@@ -112,9 +113,10 @@ BOOST_PYTHON_MODULE ( _data )
 	.def ( "insertChunk", &isis::data::Image::insertChunk )
 	.def ( "reIndex", &isis::data::Image::reIndex )
 	.def ( "isEmpty", &isis::data::Image::isEmpty )
-	.def ( "bytesPerVoxel", &isis::data::Image::getMaxBytesPerVoxel )
+	.def ( "getMaxBytesPerVoxel", &isis::data::Image::getMaxBytesPerVoxel )
 	.def ( "getMin", &isis::python::data::Image::_getMin )
 	.def ( "getMax", &isis::python::data::Image::_getMax )
+	.def ( "getMinMax", &isis::python::data::Image::_getMinMax )
 	.def ( "compare", &isis::data::Image::compare )
 	.def ( "transformCoords", &isis::python::data::Image::_transformCoords )
 	.def ( "getMainOrientationAsString", &isis::python::data::Image::_getMainOrientationAsString )
@@ -140,15 +142,29 @@ BOOST_PYTHON_MODULE ( _data )
 	//#######################################################################################
 	//  Chunk
 	//#######################################################################################
-	class_<isis::data::Chunk, _Chunk, bases< isis::data::_internal::NDimensional<4>, isis::util::PropertyMap> > ( "Chunk", init<_Chunk>() )
-	.def ( "getVoxel", ( api::object ( ::_Chunk:: * ) ( const isis::util::ivector4 & ) ) ( &_Chunk::_voxel ), ( arg ( "coord" ) ) )
-	.def ( "getVoxel", ( api::object ( ::_Chunk:: * ) ( const size_t &, const size_t &, const size_t &, const size_t & ) ) ( &_Chunk::_voxel ), ( arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ) ) )
-	.def ( "setVoxel", ( bool ( ::_Chunk:: * ) ( const isis::util::ivector4 &, const api::object & ) ) ( &_Chunk::_setVoxel ), ( arg ( "coord" ), arg ( "value" ) ) )
-	.def ( "setVoxel", ( bool ( ::_Chunk:: * ) ( const size_t &, const size_t &, const size_t &, const size_t &, const api::object & ) ) ( &_Chunk::_setVoxel ), ( arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ), arg ( "value" ) ) )
+
+	boost::python::api::object ( *_getVoxel1C ) ( const isis::python::data::_Chunk &, const isis::util::ivector4 & ) = isis::python::data::Chunk::_voxel;
+	boost::python::api::object ( *_getVoxel2C ) ( const isis::python::data::_Chunk &, const size_t &, const size_t &, const size_t &, const size_t & ) = isis::python::data::Chunk::_voxel;
+	bool ( *_setVoxel1C ) ( isis::python::data::_Chunk &, const isis::util::ivector4 &, const api::object & ) = isis::python::data::Chunk::_setVoxel;
+	bool ( *_setVoxel2C ) ( isis::python::data::_Chunk &, const size_t &, const size_t &, const size_t &, const size_t &, const api::object & ) = isis::python::data::Chunk::_setVoxel;
+	bool ( *_convertToType1C ) ( isis::data::Chunk &, const unsigned short ) = isis::python::data::Chunk::_convertToType;
+	bool ( *_convertToType2C ) ( isis::data::Chunk &, const unsigned short, float, size_t ) = isis::python::data::Chunk::_convertToType;
+	class_<isis::data::Chunk, _Chunk, bases< isis::data::_internal::NDimensional<4>, isis::util::PropertyMap> > ( "Chunk", init<_Chunk>() )	
+	.def ( "getVoxel", _getVoxel1C, ( arg ( "coord" ) ) )
+	.def ( "getVoxel", _getVoxel2C, ( arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ) ) )
+	.def ( "setVoxel", _setVoxel1C, ( arg ( "coord" ), arg ( "value" ) ) )
+	.def ( "setVoxel", _setVoxel2C, ( arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ), arg ( "value" ) ) )
 	.def ( "useCount", &isis::data::Chunk::useCount )
 	.def ( "cloneToNew", &isis::data::Chunk::cloneToNew )
-	.def ( "convertToType", ( bool ( ::_Chunk:: * ) ( const unsigned short ) ) ( &_Chunk::_convertToType ), ( arg ( "ID" ) ) )
-	.def ( "convertToType", ( bool ( ::_Chunk:: * ) ( const unsigned short, float, size_t ) ) ( &_Chunk::_convertToType ), ( arg ( "ID" ), arg ( "scaling" ), arg ( "offset" ) ) )
+	.def ( "convertToType", _convertToType1C, ( arg ( "ID" ) ) )
+	.def ( "convertToType", _convertToType2C, ( arg ( "ID" ), arg ( "scaling" ), arg ( "offset" ) ) )
+	.def ( "getTypeID", &isis::data::Chunk::getTypeID )
+	.def ( "getTypeName", &isis::data::Chunk::getTypeName )
+	.def ( "getBytesPerVoxel", &isis::data::Chunk::getBytesPerVoxel )
+	.def ( "compare", &isis::data::Chunk::compare )
+	.def ( "getMin", &isis::python::data::Chunk::_getMin )
+	.def ( "getMax", &isis::python::data::Chunk::_getMax )
+	.def ( "getMinMax", &isis::python::data::Chunk::_getMinMax )
 	;
 	//#######################################################################################
 	//  IOFactory

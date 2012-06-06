@@ -34,10 +34,12 @@ enum types { BOOL = Value<bool>::staticID,
 			 SLIST = Value<slist>::staticID,
 			 STDSTRING = Value<std::string>::staticID,
 			 SELECTION = Value<Selection>::staticID,
-			 COMPLEX_FLOAT = Value< std::complex<float> >::staticID,
-			 COMPLEX_DOUBLE = Value< std::complex<double> >::staticID,
+			 CFLOAT = Value< std::complex<float> >::staticID,
+			 CDOUBLE = Value< std::complex<double> >::staticID,
 			 BOOST_PTIME = Value<boost::posix_time::ptime>::staticID,
-			 BOOST_DATE = Value<boost::gregorian::date>::staticID
+			 BOOST_DATE = Value<boost::gregorian::date>::staticID,
+			 COLOR_24 = Value< color24 >::staticID,
+			 COLOR_48 = Value< color48 >::staticID
 		   };
 
 

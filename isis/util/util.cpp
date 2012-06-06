@@ -107,10 +107,12 @@ BOOST_PYTHON_MODULE( _util )
 	.value( "STD_STRING", STDSTRING )
 	.value( "STRING", STDSTRING )
 	.value( "SELECTION", SELECTION )
-	.value( "COMPLEX_FLOAT", COMPLEX_FLOAT )
-	.value( "COMPLEX_DOUBLE", COMPLEX_DOUBLE )
+	.value( "CFLOAT", CFLOAT )
+	.value( "CDOUBLE", CDOUBLE )
 	.value( "BOOST_PTIME", BOOST_PTIME )
 	.value( "BOOST_DATE", BOOST_DATE )
+	.value( "COLOR_24", COLOR_24 )
+	.value( "COLOR_48", COLOR_48 )
 	;
 
 }

@@ -13,12 +13,14 @@ _Image::_Image ( PyObject *p )
 	: boost::python::wrapper< Image >(), self ( p )
 {
 	updateOrientationMatrices();
+	majorTypeID_ = getMajorTypeID();
 }
 
 _Image::_Image ( PyObject *p, const isis::data::Image &base )
 	: Image ( base ), boost::python::wrapper< Image >(), self ( p )
 {
 	updateOrientationMatrices();
+	majorTypeID_ = getMajorTypeID();
 }
 
 namespace Image
@@ -26,8 +28,8 @@ namespace Image
 
 api::object _voxel ( const isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth )
 {
-	const Chunk &ch = base.getChunk ( first, second, third, fourth, false );
-	return isis::python::data::_internal::VoxelOp::getVoxelAsPyObject ( ch, first, second, third, fourth );
+	const unsigned int typeID = base.getChunk ( first, second, third, fourth, false ).getTypeID();
+	return isis::python::data::_internal::VoxelOp::getVoxelAsPyObject( base, typeID, first, second, third, fourth );
 }
 
 object _voxel ( const isis::data::Image &base, const util::ivector4 &coord )
@@ -35,35 +37,35 @@ object _voxel ( const isis::data::Image &base, const util::ivector4 &coord )
 	return _voxel ( base, coord[0], coord[1], coord[2], coord[3] );
 }
 
-bool _setVoxel ( const isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const api::object &value )
+bool _setVoxel ( isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const api::object &value )
 {
-	Chunk ch = base.getChunk ( first, second, third, fourth, false );
-	return isis::python::data::_internal::VoxelOp::setVoxelAsPyObject ( ch, first, second, third, fourth, value );
+	const unsigned int typeID = base.getChunk ( first, second, third, fourth, false ).getTypeID();
+	return isis::python::data::_internal::VoxelOp::setVoxelAsPyObject( base, typeID, first, second, third, fourth, value );
 }
 
-bool _setVoxel ( const isis::data::Image &base, const util::ivector4 &coord, const object &value )
+bool _setVoxel ( isis::data::Image &base, const util::ivector4 &coord, const object &value )
 {
 	return _setVoxel ( base, coord[0], coord[1], coord[2], coord[3], value );
 }
 
 list _getChunksAsVector ( const isis::data::Image &base )
 {
-	return isis::python::data::_internal::stdIter2PyList<std::vector<Chunk> >( base.copyChunksToVector() );
+	return isis::python::data::_internal::stdIter2PyList<std::vector<isis::data::Chunk> >( base.copyChunksToVector() );
 }
 
-Chunk _getChunk ( const isis::data::Image &base, const util::ivector4 &coord, bool copy_metadata )
+isis::data::Chunk _getChunk ( const isis::data::Image &base, const util::ivector4 &coord, bool copy_metadata )
 {
 	return base.getChunk ( coord[0], coord[1], coord[2], coord[3], copy_metadata );
 }
 
-Chunk _getChunkAs ( const isis::data::Image &base, const util::ivector4 &coord, const image_types &type )
+isis::data::Chunk _getChunkAs ( const isis::data::Image &base, const util::ivector4 &coord, const image_types &type )
 {
 	return _getChunkAs ( base, coord[0], coord[1], coord[2], coord[3], type );
 }
 
-Chunk _getChunkAs ( const isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const isis::python::data::image_types &type )
+isis::data::Chunk _getChunkAs ( const isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const isis::python::data::image_types &type )
 {
-	Chunk ret = base.getChunk ( first, second, third, fourth ); // get a cheap copy
+	isis::data::Chunk ret = base.getChunk ( first, second, third, fourth ); // get a cheap copy
 	ret.convertToType ( type );
 	return ret;
 }
@@ -81,6 +83,18 @@ object _getMax ( const isis::data::Image &base )
 	return  util::Singletons::get<isis::python::util::_internal::TypesMap, 10>().at (
 				max->getTypeID() )->convert ( *max );
 }
+
+object _getMinMax ( const isis::data::Image& base )
+{
+	const std::pair< isis::util::ValueReference, isis::util::ValueReference> minMax = base.getMinMax();
+	object min = isis::util::Singletons::get<isis::python::util::_internal::TypesMap, 10>().at (
+				minMax.first->getTypeID() )->convert ( *minMax.first );
+	object max = isis::util::Singletons::get<isis::python::util::_internal::TypesMap, 10>().at (
+				minMax.second->getTypeID() )->convert ( *minMax.second );
+				
+	return boost::python::make_tuple(min, max);
+}
+
 
 std::string _getMainOrientationAsString( const isis::data::Image &base )
 {
@@ -238,7 +252,7 @@ isis::data::Image _createImageFromChunks ( const list &chunks )
 
 numeric::array _getArray ( _Image &base )
 {
-	return _getArray( base, isis::python::data::DOUBLE );
+	return _getArray( base, static_cast<isis::python::data::image_types>( base.getMajorTypeID() ) );
 }
 
 

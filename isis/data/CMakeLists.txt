@@ -8,6 +8,7 @@ include_directories(${CMAKE_SOURCE_DIR}/isis)
 set(DATA_FILES	 data.cpp
 				_image.cpp
 				_chunk.hpp
+				_chunk.cpp
 				_ioapplication.cpp
 				_ndimensional.cpp
 				_iofactory.hpp
