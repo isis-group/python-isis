@@ -66,11 +66,22 @@ static isis::data::Image _internCreateImage ( const size_t &first, const size_t 
 namespace Image
 {
 
-api::object _voxel ( const isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
 api::object _voxel ( const isis::data::Image &base, const isis::util::ivector4 &coord );
+api::object _voxel ( const isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
 
-bool _setVoxel ( isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const api::object &value );
+api::object _voxelAs ( const isis::data::Image &base, const isis::python::data::image_types &type, const isis::util::ivector4 &coord );
+api::object _voxelAs ( const isis::data::Image &base, const isis::python::data::image_types &type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
+api::object _voxelAs ( const isis::data::Image &base, const int &type, const isis::util::ivector4 &coord );
+api::object _voxelAs ( const isis::data::Image &base, const int &type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
+
+
 bool _setVoxel ( isis::data::Image &base, const isis::util::ivector4 &coord, const api::object &value );
+bool _setVoxel ( isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const api::object &value );
+
+bool _setVoxelAs( isis::data::Image &base, const isis::python::data::image_types &type, const isis::util::ivector4 &coord, const api::object &value );
+bool _setVoxelAs( isis::data::Image &base, const isis::python::data::image_types &type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const api::object &value );
+bool _setVoxelAs( isis::data::Image &base, const int &type, const isis::util::ivector4 &coord, const api::object &value );
+bool _setVoxelAs( isis::data::Image &base, const int &type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const api::object &value );
 
 list _getChunksAsVector ( const isis::data::Image &base );
 

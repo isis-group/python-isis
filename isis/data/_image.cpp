@@ -37,6 +37,26 @@ object _voxel ( const isis::data::Image &base, const util::ivector4 &coord )
 	return _voxel ( base, coord[0], coord[1], coord[2], coord[3] );
 }
 
+object _voxelAs ( const isis::data::Image& base, const image_types& type, const isis::util::ivector4& coord )
+{
+	return isis::python::data::_internal::VoxelOp::getVoxelAsPyObject( base, static_cast<unsigned int>( type ), coord[0], coord[1], coord[2], coord[3] );
+}
+
+object _voxelAs ( const isis::data::Image& base, const image_types& type, const size_t& first, const size_t& second, const size_t& third, const size_t& fourth )
+{
+	return isis::python::data::_internal::VoxelOp::getVoxelAsPyObject( base, static_cast<unsigned int>( type ), first, second, third, fourth );
+}
+
+object _voxelAs ( const isis::data::Image& base, const int& type, const util::ivector4& coord )
+{
+	return _voxelAs( base, static_cast<isis::python::data::image_types>( type ), coord );
+}
+
+object _voxelAs ( const isis::data::Image& base, const int& type, const size_t& first, const size_t& second, const size_t& third, const size_t& fourth )
+{
+	return isis::python::data::_internal::VoxelOp::getVoxelAsPyObject( base, type, first, second, third, fourth );
+}
+
 bool _setVoxel ( isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const api::object &value )
 {
 	const unsigned int typeID = base.getChunk ( first, second, third, fourth, false ).getTypeID();
@@ -47,6 +67,27 @@ bool _setVoxel ( isis::data::Image &base, const util::ivector4 &coord, const obj
 {
 	return _setVoxel ( base, coord[0], coord[1], coord[2], coord[3], value );
 }
+
+bool _setVoxelAs ( isis::data::Image& base, const isis::python::data::image_types& type, const size_t& first, const size_t& second, const size_t& third, const size_t& fourth, const object& value )
+{
+	return isis::python::data::_internal::VoxelOp::setVoxelAsPyObject( base, static_cast<unsigned int>( type ), first, second, third, fourth, value );
+}
+
+bool _setVoxelAs ( isis::data::Image& base, const isis::python::data::image_types& type, const util::ivector4& coord, const object& value )
+{
+	return isis::python::data::_internal::VoxelOp::setVoxelAsPyObject( base, static_cast<unsigned int>( type ), coord[0], coord[1], coord[2], coord[3], value );
+}
+
+bool _setVoxelAs ( isis::data::Image& base, const int& type, const util::ivector4& coord, const object& value )
+{
+	return _setVoxelAs( base, static_cast<isis::python::data::image_types>( type ), coord, value );
+}
+
+bool _setVoxelAs ( isis::data::Image& base, const int& type, const size_t& first, const size_t& second, const size_t& third, const size_t& fourth, const object& value )
+{
+	return _setVoxelAs( base, static_cast<isis::python::data::image_types>( type ), first, second, third, fourth, value );
+}
+
 
 list _getChunksAsVector ( const isis::data::Image &base )
 {

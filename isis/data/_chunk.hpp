@@ -11,6 +11,7 @@
 #include "DataStorage/chunk.hpp"
 #include <boost/python.hpp>
 #include "util/_convertToPython.hpp"
+#include "_types.hpp"
 
 using namespace isis::data;
 
@@ -36,8 +37,19 @@ namespace Chunk {
 boost::python::api::object _voxel( const isis::python::data::_Chunk& base, const isis::util::ivector4 &coord );
 boost::python::api::object _voxel( const isis::python::data::_Chunk& base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
 
-bool _setVoxel( isis::python::data::_Chunk& base, const isis::util::ivector4 &coord, const api::object &value );
-bool _setVoxel( isis::python::data::_Chunk& base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const api::object &value );
+api::object _voxelAs ( const isis::data::Chunk &base, const isis::python::data::image_types &type, const isis::util::ivector4 &coord );
+api::object _voxelAs ( const isis::data::Chunk &base, const isis::python::data::image_types &type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
+api::object _voxelAs ( const isis::data::Chunk &base, const int &type, const isis::util::ivector4 &coord );
+api::object _voxelAs ( const isis::data::Chunk &base, const int &type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
+
+bool _setVoxel( isis::data::Chunk& base, const isis::util::ivector4 &coord, const api::object &value );
+bool _setVoxel( isis::data::Chunk& base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const api::object &value );
+
+bool _setVoxelAs( isis::data::Chunk &base, const isis::python::data::image_types &type, const isis::util::ivector4 &coord, const api::object &value );
+bool _setVoxelAs( isis::data::Chunk &base, const isis::python::data::image_types &type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const api::object &value );
+bool _setVoxelAs( isis::data::Chunk &base, const int &type, const isis::util::ivector4 &coord, const api::object &value );
+bool _setVoxelAs( isis::data::Chunk &base, const int &type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth, const api::object &value );
+
 
 bool _convertToType( isis::data::Chunk &base, const unsigned short ID );
 bool _convertToType( isis::data::Chunk &base, const unsigned short ID, float scaling, size_t offset );
