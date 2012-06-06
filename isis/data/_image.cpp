@@ -342,8 +342,9 @@ numeric::array _getArray( isis::python::data::_Image &base, isis::python::data::
 	const size_t relDims = base.getRelevantDims();
 	npy_intp dims[relDims];
 
+	int count = relDims;
 	for( size_t i = 0; i < relDims; i++ ) {
-		dims[i] = size[i];
+		dims[i] = size[--count];
 	}
 
 	switch( image_type ) {
@@ -435,9 +436,10 @@ isis::data::Image _createFromArray( const boost::python::numeric::array &arr )
 	const boost::python::object shape = arr.attr( "shape" );
 	const boost::python::ssize_t len = boost::python::len( shape );
 	util::ivector4 size( 1, 1, 1, 1 );
-
+	
+	int count = len;
 	for ( boost::python::ssize_t i = 0; i < len; i++ ) {
-		size[i] = boost::python::extract<int32_t>( shape[i] );
+		size[i] = boost::python::extract<int32_t>( shape[--count] );
 	}
 
 	switch( PyArray_TYPE( arr.ptr() ) ) {
@@ -448,7 +450,7 @@ isis::data::Image _createFromArray( const boost::python::numeric::array &arr )
 		break;
 	}
 	case NPY_DOUBLE: {
-		isis::data::MemChunk<double>ch( ( double * )PyArray_DATA( arr.ptr() ), size[1], size[0], size[2], size[3] );
+		isis::data::MemChunk<double>ch( ( double * )PyArray_DATA( arr.ptr() ), size[0], size[1], size[2], size[3] );
 		_internal::setInitialProperties( ch );
 		return isis::data::Image( ch );
 		break;

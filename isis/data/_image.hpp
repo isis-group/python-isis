@@ -119,6 +119,7 @@ numeric::array _getArray( isis::python::data::_Image &base, isis::python::data::
 isis::data::Image _createImage ( isis::python::data::image_types type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
 isis::data::Image _createImageFromChunks( const list &chunks );
 
+
 isis::data::Image _createFromArray( const boost::python::numeric::array &arr );
 isis::data::Image _createFromArray(  const boost::python::numeric::array &arr, const isis::data::Image &image );
 
