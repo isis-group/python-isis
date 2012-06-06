@@ -52,6 +52,7 @@ BOOST_PYTHON_MODULE( _util )
 	.def( "setPropertyAs", &_setPropertyAs )
 	.def( "join", _join1, ( arg ( "PropertyMap" ), arg( "overwrite" ) ) )
 	.def( "join", _join2, ( arg ( "Image" ), arg( "overwrite" ) ) )
+	.def( "getDifference", &isis::util::PropertyMap::getDifference )
 	;
 	//#######################################################################################
 	//  Selection
