@@ -26,7 +26,6 @@ class _Chunk : public Chunk, boost::python::wrapper<Chunk>
 {
 public:
 	_Chunk ( PyObject *p, const Chunk &base );
-	unsigned int typeID_;
 private:
 	PyObject *self;
 
@@ -34,8 +33,8 @@ private:
 
 namespace Chunk {
 
-boost::python::api::object _voxel( const isis::python::data::_Chunk& base, const isis::util::ivector4 &coord );
-boost::python::api::object _voxel( const isis::python::data::_Chunk& base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
+boost::python::api::object _voxel( const isis::data::Chunk& base, const isis::util::ivector4 &coord );
+boost::python::api::object _voxel( const isis::data::Chunk& base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
 
 api::object _voxelAs ( const isis::data::Chunk &base, const isis::python::data::image_types &type, const isis::util::ivector4 &coord );
 api::object _voxelAs ( const isis::data::Chunk &base, const isis::python::data::image_types &type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );

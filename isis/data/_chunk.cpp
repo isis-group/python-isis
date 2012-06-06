@@ -7,9 +7,7 @@ namespace data {
 
 _Chunk::_Chunk ( PyObject* p, const Chunk& base )
 	: Chunk( base ), self( p )
-{
-	typeID_ = getTypeID();
-}
+{}
 
 namespace Chunk {
 
@@ -19,7 +17,7 @@ object _voxel ( const isis::data::Chunk& base, const size_t& first, const size_t
 	return isis::python::data::_internal::VoxelOp::getVoxelAsPyObject( base, typeID, first, second, third, fourth );
 }
 
-object _voxel ( const isis::python::data::_Chunk& base, const isis::util::ivector4& coord )
+object _voxel ( const isis::data::Chunk& base, const isis::util::ivector4& coord )
 {
 	return _voxel( base, coord[0], coord[1], coord[2], coord[3] );
 }
@@ -50,7 +48,7 @@ bool _setVoxel( isis::data::Chunk& base, const size_t &first, const size_t &seco
 	return isis::python::data::_internal::VoxelOp::setVoxelAsPyObject( base, typeID, first, second, third, fourth, value );
 }
 
-bool _setVoxel ( isis::python::data::_Chunk& base, const isis::util::ivector4& coord, const object& value )
+bool _setVoxel ( isis::data::Chunk& base, const isis::util::ivector4& coord, const object& value )
 {
 	return _setVoxel( base, coord[0], coord[1], coord[2], coord[3], value );
 }

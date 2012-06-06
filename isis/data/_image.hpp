@@ -44,8 +44,6 @@ public:
 	void makeContiguousChunk() {
 		contiguousChunk_ = boost::shared_ptr<isis::data::Chunk>( new isis::data::Chunk( copyAsMemChunk<TYPE>() ) );
 	}
-
-	unsigned int majorTypeID_;
 	
 private:
 	PyObject *self;

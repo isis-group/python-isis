@@ -13,14 +13,12 @@ _Image::_Image ( PyObject *p )
 	: boost::python::wrapper< Image >(), self ( p )
 {
 	updateOrientationMatrices();
-	majorTypeID_ = getMajorTypeID();
 }
 
 _Image::_Image ( PyObject *p, const isis::data::Image &base )
 	: Image ( base ), boost::python::wrapper< Image >(), self ( p )
 {
 	updateOrientationMatrices();
-	majorTypeID_ = getMajorTypeID();
 }
 
 namespace Image

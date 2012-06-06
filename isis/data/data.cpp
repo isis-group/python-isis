@@ -90,7 +90,6 @@ BOOST_PYTHON_MODULE ( _data )
 	api::object ( *_getVoxelAs3 ) ( const isis::data::Image &, const int &, const isis::util::ivector4 & ) = isis::python::data::Image::_voxelAs;
 	api::object ( *_getVoxelAs4 ) ( const isis::data::Image &, const int &, const size_t &, const size_t &, const size_t &, const size_t & ) = isis::python::data::Image::_voxelAs;
 
-
 	bool ( *_setVoxel1 ) ( isis::data::Image &, const isis::util::ivector4 &, const api::object & ) = isis::python::data::Image::_setVoxel;
 	bool ( *_setVoxel2 ) ( isis::data::Image &, const size_t &, const size_t &, const size_t &, const size_t &, const api::object & ) = isis::python::data::Image::_setVoxel;
 
@@ -168,8 +167,8 @@ BOOST_PYTHON_MODULE ( _data )
 	//  Chunk
 	//#######################################################################################
 
-	boost::python::api::object ( *_getVoxel1C ) ( const isis::python::data::_Chunk &, const isis::util::ivector4 & ) = isis::python::data::Chunk::_voxel;
-	boost::python::api::object ( *_getVoxel2C ) ( const isis::python::data::_Chunk &, const size_t &, const size_t &, const size_t &, const size_t & ) = isis::python::data::Chunk::_voxel;
+	boost::python::api::object ( *_getVoxel1C ) ( const isis::data::Chunk &, const isis::util::ivector4 & ) = isis::python::data::Chunk::_voxel;
+	boost::python::api::object ( *_getVoxel2C ) ( const isis::data::Chunk &, const size_t &, const size_t &, const size_t &, const size_t & ) = isis::python::data::Chunk::_voxel;
 
 	api::object ( *_getVoxelAs1C ) ( const isis::data::Chunk &, const isis::python::data::image_types &, const isis::util::ivector4 & ) = isis::python::data::Chunk::_voxelAs;
 	api::object ( *_getVoxelAs2C ) ( const isis::data::Chunk &, const isis::python::data::image_types &, const size_t &, const size_t &, const size_t &, const size_t & ) = isis::python::data::Chunk::_voxelAs;
