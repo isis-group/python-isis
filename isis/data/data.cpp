@@ -91,17 +91,13 @@ BOOST_PYTHON_MODULE ( _data )
 
 	api::object ( *_getVoxelAs1 ) ( const isis::data::Image &, const isis::python::data::image_types &, const isis::util::ivector4 & ) = isis::python::data::Image::_voxelAs;
 	api::object ( *_getVoxelAs2 ) ( const isis::data::Image &, const isis::python::data::image_types &, const size_t &, const size_t &, const size_t &, const size_t & ) = isis::python::data::Image::_voxelAs;
-	api::object ( *_getVoxelAs3 ) ( const isis::data::Image &, const int &, const isis::util::ivector4 & ) = isis::python::data::Image::_voxelAs;
-	api::object ( *_getVoxelAs4 ) ( const isis::data::Image &, const int &, const size_t &, const size_t &, const size_t &, const size_t & ) = isis::python::data::Image::_voxelAs;
 
 	bool ( *_setVoxel1 ) ( isis::data::Image &, const isis::util::ivector4 &, const api::object & ) = isis::python::data::Image::_setVoxel;
 	bool ( *_setVoxel2 ) ( isis::data::Image &, const size_t &, const size_t &, const size_t &, const size_t &, const api::object & ) = isis::python::data::Image::_setVoxel;
 
 	bool ( *_setVoxelAs1 ) ( isis::data::Image &, const isis::python::data::image_types &, const isis::util::ivector4 &, const api::object & ) = isis::python::data::Image::_setVoxelAs;
 	bool ( *_setVoxelAs2 ) ( isis::data::Image &, const isis::python::data::image_types &, const size_t &, const size_t &, const size_t &, const size_t &, const api::object & ) = isis::python::data::Image::_setVoxelAs;
-	bool ( *_setVoxelAs3 ) ( isis::data::Image &, const int &, const isis::util::ivector4 &, const api::object & ) = isis::python::data::Image::_setVoxelAs;
-	bool ( *_setVoxelAs4 ) ( isis::data::Image &, const int &, const size_t &, const size_t &, const size_t &, const size_t &, const api::object & ) = isis::python::data::Image::_setVoxelAs;
-	
+
 	isis::data::Chunk ( *_getChunk ) ( const isis::data::Image &, const isis::util::ivector4 &, bool ) = isis::python::data::Image::_getChunk;
 	isis::data::Chunk ( *_getChunkAs1 ) ( const isis::data::Image &, const isis::util::ivector4 &, const isis::python::data::image_types & ) = isis::python::data::Image::_getChunkAs;
 	isis::data::Chunk ( *_getChunkAs2 ) ( const isis::data::Image &, const size_t &, const size_t &, const size_t &, const size_t &, const isis::python::data::image_types & ) = isis::python::data::Image::_getChunkAs;
@@ -110,8 +106,7 @@ BOOST_PYTHON_MODULE ( _data )
 	isis::data::Image ( *_createFromArray1 ) ( const boost::python::numeric::array & ) = isis::python::data::Image::_createFromArray;
 	isis::data::Image ( *_createFromArray2 ) ( const boost::python::numeric::array &, const isis::data::Image & ) = isis::python::data::Image::_createFromArray;
 
-	class_<isis::data::Image, _Image, bases< isis::data::_internal::NDimensional<4>, isis::util::PropertyMap > > ( "Image", init<>() )
-	.def ( init<const isis::data::Image&>() )
+	class_<isis::data::Image, _Image, bases< isis::data::_internal::NDimensional<4>, isis::util::PropertyMap > > ( "Image", init<const isis::data::Image&>() )
 	.def ( init<const boost::python::numeric::array&>() )
 	.def ( init<const boost::python::numeric::array&, const isis::data::Image&>() )
 	.def ( "checkMakeClean", &isis::data::Image::checkMakeClean )
@@ -120,16 +115,13 @@ BOOST_PYTHON_MODULE ( _data )
 
 	.def ( "getVoxelAs", _getVoxelAs1, ( arg( "image_type" ), arg ( "coords" ) ) )
 	.def ( "getVoxelAs", _getVoxelAs2, ( arg( "image_type" ), arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ) ) )
-	.def ( "getVoxelAs", _getVoxelAs3, ( arg( "image_type" ), arg ( "coords" ) ) )
-	.def ( "getVoxelAs", _getVoxelAs4, ( arg( "image_type" ), arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ) ) )
 	
 	.def ( "setVoxel", _setVoxel1, ( arg ( "coords" ), arg ( "value" ) ) )
 	.def ( "setVoxel", _setVoxel2, ( arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ), arg ( "value" ) ) )
 
 	.def ( "setVoxelAs", _setVoxelAs1, ( arg( "image_type" ), arg( "coords" ) ) )
 	.def ( "setVoxelAs", _setVoxelAs2, ( arg( "image_type" ),  arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ) ) )
-	.def ( "setVoxelAs", _setVoxelAs3, ( arg( "image_type" ), arg( "coords" ) ) )
-	.def ( "setVoxelAs", _setVoxelAs4, ( arg( "image_type" ),  arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ) ) )
+
 
 	.def ( "getChunkList", &isis::python::data::Image::_getChunksAsVector )
 	.def ( "getChunksAsList", &isis::python::data::Image::_getChunksAsVector )
@@ -183,16 +175,12 @@ BOOST_PYTHON_MODULE ( _data )
 
 	api::object ( *_getVoxelAs1C ) ( const isis::data::Chunk &, const isis::python::data::image_types &, const isis::util::ivector4 & ) = isis::python::data::Chunk::_voxelAs;
 	api::object ( *_getVoxelAs2C ) ( const isis::data::Chunk &, const isis::python::data::image_types &, const size_t &, const size_t &, const size_t &, const size_t & ) = isis::python::data::Chunk::_voxelAs;
-	api::object ( *_getVoxelAs3C ) ( const isis::data::Chunk &, const int &, const isis::util::ivector4 & ) = isis::python::data::Chunk::_voxelAs;
-	api::object ( *_getVoxelAs4C ) ( const isis::data::Chunk &, const int &, const size_t &, const size_t &, const size_t &, const size_t & ) = isis::python::data::Chunk::_voxelAs;
 
 	bool ( *_setVoxel1C ) ( isis::data::Chunk &, const isis::util::ivector4 &, const api::object & ) = isis::python::data::Chunk::_setVoxel;
 	bool ( *_setVoxel2C ) ( isis::data::Chunk &, const size_t &, const size_t &, const size_t &, const size_t &, const api::object & ) = isis::python::data::Chunk::_setVoxel;
 
 	bool ( *_setVoxelAs1C ) ( isis::data::Chunk &, const isis::python::data::image_types &, const isis::util::ivector4 &, const api::object & ) = isis::python::data::Chunk::_setVoxelAs;
 	bool ( *_setVoxelAs2C ) ( isis::data::Chunk &, const isis::python::data::image_types &, const size_t &, const size_t &, const size_t &, const size_t &, const api::object & ) = isis::python::data::Chunk::_setVoxelAs;
-	bool ( *_setVoxelAs3C ) ( isis::data::Chunk &, const int &, const isis::util::ivector4 &, const api::object & ) = isis::python::data::Chunk::_setVoxelAs;
-	bool ( *_setVoxelAs4C ) ( isis::data::Chunk &, const int &, const size_t &, const size_t &, const size_t &, const size_t &, const api::object & ) = isis::python::data::Chunk::_setVoxelAs;
 	
 	bool ( *_convertToType1C ) ( isis::data::Chunk &, const unsigned short ) = isis::python::data::Chunk::_convertToType;
 	bool ( *_convertToType2C ) ( isis::data::Chunk &, const unsigned short, float, size_t ) = isis::python::data::Chunk::_convertToType;
@@ -202,16 +190,12 @@ BOOST_PYTHON_MODULE ( _data )
 
 	.def ( "getVoxelAs", _getVoxelAs1C, ( arg( "image_type" ), arg ( "coords" ) ) )
 	.def ( "getVoxelAs", _getVoxelAs2C, ( arg( "image_type" ), arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ) ) )
-	.def ( "getVoxelAs", _getVoxelAs3C, ( arg( "image_type" ), arg ( "coords" ) ) )
-	.def ( "getVoxelAs", _getVoxelAs4C, ( arg( "image_type" ), arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ) ) )
 
 	.def ( "setVoxel", _setVoxel1C, ( arg ( "coord" ), arg ( "value" ) ) )
 	.def ( "setVoxel", _setVoxel2C, ( arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ), arg ( "value" ) ) )
 
 	.def ( "setVoxelAs", _setVoxelAs1C, ( arg( "image_type" ), arg( "coords" ) ) )
 	.def ( "setVoxelAs", _setVoxelAs2C, ( arg( "image_type" ),  arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ) ) )
-	.def ( "setVoxelAs", _setVoxelAs3C, ( arg( "image_type" ), arg( "coords" ) ) )
-	.def ( "setVoxelAs", _setVoxelAs4C, ( arg( "image_type" ),  arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ) ) )
 	
 	.def ( "useCount", &isis::data::Chunk::useCount )
 	.def ( "cloneToNew", &isis::data::Chunk::cloneToNew )

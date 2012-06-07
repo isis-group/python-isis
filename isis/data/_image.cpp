@@ -11,13 +11,6 @@ namespace python
 namespace data
 {
 
-
-_Image::_Image ( PyObject *p )
-	: boost::python::wrapper< Image >(), self ( p )
-{
-	updateOrientationMatrices();
-}
-
 _Image::_Image ( PyObject *p, const isis::data::Image &base )
 	: Image ( base ), boost::python::wrapper< Image >(), self ( p )
 {
@@ -28,6 +21,7 @@ _Image::_Image ( PyObject* p, const boost::python::numeric::array& array )
 	:boost::python::wrapper< Image >(), self( p )
 {
 	*this = _Image( p, isis::python::data::Image::_createFromArray( array ) );
+	updateOrientationMatrices();
 
 }
 
@@ -35,6 +29,7 @@ _Image::_Image ( PyObject* p, const numeric::array& array, const isis::data::Ima
 	:boost::python::wrapper< Image >(), self( p )
 {
 	*this = _Image( p, isis::python::data::Image::_createFromArray( array, image ) );
+	updateOrientationMatrices();
 }
 
 

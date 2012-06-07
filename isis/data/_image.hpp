@@ -46,7 +46,6 @@ class _Image : public Image, public boost::python::wrapper<Image>
 
 public:
 
-	_Image ( PyObject *p );
 	_Image ( PyObject *p, const Image &base );
     _Image ( PyObject *p, const boost::python::numeric::array &array );
 	_Image ( PyObject *p, const boost::python::numeric::array &array, const isis::data::Image &image );
