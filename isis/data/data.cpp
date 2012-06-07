@@ -109,6 +109,7 @@ BOOST_PYTHON_MODULE ( _data )
 	class_<isis::data::Image, _Image, bases< isis::data::_internal::NDimensional<4>, isis::util::PropertyMap > > ( "Image", init<const isis::data::Image&>() )
 	.def ( init<const boost::python::numeric::array&>() )
 	.def ( init<const boost::python::numeric::array&, const isis::data::Image&>() )
+	.def ( init<const isis::data::Chunk &>() )
 	.def ( "checkMakeClean", &isis::data::Image::checkMakeClean )
 	.def ( "getVoxel", _getVoxel1, ( arg ( "coords" ) ) )
 	.def ( "getVoxel", _getVoxel2, ( arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ) ) )
@@ -184,7 +185,17 @@ BOOST_PYTHON_MODULE ( _data )
 	
 	bool ( *_convertToType1C ) ( isis::data::Chunk &, const unsigned short ) = isis::python::data::Chunk::_convertToType;
 	bool ( *_convertToType2C ) ( isis::data::Chunk &, const unsigned short, float, size_t ) = isis::python::data::Chunk::_convertToType;
-	class_<isis::data::Chunk, _Chunk, bases< isis::data::_internal::NDimensional<4>, isis::util::PropertyMap> > ( "Chunk", init<_Chunk>() )	
+
+	boost::python::numeric::array ( *_getArray1C ) ( isis::python::data::_Chunk & ) = isis::python::data::Chunk::_getArray;
+	boost::python::numeric::array ( *_getArray2C ) ( isis::python::data::_Chunk &, isis::python::data::image_types ) = isis::python::data::Chunk::_getArray;
+
+	isis::data::Chunk ( *_createFromArray1C ) ( const boost::python::numeric::array & ) = isis::python::data::Chunk::_createFromArray;
+	isis::data::Chunk ( *_createFromArray2C ) ( const boost::python::numeric::array &, const isis::data::Chunk & ) = isis::python::data::Chunk::_createFromArray;
+	
+	class_<isis::data::Chunk, _Chunk, bases< isis::data::_internal::NDimensional<4>, isis::util::PropertyMap> > ( "Chunk", init<const isis::data::Chunk&>() )
+	.def ( init< const boost::python::numeric::array &>() )
+	.def ( init< const boost::python::numeric::array &, const isis::data::Chunk&>() )
+	
 	.def ( "getVoxel", _getVoxel1C, ( arg ( "coord" ) ) )
 	.def ( "getVoxel", _getVoxel2C, ( arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ) ) )
 
@@ -208,6 +219,13 @@ BOOST_PYTHON_MODULE ( _data )
 	.def ( "getMin", &isis::python::data::Chunk::_getMin )
 	.def ( "getMax", &isis::python::data::Chunk::_getMax )
 	.def ( "getMinMax", &isis::python::data::Chunk::_getMinMax )
+	
+	.def ( "getArray",  _getArray1C )
+	.def ( "getArray",  _getArray2C, arg( "type" ) )
+	
+	.def ( "createFromArray", _createFromArray1C, arg ( "array" ) )
+	.def ( "createFromArray", _createFromArray2C, arg( "array" ), arg( "template_chunk" ) )
+	.staticmethod( "createFromArray" )
 	;
 	//#######################################################################################
 	//  IOFactory

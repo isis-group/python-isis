@@ -19,12 +19,12 @@ endif( ISIS_PYTHON_MUPARSER_SUPPORT)
 
 set(DATA_FILES	 data.cpp
 				_image.cpp
-				_chunk.hpp
 				_chunk.cpp
 				_ioapplication.cpp
 				_ndimensional.cpp
 				_iofactory.hpp
-				_writingvalueadapter.cpp )
+				_writingvalueadapter.cpp
+				common.cpp )
 
 add_library(_data SHARED ${DATA_FILES})
 set_target_properties(_data PROPERTIES PREFIX "")

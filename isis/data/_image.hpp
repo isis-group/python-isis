@@ -5,8 +5,8 @@
  *      Author: tuerke
  */
 
-#ifndef _IMAGE_HPP_
-#define _IMAGE_HPP_
+#ifndef ISIS_PYTHON_IMAGE_HPP_
+#define ISIS_PYTHON_IMAGE_HPP_
 
 #include "_types.hpp"
 #include "DataStorage/image.hpp"
@@ -31,7 +31,6 @@ namespace data
 {
 namespace _internal
 {
-void setInitialProperties( isis::data::Chunk &chunk );
 
 template<typename TYPE>
 static isis::data::Image _internCreateImage ( const size_t &first, const size_t &second, const size_t &third, const size_t &fourth )
@@ -49,6 +48,7 @@ public:
 	_Image ( PyObject *p, const Image &base );
     _Image ( PyObject *p, const boost::python::numeric::array &array );
 	_Image ( PyObject *p, const boost::python::numeric::array &array, const isis::data::Image &image );
+    _Image ( PyObject *p, const isis::data::Chunk &chunk );
 
 	std::list<boost::shared_ptr<isis::data::Chunk> > contiguousChunkList_;
 
@@ -64,7 +64,6 @@ public:
 					for ( value_type x = 0; x < size[0]; x++ ) {
 						static_cast<isis::data::Chunk&>( mChunk ).voxel<TYPE>(t,z,y,x) =
 							static_cast<const isis::data::Image&>( tImage ).voxel<TYPE>(x,y,z,t);
-						
 					}
 				}
 			}
@@ -72,24 +71,7 @@ public:
 		contiguousChunkList_.push_back( boost::shared_ptr<isis::data::Chunk>( new isis::data::Chunk( mChunk ) ) );
 	}
 
-	template<typename TYPE>
-	static isis::data::Image swappedChunk2Image( const isis::data::Chunk &ch ) {
-		const isis::util::ivector4 size = ch.getSizeAsVector();
-		isis::data::MemChunk<TYPE> mChunk ( size[3], size[2], size[1], size[0] );
-		typedef isis::util::ivector4::value_type value_type;
-		for ( value_type t = 0; t < size[3]; t++ ) {
-			for ( value_type z = 0; z < size[2]; z++ ) {
-				for ( value_type y = 0; y < size[1]; y++ ) {
-					for ( value_type x = 0; x < size[0]; x++ ) {
-						static_cast<isis::data::Chunk&>( mChunk ).voxel<TYPE>(t,z,y,x) =
-							ch.voxel<TYPE>(x,y,z,t);
-					}
-				}
-			}
-		}
-		isis::python::data::_internal::setInitialProperties( mChunk );
-		return isis::data::Image( mChunk );
-	}
+
 	
 private:
 	PyObject *self;
@@ -149,7 +131,7 @@ isis::data::Image _deepCopyAs ( const isis::data::Image &base, isis::python::dat
 isis::data::Image _cheapCopy ( const isis::data::Image &base );
 
 numeric::array _getArray ( isis::python::data::_Image &base );
-numeric::array _getArray( isis::python::data::_Image &base, isis::python::data::image_types image_type = isis::python::data::DOUBLE );
+numeric::array _getArray( isis::python::data::_Image &base, isis::python::data::image_types image_type );
 
 isis::data::Image _createImage ( isis::python::data::image_types type, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
 isis::data::Image _createImageFromChunks( const list &chunks );
