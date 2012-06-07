@@ -2,7 +2,7 @@ __author__ = 'tuerke'
 
 from .. import data
 
-def _concatenateTimeDim( imageList ):
+def _concatenate_time_dim( imageList ):
     allChunks = []
     acquisitionNumber = 0
     for i in imageList:

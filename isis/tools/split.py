@@ -2,7 +2,7 @@ __author__ = 'tuerke'
 
 from .. import data
 
-def splitTimeDim( image, size ):
+def split_time_dim( image, size ):
     timeSize = image.getSizeAsVector()[3]
 
     if( timeSize < size):
