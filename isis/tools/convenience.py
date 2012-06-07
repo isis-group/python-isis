@@ -3,7 +3,7 @@ __author__ = 'tuerke'
 from .. import data
 import os
 
-def loadFromPathList( pathList ):
+def load_from_path_list( pathList ):
 	images = []
 	for path in pathList:
 		if( os.path.exists( path ) ):

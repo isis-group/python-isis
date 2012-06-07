@@ -48,3 +48,4 @@ install(TARGETS _data
   LIBRARY DESTINATION  ${PYTHON_INSTALL_PATH}/isis/data 
   COMPONENT RuntimeLibraries)
 endforeach(pv)
+
