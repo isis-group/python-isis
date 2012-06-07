@@ -26,6 +26,7 @@ CMAKE_FLAGS=-DCMAKE_INSTALL_PREFIX:PATH=/usr \
             -DCMAKE_SHARED_LINKER_FLAGS="-Wl,--no-undefined" \
             -DCMAKE_EXE_LINKER_FLAGS="-Wl,--no-undefined" \
             -DISIS_RUNTIME_LOG:BOOL=ON \
+            -DISIS_PYTHON_MUPARSER_SUPPORT:BOOL=ON \
             -DGIT_REVISION="Debian-$(debver)"
 
 override_dh_auto_test:
