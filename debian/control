@@ -3,7 +3,7 @@ Section: science
 Priority: extra
 Maintainer: ISIS Group <gr_isis@cbs.mpg.de>
 Uploaders: Erik Tuerke <tuerke@cbs.mpg.de>, Enrico Reimer <reimer@cbs.mpg.de>, Michael Hanke <mih@debian.org>
-Build-Depends: debhelper (>= 7.0.50~), doxygen, cmake, libboost-python-dev, python-all-dev, libmuparser-dev
+Build-Depends: debhelper (>= 7.0.50~), doxygen, cmake, libboost-python-dev, python-all-dev, libmuparser-dev, python-numpy
 Standards-Version: 3.9.2
 Homepage: https://github.com/isis-group
 Vcs-Browser: http://git.debian.org/?p=pkg-exppsy/isis.git
