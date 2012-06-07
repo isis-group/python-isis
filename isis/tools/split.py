@@ -1,5 +1,6 @@
 __author__ = 'tuerke'
-from isis import data
+
+from .. import data
 
 def splitTimeDim( image, size ):
     timeSize = image.getSizeAsVector()[3]
@@ -27,3 +28,9 @@ def splitTimeDim( image, size ):
 
     return retList
 
+def split( image, size, dimension ):
+	if( dimension == data.dimensions.TIME_DIM ):
+		return splitTimeDim( image, size )
+	else:
+		print 'Sorry, there are no implementations for that dimension yet!'
+	return []

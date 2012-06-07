@@ -9,7 +9,6 @@
 #define _WRITINGVALUEADAPTER_HPP
 
 #include "DataStorage/valuearray_base.hpp"
-#include "common.hpp"
 #include "util/_convertToPython.hpp"
 #include "util/_convertFromPython.hpp"
 #include "_types.hpp"

@@ -38,8 +38,8 @@ BOOST_PYTHON_MODULE( _util )
 	//  PropertyMap
 	//#######################################################################################
 	using namespace isis::python::util::PropertyMap;
-	void ( *_join1 ) ( isis::util::PropertyMap &, const isis::util::PropertyMap&, bool ) = isis::python::util::PropertyMap::_join;
-	void ( *_join2 ) ( isis::util::PropertyMap &, const isis::data::Image&, bool ) = isis::python::util::PropertyMap::_join;
+	void ( *_join1 ) ( isis::util::PropertyMap &, const isis::util::PropertyMap &, bool ) = isis::python::util::PropertyMap::_join;
+	void ( *_join2 ) ( isis::util::PropertyMap &, const isis::data::Image &, bool ) = isis::python::util::PropertyMap::_join;
 	class_<isis::util::PropertyMap>( "PropertyMap", init<>() )
 	.def( "hasProperty", &_hasProperty )
 	.def( "hasBranch", &_hasBranch )
@@ -50,14 +50,17 @@ BOOST_PYTHON_MODULE( _util )
 	.def( "setProperty", &_setProperty )
 	.def( "getProperty", &_getProperty )
 	.def( "setPropertyAs", &_setPropertyAs )
-	.def( "join", _join1, ( arg ( "PropertyMap" ), arg( "overwrite") ) )
+	.def( "join", _join1, ( arg ( "PropertyMap" ), arg( "overwrite" ) ) )
 	.def( "join", _join2, ( arg ( "Image" ), arg( "overwrite" ) ) )
+	.def( "getDifference", &isis::util::PropertyMap::getDifference )
 	;
 	//#######################################################################################
 	//  Selection
 	//#######################################################################################
 	class_<isis::util::Selection>( "Selection", init<const char *>() )
 	.def( init<>() )
+	.def( "set", ( bool ( ::isis::util::Selection:: * ) ( const char *) ) ( &isis::util::Selection::set ), ( arg( "entry" ) ) )
+	.def( "set", ( bool ( ::isis::util::Selection:: * ) ( unsigned short ) ) ( &isis::util::Selection::set ) , ( arg( "entry" ) ) )
 	;
 	//#######################################################################################
 	//  Vector4
@@ -107,10 +110,12 @@ BOOST_PYTHON_MODULE( _util )
 	.value( "STD_STRING", STDSTRING )
 	.value( "STRING", STDSTRING )
 	.value( "SELECTION", SELECTION )
-	.value( "COMPLEX_FLOAT", COMPLEX_FLOAT )
-	.value( "COMPLEX_DOUBLE", COMPLEX_DOUBLE )
+	.value( "CFLOAT", CFLOAT )
+	.value( "CDOUBLE", CDOUBLE )
 	.value( "BOOST_PTIME", BOOST_PTIME )
 	.value( "BOOST_DATE", BOOST_DATE )
+	.value( "COLOR_24", COLOR_24 )
+	.value( "COLOR_48", COLOR_48 )
 	;
 
 }

@@ -21,7 +21,11 @@ enum image_types { BOOL = ValueArray<bool>::staticID,
 				   INT64_T = ValueArray<int64_t>::staticID,
 				   UINT64_T = ValueArray<uint64_t>::staticID,
 				   FLOAT = ValueArray<float>::staticID,
-				   DOUBLE = ValueArray<double>::staticID
+				   DOUBLE = ValueArray<double>::staticID,
+				   CFLOAT = ValueArray<std::complex< float > >::staticID,
+				   CDOUBLE = ValueArray<std::complex< double > >::staticID,
+				   COLOR_24 = ValueArray<isis::util::color24>::staticID,
+				   COLOR_48 = ValueArray<isis::util::color48>::staticID
 				 };
 
 

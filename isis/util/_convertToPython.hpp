@@ -98,6 +98,22 @@ struct  PyObjectGenerator<false, boost::posix_time::ptime> : PyObjectGeneratorBa
 	}
 };
 
+template<>
+struct PyObjectGenerator<false, isis::util::color24> : PyObjectGeneratorBase {
+	virtual api::object convert ( isis::util::ValueBase &value ) {
+		const isis::util::color24 cV = value.as<isis::util::color24>();
+		return boost::python::make_tuple( cV.r, cV.g, cV.b );
+	}
+};
+
+template<>
+struct PyObjectGenerator<false, isis::util::color48> : PyObjectGeneratorBase {
+	virtual api::object convert ( isis::util::ValueBase &value ) {
+		const isis::util::color48 cV = value.as<isis::util::color48>();
+		return boost::python::make_tuple( cV.r, cV.g, cV.b );
+	}
+};
+
 //vectors
 template<>
 struct PyObjectGenerator<false, isis::util::ivector4> : PyObjectGeneratorBase {
