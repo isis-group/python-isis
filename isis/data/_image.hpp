@@ -48,6 +48,8 @@ public:
 
 	_Image ( PyObject *p );
 	_Image ( PyObject *p, const Image &base );
+    _Image ( PyObject *p, const boost::python::numeric::array &array );
+	_Image ( PyObject *p, const boost::python::numeric::array &array, const isis::data::Image &image );
 
 	std::list<boost::shared_ptr<isis::data::Chunk> > contiguousChunkList_;
 

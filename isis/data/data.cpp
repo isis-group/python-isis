@@ -29,7 +29,6 @@ using namespace isis::python::data;
 
 BOOST_PYTHON_MODULE ( _data )
 {
-	import_array();
 	boost::python::numeric::array::set_module_and_type( "numpy", "ndarray" );
 
 	def( "set_array_module_and_type", &global::_set_array_module_and_type );
@@ -112,7 +111,9 @@ BOOST_PYTHON_MODULE ( _data )
 	isis::data::Image ( *_createFromArray2 ) ( const boost::python::numeric::array &, const isis::data::Image & ) = isis::python::data::Image::_createFromArray;
 
 	class_<isis::data::Image, _Image, bases< isis::data::_internal::NDimensional<4>, isis::util::PropertyMap > > ( "Image", init<>() )
-	.def ( init<isis::data::Image>() )
+	.def ( init<const isis::data::Image&>() )
+	.def ( init<const boost::python::numeric::array&>() )
+	.def ( init<const boost::python::numeric::array&, const isis::data::Image&>() )
 	.def ( "checkMakeClean", &isis::data::Image::checkMakeClean )
 	.def ( "getVoxel", _getVoxel1, ( arg ( "coords" ) ) )
 	.def ( "getVoxel", _getVoxel2, ( arg ( "first" ), arg ( "second" ), arg ( "third" ), arg ( "fourth" ) ) )
