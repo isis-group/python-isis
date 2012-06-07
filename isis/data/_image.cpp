@@ -371,7 +371,6 @@ numeric::array _getArray ( _Image &base )
 
 numeric::array _getArray( isis::python::data::_Image &base, isis::python::data::image_types image_type )
 {
-	import_array();
 	const isis::util::ivector4 size = base.getSizeAsVector();
 	const size_t relDims = base.getRelevantDims();
 	npy_intp dims[relDims];
@@ -465,7 +464,6 @@ numeric::array _getArray( isis::python::data::_Image &base, isis::python::data::
 
 isis::data::Image _createFromArray( const boost::python::numeric::array &arr )
 {
-	import_array();
 	const boost::python::object shape = arr.attr( "shape" );
 	const boost::python::ssize_t len = boost::python::len( shape );
 	util::ivector4 size( 1, 1, 1, 1 );
