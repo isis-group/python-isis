@@ -30,7 +30,7 @@ namespace util
 namespace PropertyMap
 {
 
-void _setPropertyAs( isis::util::PropertyMap &base, const std::string &key, api::object value, isis::python::util::types type );
+void _setPropertyAs( isis::util::PropertyMap &base, isis::python::util::types type, const std::string &key, api::object value );
 
 void _setProperty( isis::util::PropertyMap &base, const std::string &key, api::object value );
 
