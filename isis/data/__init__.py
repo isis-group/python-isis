@@ -1,2 +1,2 @@
-import isis.util
+from .. import util
 from _data import *
