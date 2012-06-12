@@ -1,4 +1,4 @@
-VERSION = '0.9.0'
+VERSION = '0.9.1'
 VERSION_AS_LIST = tuple(map(int, VERSION.split('.')))
 
 __all__=['util','data','tools']
