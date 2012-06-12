@@ -1,5 +1,7 @@
 *~
 *.kdev4
+*.idea
+*.pyc
 *.xcode
 files
 .kdev_include_paths
