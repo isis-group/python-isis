@@ -146,7 +146,7 @@ bool _setVoxelAs ( isis::data::Image& base, const int& type, const size_t& first
 
 list _getChunksAsVector ( const isis::data::Image &base )
 {
-	return isis::python::data::_internal::stdIter2PyList<std::vector<isis::data::Chunk> >( base.copyChunksToVector() );
+	return isis::python::stdIter2PyList<std::vector<isis::data::Chunk> >( base.copyChunksToVector() );
 }
 
 isis::data::Chunk _getChunk ( const isis::data::Image &base, const util::ivector4 &coord, bool copy_metadata )
@@ -376,7 +376,7 @@ isis::data::Image _cheapCopy ( const isis::data::Image &base )
 
 isis::data::Image _createImageFromChunks ( const list &chunks )
 {
-	std::list<isis::data::Chunk> chunkList = isis::python::data::_internal::pyList2StdList<isis::data::Chunk>( chunks );
+	std::list<isis::data::Chunk> chunkList = isis::python::pyList2StdList<isis::data::Chunk>( chunks );
 	return isis::data::Image( chunkList );
 }
 

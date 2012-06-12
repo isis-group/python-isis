@@ -5,8 +5,8 @@
  *      Author: tuerke
  */
 
-#ifndef PYTHON_COMMON_DATA_HPP
-#define PYTHON_COMMON_DATA_HPP
+#ifndef PYTHON_COMMON_ROOT_HPP
+#define PYTHON_COMMON_ROOT_HPP
 
 #include "CoreUtils/log.hpp"
 #include "DataStorage/chunk.hpp"
@@ -19,13 +19,8 @@ namespace isis
 {
 namespace python
 {
-namespace data
-{
 namespace _internal
 {
-	
-void setInitialProperties ( isis::data::Chunk &ch );
-	
 
 template <typename TYPE>
 boost::python::list stdIter2PyList( const TYPE &stdList )

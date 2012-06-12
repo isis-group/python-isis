@@ -47,6 +47,12 @@ void _join( isis::util::PropertyMap &base, const isis::util::PropertyMap &, bool
 
 bool _removeProperty( isis::util::PropertyMap &base, const std::string & );
 
+list _getKeys( const isis::util::PropertyMap &base );
+
+list _getMissing( const isis::util::PropertyMap &base );
+
+dict _convertToDict( const isis::util::PropertyMap &base );
+
 } // end namespace PropertyMap
 }
 }
