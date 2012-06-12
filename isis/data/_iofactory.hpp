@@ -11,7 +11,7 @@
 #include <DataStorage/io_factory.hpp>
 #include <DataStorage/io_interface.h>
 #include <boost/python.hpp>
-#include "common.hpp"
+#include "util/common.hpp"
 
 struct stat;
 using namespace isis::data;
@@ -30,14 +30,14 @@ public:
 	_IOFactory() {}
 
 	static boost::python::list _load ( const std::string &path, const std::string &suffix_override, const std::string &dialect ) {
-		return _internal::stdIter2PyList<std::list<isis::data::Image> >( IOFactory::load( path, suffix_override.c_str(), dialect.c_str() ) );
+		return stdIter2PyList<std::list<isis::data::Image> >( IOFactory::load( path, suffix_override.c_str(), dialect.c_str() ) );
 	}
 	static boost::python::list _load ( const std::string &path, const std::string &suffix_override ) {
-		return _internal::stdIter2PyList<std::list<isis::data::Image> >( IOFactory::load( path, suffix_override.c_str() ) );
+		return stdIter2PyList<std::list<isis::data::Image> >( IOFactory::load( path, suffix_override.c_str() ) );
 	}
 
 	static boost::python::list _load ( const std::string &path ) {
-		return _internal::stdIter2PyList<std::list<isis::data::Image> >( IOFactory::load( path ) );
+		return stdIter2PyList<std::list<isis::data::Image> >( IOFactory::load( path ) );
 	}
 
 	static bool _write( const isis::data::Image &image, const std::string &path, const std::string &suffix_override, const std::string &dialect ) {
@@ -51,14 +51,14 @@ public:
 		return IOFactory::write( image, path, "", "" );
 	}
 	static bool _write( const boost::python::list &images, const std::string &path, const std::string &suffix_override, const std::string &dialect ) {
-		return IOFactory::write( _internal::pyList2StdList<isis::data::Image>( images ), path, suffix_override.c_str(), dialect.c_str() );
+		return IOFactory::write( pyList2StdList<isis::data::Image>( images ), path, suffix_override.c_str(), dialect.c_str() );
 	}
 
 	static bool _write( const boost::python::list &images, const std::string &path, const std::string &suffix_override ) {
-		return IOFactory::write( _internal::pyList2StdList<isis::data::Image>( images ), path, suffix_override.c_str(), "" );
+		return IOFactory::write( pyList2StdList<isis::data::Image>( images ), path, suffix_override.c_str(), "" );
 	}
 	static bool _write( const boost::python::list &images, const std::string &path ) {
-		return IOFactory::write( _internal::pyList2StdList<isis::data::Image>( images ), path );
+		return IOFactory::write( pyList2StdList<isis::data::Image>( images ), path );
 	}
 
 	static boost::python::list _getFormats() {

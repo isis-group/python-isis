@@ -248,7 +248,7 @@ struct VoxelOp {
 			}
 		}
 		if ( setInitial ) {
-			isis::python::data::_internal::setInitialProperties(mChunk);
+			isis::python::data::setInitialProperties(mChunk);
 		}
 		return mChunk;
 	}

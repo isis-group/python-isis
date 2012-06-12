@@ -2,7 +2,7 @@ __author__ = 'tuerke'
 
 from .. import data
 
-def split_time_dim( image, size ):
+def _split_time_dim( image, size ):
     timeSize = image.getSizeAsVector()[3]
 
     if( timeSize < size):
@@ -30,7 +30,7 @@ def split_time_dim( image, size ):
 
 def split( image, size, dimension ):
 	if( dimension == data.dimensions.TIME_DIM ):
-		return splitTimeDim( image, size )
+		return _split_time_dim( image, size )
 	else:
 		print 'Sorry, there are no implementations for that dimension yet!'
 	return []

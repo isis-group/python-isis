@@ -5,30 +5,23 @@
  *      Author: tuerke
  */
 
-#ifndef PYTHON_COMMON_HPP
-#define PYTHON_COMMON_HPP
+#ifndef PYTHON_COMMON_ROOT_HPP
+#define PYTHON_COMMON_ROOT_HPP
 
 #include "CoreUtils/log.hpp"
-#include "CoreUtils/common.hpp"
-#include "CoreUtils/value.hpp"
+#include "DataStorage/chunk.hpp"
+#include "DataStorage/image.hpp"
+#include "DataStorage/valuearray.hpp"
 #include <boost/python.hpp>
 
+using namespace isis::data;
 namespace isis
 {
-
-struct PythonLog {static const char *name() {return "Python";}; enum {use = _ENABLE_LOG};};
-struct PythonDebug {static const char *name() {return "PythonDebug";}; enum {use = _ENABLE_DEBUG};};
-
 namespace python
 {
-typedef PythonLog Runtime;
-typedef PythonDebug Debug;
-
-template<typename HANDLE> void enable_log( LogLevel level )
+namespace _internal
 {
-	ENABLE_LOG( Runtime, HANDLE, level );
-	ENABLE_LOG( Debug, HANDLE, level );
-}
+
 template <typename TYPE>
 boost::python::list stdIter2PyList( const TYPE &stdList )
 {
@@ -51,6 +44,9 @@ std::list<TYPE> pyList2StdList( const boost::python::list &pyList )
 	return retList;
 }
 
+
+}
+}
 } //namespace python
 
 } //namespace isis

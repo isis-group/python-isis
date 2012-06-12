@@ -1,4 +1,5 @@
 #include "_propmap.hpp"
+#include "common.hpp"
 
 namespace isis
 {
@@ -61,6 +62,34 @@ bool _removeProperty( isis::util::PropertyMap &base, const std::string &path )
 	return base.remove( path.c_str() );
 }
 
+list _getKeys ( const isis::util::PropertyMap& base )
+{
+	list retList;
+	BOOST_FOREACH( isis::util::PropertyMap::KeyList::const_reference key, base.getKeys() ) {
+		retList.append( key.c_str() );
+	}
+	return retList;
+}
+
+list _getMissing ( const isis::util::PropertyMap& base )
+{
+	list retList;
+		BOOST_FOREACH( isis::util::PropertyMap::KeyList::const_reference key, base.getMissing() ) {
+		retList.append( key.c_str() );
+	}
+	return retList;
+}
+
+
+dict _convertToDict ( const isis::util::PropertyMap& base )
+{
+	dict retDict;
+	BOOST_FOREACH( isis::util::PropertyMap::FlatMap::const_reference flat, base.getFlatMap() ) {
+		
+		retDict[flat.first.c_str()] = isis::util::Singletons::get<_internal::TypesMap, 10>()[flat.second.getTypeID()]->convert( *flat.second );
+	}
+	return retDict;
+}
 
 
 } // end namespace PropertyMap

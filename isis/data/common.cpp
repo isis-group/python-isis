@@ -1,6 +1,6 @@
 #include "common.hpp"
 
-void isis::python::data::_internal::setInitialProperties ( Chunk& ch )
+void isis::python::data::setInitialProperties ( isis::data::Chunk& ch )
 {
 	const isis::util::ivector4 size = ch.getSizeAsVector();
 	ch.setPropertyAs<uint32_t> ( "acquisitionNumber", 0 );
