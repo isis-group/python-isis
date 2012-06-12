@@ -12,7 +12,7 @@ def load_from_path_list( path_list, warning = True ):
 	Returns a list of images
 	'''
 	images = []
-	for path in pathList:
+	for path in path_list:
 		if( os.path.exists( path ) ):
 			images.extend( data.IOFactory.load( path ) )
 		else:
