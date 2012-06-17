@@ -7,6 +7,25 @@ namespace python
 {
 namespace util
 {
+_PropertyMap::_PropertyMap(PyObject* p)
+	: self(p)
+{}	
+
+_PropertyMap::_PropertyMap(PyObject* p, const isis::util::PropertyMap& base)
+	: isis::util::PropertyMap( base ), self(p)
+{}
+
+_PropertyMap::_PropertyMap(PyObject* p, const dict& d)
+	: boost::python::wrapper<PropertyMap>(), self(p)
+{
+	const list keys = d.keys();
+	const size_t length = boost::python::len( keys );
+	for ( size_t i = 0; i < length; i++ ) {
+		propertyValue(  PropPath( extract<char *>(keys[i]) ) ) 
+			= _internal::ConvertFromPython::convert( d[keys[i]] );
+	}
+}
+
 namespace PropertyMap
 {
 
@@ -57,6 +76,12 @@ void _join ( isis::util::PropertyMap &base, const isis::util::PropertyMap &map, 
 	base.join( map, overwrite );
 }
 
+void _join(isis::util::PropertyMap& base, const data::Chunk& chunk, bool overwrite)
+{
+	base.join( chunk, overwrite );
+}
+
+
 bool _removeProperty( isis::util::PropertyMap &base, const std::string &path )
 {
 	return base.remove( path.c_str() );
@@ -81,7 +106,7 @@ list _getMissing ( const isis::util::PropertyMap& base )
 }
 
 
-dict _convertToDict ( const isis::util::PropertyMap& base )
+dict _getDict ( const isis::util::PropertyMap& base )
 {
 	dict retDict;
 	BOOST_FOREACH( isis::util::PropertyMap::FlatMap::const_reference flat, base.getFlatMap() ) {

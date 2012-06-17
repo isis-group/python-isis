@@ -5,13 +5,14 @@
  *      Author: tuerke
  */
 
-#ifndef PYTHON_COMMON_HPP
-#define PYTHON_COMMON_HPP
+#ifndef PYTHON_UTIL_COMMON_HPP
+#define PYTHON_UTIL_COMMON_HPP
 
 #include "CoreUtils/log.hpp"
 #include "CoreUtils/common.hpp"
 #include "CoreUtils/value.hpp"
 #include <boost/python.hpp>
+#include "_messageHandler.hpp"
 
 namespace isis
 {
@@ -51,6 +52,7 @@ std::list<TYPE> pyList2StdList( const boost::python::list &pyList )
 	return retList;
 }
 
+void setPythonLoggingHandler( const boost::python::api::object &mH );
 } //namespace python
 
 } //namespace isis

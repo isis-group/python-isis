@@ -5,19 +5,26 @@
 #include <boost/python.hpp>
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>
-#include "common.hpp"
 #include "_application.hpp"
 #include "_convertToPython.hpp"
 #include "_vector.hpp"
 #include "_propmap.hpp"
+#include "_messageHandler.hpp"
 #include "CoreUtils/selection.hpp"
 #include "CoreUtils/singletons.hpp"
+#include "common.hpp"
 
 using namespace boost::python;
 using namespace isis::python::util;
 
 BOOST_PYTHON_MODULE( _util )
 {
+	isis::util::_internal::Log<isis::util::Runtime>::setHandler( 
+		boost::shared_ptr<isis::python::util::PythonMessageHandler>( new isis::python::util::PythonMessageHandler( isis::verbose_info) ) );
+	isis::util::_internal::Log<isis::util::Debug>::setHandler( 
+		boost::shared_ptr<isis::python::util::PythonMessageHandler>( new isis::python::util::PythonMessageHandler( isis::verbose_info) ) );
+	def( "setLoggingHandler", &isis::python::setPythonLoggingHandler );
+	
 	isis::util::Singletons::get<isis::python::util::_internal::TypesMap, 10>().create();
 	//#######################################################################################
 	//  Application
@@ -40,7 +47,10 @@ BOOST_PYTHON_MODULE( _util )
 	using namespace isis::python::util::PropertyMap;
 	void ( *_join1 ) ( isis::util::PropertyMap &, const isis::util::PropertyMap &, bool ) = isis::python::util::PropertyMap::_join;
 	void ( *_join2 ) ( isis::util::PropertyMap &, const isis::data::Image &, bool ) = isis::python::util::PropertyMap::_join;
-	class_<isis::util::PropertyMap>( "PropertyMap", init<>() )
+	void ( *_join3 ) ( isis::util::PropertyMap &, const isis::data::Chunk &, bool ) = isis::python::util::PropertyMap::_join;;
+	class_<isis::util::PropertyMap, isis::python::util::_PropertyMap>( "PropertyMap", init<>() )
+	.def( init<const dict&>() )
+	.def( init<const isis::util::PropertyMap &>() )
 	.def( "hasProperty", &_hasProperty )
 	.def( "hasBranch", &_hasBranch )
 	.def( "getBranch", &_branch )
@@ -52,10 +62,11 @@ BOOST_PYTHON_MODULE( _util )
 	.def( "setPropertyAs", &_setPropertyAs )
 	.def( "join", _join1, ( arg ( "PropertyMap" ), arg( "overwrite" ) ) )
 	.def( "join", _join2, ( arg ( "Image" ), arg( "overwrite" ) ) )
+	.def( "join", _join3, ( arg ( "Chunk" ), arg( "overwrite" ) ) )
 	.def( "getDifference", &isis::util::PropertyMap::getDifference )
 	.def( "getKeys", &_getKeys )
 	.def( "getMissing", &_getMissing )
-	.def( "getDict", &_convertToDict )
+	.def( "getDict", &_getDict )
 	
 	;
 	//#######################################################################################

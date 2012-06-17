@@ -46,9 +46,9 @@ class _Image : public Image, public boost::python::wrapper<Image>
 public:
 
 	_Image ( PyObject *p, const Image &base );
-    _Image ( PyObject *p, const boost::python::numeric::array &array );
+	_Image ( PyObject *p, const boost::python::numeric::array &array );
 	_Image ( PyObject *p, const boost::python::numeric::array &array, const isis::data::Image &image );
-    _Image ( PyObject *p, const isis::data::Chunk &chunk );
+	_Image ( PyObject *p, const isis::data::Chunk &chunk );
 
 	std::list<boost::shared_ptr<isis::data::Chunk> > contiguousChunkList_;
 

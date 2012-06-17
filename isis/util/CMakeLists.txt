@@ -3,11 +3,11 @@
 ############################################################
 
 set( CORE_FILES util.cpp
-				_vector.hpp
+				common.cpp
 				_application.cpp
 				_propmap.cpp
-				_convertFromPython.cpp
-				_convertToPython.hpp )
+				_convertFromPython.cpp 
+				_messageHandler.cpp )
 
 
 add_library(_util SHARED ${CORE_FILES} )

@@ -26,7 +26,16 @@ namespace python
 {
 namespace util
 {
-
+class _PropertyMap : public isis::util::PropertyMap, public boost::python::wrapper<isis::util::PropertyMap>
+{
+public:
+	_PropertyMap( PyObject *p );
+	_PropertyMap( PyObject *p, const dict &d );
+	_PropertyMap( PyObject *p, const isis::util::PropertyMap &base );
+private:
+	PyObject *self;
+};
+	
 namespace PropertyMap
 {
 
@@ -45,13 +54,15 @@ void _join( isis::util::PropertyMap &base, const isis::data::Image &, bool overw
 
 void _join( isis::util::PropertyMap &base, const isis::util::PropertyMap &, bool overwrite );
 
+void _join( isis::util::PropertyMap &base, const isis::data::Chunk &, bool overwrite );
+
 bool _removeProperty( isis::util::PropertyMap &base, const std::string & );
 
 list _getKeys( const isis::util::PropertyMap &base );
 
 list _getMissing( const isis::util::PropertyMap &base );
 
-dict _convertToDict( const isis::util::PropertyMap &base );
+dict _getDict( const isis::util::PropertyMap &base );
 
 } // end namespace PropertyMap
 }
