@@ -18,11 +18,11 @@ def _concatenate_time_dim( imageList ):
 
 
 def concatenate( imageList, dimension ):
-    if( len( imageList ) <= 1 ):
-        print 'Trying to concatenate a list of 0 or 1 entries ... how should i do this?'
-        return imageList
-    if( dimension == data.dimensions.TIME_DIM ):
-        return _concatenate_time_dim( imageList )
-    else:
-        print 'Sorry, there are no implementations for that dimension yet!'
+	if( len( imageList ) <= 1 ):
+		print 'Trying to concatenate a list of 0 or 1 entries ... how should i do this?'
+		return imageList
+	if( dimension == data.dimensions.TIME_DIM ):
+		return _concatenate_time_dim( imageList )
+	else:
+		print 'Sorry, there are no implementations for that dimension yet!'
 

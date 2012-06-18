@@ -24,6 +24,8 @@ BOOST_PYTHON_MODULE( _util )
 	isis::python::enableLogGlobalDebug<isis::python::util::PythonMessageHandlerDebug>(isis::verbose_info);
 	
 	def( "setLogger", &isis::python::_setPythonLogger );
+	def( "getLogger", &isis::python::_getPythonLogger );
+	def( "hasLogger", &isis::python::_hasLogger );
 	
 	isis::util::Singletons::get<isis::python::util::_internal::TypesMap, 10>().create();
 	//#######################################################################################

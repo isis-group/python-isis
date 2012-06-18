@@ -21,6 +21,8 @@ namespace python
 {
 
 void _setPythonLogger( const boost::python::api::object &mH );
+boost::python::api::object _getPythonLogger();
+bool _hasLogger();
 } //namespace python
 
 } //namespace isis
