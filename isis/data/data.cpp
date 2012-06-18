@@ -31,6 +31,8 @@ BOOST_PYTHON_MODULE ( _data )
 {
 	boost::python::numeric::array::set_module_and_type( "numpy", "ndarray" );
 
+	isis::python::enableLogGlobal<isis::python::util::PythonMessageHandler>(isis::verbose_info);
+
 	def( "set_array_module_and_type", &global::_set_array_module_and_type );
 	//#######################################################################################
 	//  IOApplication

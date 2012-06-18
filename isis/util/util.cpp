@@ -13,16 +13,15 @@
 #include "CoreUtils/selection.hpp"
 #include "CoreUtils/singletons.hpp"
 #include "common.hpp"
+#include "../common.hpp"
 
 using namespace boost::python;
 using namespace isis::python::util;
 
 BOOST_PYTHON_MODULE( _util )
 {
-	isis::util::_internal::Log<isis::util::Runtime>::setHandler( 
-		boost::shared_ptr<isis::python::util::PythonMessageHandler>( new isis::python::util::PythonMessageHandler( isis::verbose_info) ) );
-	isis::util::_internal::Log<isis::util::Debug>::setHandler( 
-		boost::shared_ptr<isis::python::util::PythonMessageHandler>( new isis::python::util::PythonMessageHandler( isis::verbose_info) ) );
+	isis::python::enableLogGlobal<isis::python::util::PythonMessageHandler>(isis::verbose_info);
+	
 	def( "setLoggingHandler", &isis::python::setPythonLoggingHandler );
 	
 	isis::util::Singletons::get<isis::python::util::_internal::TypesMap, 10>().create();

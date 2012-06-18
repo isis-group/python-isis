@@ -2,6 +2,7 @@
 #define _VECTOR_HPP_
 
 #include "CoreUtils/vector.hpp"
+#include <boost/python.hpp>
 
 using namespace isis::util;
 

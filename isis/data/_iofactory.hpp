@@ -11,7 +11,8 @@
 #include <DataStorage/io_factory.hpp>
 #include <DataStorage/io_interface.h>
 #include <boost/python.hpp>
-#include "util/common.hpp"
+#include "../common.hpp"
+
 
 struct stat;
 using namespace isis::data;

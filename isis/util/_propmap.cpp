@@ -1,5 +1,5 @@
 #include "_propmap.hpp"
-#include "common.hpp"
+#include "../common.hpp"
 
 namespace isis
 {
@@ -89,20 +89,12 @@ bool _removeProperty( isis::util::PropertyMap &base, const std::string &path )
 
 list _getKeys ( const isis::util::PropertyMap& base )
 {
-	list retList;
-	BOOST_FOREACH( isis::util::PropertyMap::KeyList::const_reference key, base.getKeys() ) {
-		retList.append( key.c_str() );
-	}
-	return retList;
+	return isis::python::stdIter2PyList<isis::util::PropertyMap::KeyList>( base.getKeys() );
 }
 
 list _getMissing ( const isis::util::PropertyMap& base )
 {
-	list retList;
-		BOOST_FOREACH( isis::util::PropertyMap::KeyList::const_reference key, base.getMissing() ) {
-		retList.append( key.c_str() );
-	}
-	return retList;
+	return isis::python::stdIter2PyList<isis::util::PropertyMap::KeyList>( base.getMissing() );
 }
 
 

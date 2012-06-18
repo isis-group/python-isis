@@ -19,8 +19,20 @@ namespace isis
 {
 namespace python
 {
-namespace _internal
+struct PythonLog {static const char *name() {return "Python";}; enum {use = _ENABLE_LOG};};
+struct PythonDebug {static const char *name() {return "PythonDebug";}; enum {use = _ENABLE_DEBUG};};
+
+template<typename HANDLE> void enableLogGlobal( LogLevel level )
 {
+	ENABLE_LOG( CoreLog, HANDLE, level );
+	ENABLE_LOG( CoreDebug, HANDLE, level );
+	ENABLE_LOG( ImageIoLog, HANDLE, level );
+	ENABLE_LOG( ImageIoDebug, HANDLE, level );
+	ENABLE_LOG( DataLog, HANDLE, level );
+	ENABLE_LOG( DataDebug, HANDLE, level );
+	ENABLE_LOG( PythonLog, HANDLE, level );
+	ENABLE_LOG( PythonDebug, HANDLE, level );
+}
 
 template <typename TYPE>
 boost::python::list stdIter2PyList( const TYPE &stdList )
@@ -44,9 +56,6 @@ std::list<TYPE> pyList2StdList( const boost::python::list &pyList )
 	return retList;
 }
 
-
-}
-}
 } //namespace python
 
 } //namespace isis
