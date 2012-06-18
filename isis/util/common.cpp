@@ -4,11 +4,9 @@
 namespace isis {
 namespace python {
 
-void setPythonLoggingHandler ( const boost::python::api::object& mH )
+void _setPythonLogger ( const boost::python::api::object& mH )
 {
-	isis::python::util::PythonMessageHandler::pythonMessageHandler_ = mH;
-
-
+	isis::python::util::PythonMessageHandler::pythonLogger_ = mH;
 }
 
 	

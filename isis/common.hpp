@@ -25,13 +25,18 @@ struct PythonDebug {static const char *name() {return "PythonDebug";}; enum {use
 template<typename HANDLE> void enableLogGlobal( LogLevel level )
 {
 	ENABLE_LOG( CoreLog, HANDLE, level );
-	ENABLE_LOG( CoreDebug, HANDLE, level );
 	ENABLE_LOG( ImageIoLog, HANDLE, level );
-	ENABLE_LOG( ImageIoDebug, HANDLE, level );
 	ENABLE_LOG( DataLog, HANDLE, level );
-	ENABLE_LOG( DataDebug, HANDLE, level );
 	ENABLE_LOG( PythonLog, HANDLE, level );
-	ENABLE_LOG( PythonDebug, HANDLE, level );
+
+}
+
+template<typename HANDLE> void enableLogGlobalDebug( LogLevel level )
+{
+	ENABLE_LOG( CoreDebug, HANDLE, level );
+	ENABLE_LOG( ImageIoDebug, HANDLE, level );
+	ENABLE_LOG( DataDebug, HANDLE, level );
+	ENABLE_LOG( PythonDebug, HANDLE, level );	
 }
 
 template <typename TYPE>

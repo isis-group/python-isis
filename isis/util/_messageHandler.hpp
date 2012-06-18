@@ -7,6 +7,11 @@
 namespace isis {
 namespace python {
 namespace util {
+namespace _internal {
+
+void commit( const isis::util::Message &mesg, const char* lvl );
+	
+}
 
 class PythonMessageHandler : public isis::util::MessageHandlerBase
 {
@@ -15,7 +20,22 @@ public:
 	virtual ~PythonMessageHandler() {}
 	void commit( const isis::util::Message &mesg );
 	
-	static boost::python::api::object pythonMessageHandler_;
+	static boost::python::api::object pythonLogger_;
+private:
+	std::string last_;
+
+};
+
+class PythonMessageHandlerDebug : public isis::util::MessageHandlerBase
+{
+public:
+	PythonMessageHandlerDebug( LogLevel level ): MessageHandlerBase( level ) {}
+	virtual ~PythonMessageHandlerDebug() {}
+	void commit( const isis::util::Message &mesg );
+
+private:
+	std::string last_;
+
 };
 
 

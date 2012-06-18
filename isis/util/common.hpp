@@ -20,7 +20,7 @@ namespace isis
 namespace python
 {
 
-void setPythonLoggingHandler( const boost::python::api::object &mH );
+void _setPythonLogger( const boost::python::api::object &mH );
 } //namespace python
 
 } //namespace isis

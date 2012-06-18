@@ -21,8 +21,9 @@ using namespace isis::python::util;
 BOOST_PYTHON_MODULE( _util )
 {
 	isis::python::enableLogGlobal<isis::python::util::PythonMessageHandler>(isis::verbose_info);
+	isis::python::enableLogGlobalDebug<isis::python::util::PythonMessageHandlerDebug>(isis::verbose_info);
 	
-	def( "setLoggingHandler", &isis::python::setPythonLoggingHandler );
+	def( "setLogger", &isis::python::_setPythonLogger );
 	
 	isis::util::Singletons::get<isis::python::util::_internal::TypesMap, 10>().create();
 	//#######################################################################################
