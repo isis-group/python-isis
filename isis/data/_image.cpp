@@ -1,4 +1,5 @@
 #include "_image.hpp"
+#include "../common.hpp"
 #include <numpy/oldnumeric.h>
 
 #include "VoxelOp.hpp"
@@ -557,7 +558,7 @@ isis::data::Image _createFromArray( const boost::python::numeric::array &arr )
 		break;
 	}
 	default:
-		LOG( isis::python::Runtime, error ) << "Unregistered datatype: " << PyArray_TYPE( arr.ptr() ) << ". Returning empty image of type double.";
+		LOG( PythonLog, error ) << "Unregistered datatype: " << PyArray_TYPE( arr.ptr() ) << ". Returning empty image of type double.";
 		return _createImage( DOUBLE, size[3], size[2], size[1], size[0] );
 	}
 }

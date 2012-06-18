@@ -14,6 +14,7 @@ foreach(pv ${PYTHON_VERSIONS})
 # installation
 ############################################################
 set( INSTALL_FILES 	__init__.py
+					log.py
 					)
 
 message(STATUS "Installing python modules to ${PYTHON_INSTALL_PATH}")
