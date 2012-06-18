@@ -1,3 +1,10 @@
+isis-python (0.10.0-1) UNRELEASED; urgency=low
+
+  * add logging support
+  * create a propmap from a python dict and vice versa
+
+ -- ISIS Group (The friendly isis team) <gr_isis@cbs.mpg.de>  Thu, 18 Jun 2012 15:16:34 +0100
+
 isis-python (0.9.2-1) UNRELEASED; urgency=low
 
   * fixed wrong name in split and concatenate functions
