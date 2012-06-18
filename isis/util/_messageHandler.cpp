@@ -38,7 +38,6 @@ void isis::python::util::PythonMessageHandler::commit ( const isis::util::Messag
 				_internal::commit( mesg, "error" );
 				break;
 		}
-
 	}
 }
 void isis::python::util::PythonMessageHandlerDebug::commit ( const isis::util::Message& mesg )
