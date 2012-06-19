@@ -1,4 +1,4 @@
-isis-python (0.10.0-1) UNRELEASED; urgency=low
+python-isis (0.10.0-1) UNRELEASED; urgency=low
 
   * add logging support
   * create a propmap from a python dict and vice versa

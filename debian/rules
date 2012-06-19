@@ -5,6 +5,8 @@ srcpkg = $(shell LC_ALL=C dpkg-parsechangelog | grep '^Source:' | cut -d ' ' -f 
 debver = $(shell LC_ALL=C dpkg-parsechangelog | grep '^Version:' | cut -d ' ' -f 2,2 )
 upstreamver = $(shell echo $(debver) | cut -d '-' -f 1,1 )
 
+PYTHONS := $(shell pyversions -vr)
+
 # this figures out the last merge point from 'master' into the Debian branch and
 # then described this commit relative to the last release tag
 # If this should make any sense the local master branch must track upstream's
@@ -33,14 +35,9 @@ CMAKE_FLAGS=-DCMAKE_INSTALL_PREFIX:PATH=/usr \
 override_dh_auto_test:
 	# don't work ATM
 
+
 override_dh_auto_configure:
 	dh_auto_configure -- $(CMAKE_FLAGS)
-# TODO compile for mutliple python versions
-# dh_auto_configure --builddirectory=build-$*-dbg -- \
-#        -DCMAKE_BUILDTYPE:STRING="Debug" \
-#        -DCMAKE_SKIP_RPATH=true \
-#        -DCMAKE_PYTHON_VERSION=$*-dbg \
-#        -DCMAKE_PYTHONLIB_VERSION="$*_d;$*" \
 
 get-orig-source:
 	# orig tarball, turn directory into something nicer
