@@ -20,9 +20,6 @@ using namespace isis::python::util;
 
 BOOST_PYTHON_MODULE( _util )
 {
-	isis::python::enableLogGlobal<isis::python::util::PythonMessageHandler>(isis::verbose_info);
-	isis::python::enableLogGlobalDebug<isis::python::util::PythonMessageHandlerDebug>(isis::verbose_info);
-	
 	def( "setLogger", &isis::python::_setPythonLogger );
 	def( "getLogger", &isis::python::_getPythonLogger );
 	def( "hasLogger", &isis::python::_hasLogger );
