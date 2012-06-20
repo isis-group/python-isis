@@ -1,3 +1,10 @@
+python-isis (0.10.2-1) UNRELEASED; urgency=low
+
+  * fixed some import problems
+  * changed logging behaviour
+
+ -- ISIS Group (The friendly isis team) <gr_isis@cbs.mpg.de>  Thu, 20 Jun 2012 14:23:49 +0100
+
 python-isis (0.10.1-1) UNRELEASED; urgency=low
 
   * fixed bug in isis.tools.normalize_values
