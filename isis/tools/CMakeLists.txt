@@ -4,7 +4,8 @@ set(DATA_FILES	__init__.py
                 convenience.py
                 metadata.py
                 swap_axes.py
-                normalize_values.py)
+                normalize_values.py
+                flip_image.py)
 
 install(FILES ${DATA_FILES}
   DESTINATION  ${PYTHON_INSTALL_PATH}/isis/tools)
