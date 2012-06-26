@@ -2,7 +2,15 @@ __author__ = 'tuerke'
 
 from .. import data
 
-def flip_image( image, dimension ):
+def flip_image( image, dimension, flip_orientation_matrix = True, center_is_image_center = False ):
+	'''Flips the voxels of 'image' at the specified 'dimension'
+
+	If 'flip_orientation_matrix' is 'True' the orientation matrix will be flipped the same way.
+	This means orientation will not change in physical space.
+
+	If 'flip_orientation_matrix' is 'False' the orientation matrix will be prevented and
+	orientation will change in physical space.
+	'''
 	sub_calls = []
 	sub_calls.append( _flip_image_row )
 	sub_calls.append( _flip_image_column )
@@ -15,7 +23,13 @@ def flip_image( image, dimension ):
 
 	sub_calls[dimension]( orig_array, buffer_array, size )
 
-	return data.Image( buffer_array, image )
+	flipped_image = data.Image( buffer_array, image )
+
+	if( flip_orientation_matrix ):
+		transform = [[1,0,0],[0,1,0],[0,0,1]]
+		transform[dimension][dimension] *= -1
+		flipped_image.transformCoords( transform, center_is_image_center )
+	return flipped_image
 
 	
 def _flip_image_row( orig_array, buffer_array, size ):
