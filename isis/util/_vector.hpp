@@ -39,7 +39,10 @@ public:
 		return this->operator []( elem );
 	}
 
-
+	std::string toString()
+	{
+		return this->toString();
+	}
 
 private:
 	PyObject *self;

@@ -85,6 +85,7 @@ BOOST_PYTHON_MODULE( _util )
 	.def( "__setitem__", &_Vector4<float>::setItem )
 	.def( "__getitem__", &_Vector4<float>::getItem )
 	.def( "__iter__", iterator<isis::util::fvector4>() )
+	.def( "toString", &_Vector4<float>::toString )
 	;
 	class_<isis::util::ivector4, _Vector4<int32_t> >( "ivector4", init<int32_t, int32_t, int32_t, int32_t>() )
 	.def( init< isis::util::ivector4 >() )
@@ -92,12 +93,14 @@ BOOST_PYTHON_MODULE( _util )
 	.def( "__setitem__", &_Vector4<int32_t>::setItem )
 	.def( "__getitem__", &_Vector4<int32_t>::getItem )
 	.def( "__iter__", iterator<isis::util::ivector4>() )
+	.def( "toString", &_Vector4<int32_t>::toString )
 	;
 	class_<isis::util::dvector4, _Vector4<double> >( "dvector4", init<double, double, double, double>() )
 	.def( init< isis::util::dvector4>() )
 	.def( "__setitem__", &_Vector4<double>::setItem )
 	.def( "__getitem__", &_Vector4<double>::getItem )
 	.def( "__iter__", iterator<isis::util::dvector4>() )
+	.def( "toString", &_Vector4<double>::toString )
 	.def( init<>() )
 	;
 	//#######################################################################################

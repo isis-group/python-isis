@@ -499,7 +499,7 @@ isis::data::Image _createFromArray( const boost::python::numeric::array &arr )
 	}
 	case NPY_DOUBLE: {
 		isis::data::MemChunk<double>ch( ( double * )PyArray_DATA( arr.ptr() ), size[3], size[2], size[1], size[0] );
-		return isis::data::Image( isis::python::data::VoxelOp::getSwappedChunk<float>(ch) );
+		return isis::data::Image( isis::python::data::VoxelOp::getSwappedChunk<double>(ch) );
 		break;
 	}
 	case NPY_INT8: {
