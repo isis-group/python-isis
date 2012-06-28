@@ -153,6 +153,7 @@ BOOST_PYTHON_MODULE ( _data )
 	.def ( "createEmpty", &isis::python::data::Image::_createImage )
 	.staticmethod ( "createEmpty" )
 	.def ( "__str__", &isis::python::data::Image::_toString )
+	.def ( "getProperties", &isis::python::data::Image::_getProperties )
 	
 #ifdef ISIS_PYTHON_MUPARSER_SUPPORT
 	.def( "applyOperation", &isis::python::data::Image::_applyOperation, arg( "operation" ) )
@@ -226,6 +227,8 @@ BOOST_PYTHON_MODULE ( _data )
 	.def ( "createFromArray", _createFromArray1C, arg ( "array" ) )
 	.def ( "createFromArray", _createFromArray2C, arg( "array" ), arg( "template_chunk" ) )
 	.staticmethod( "createFromArray" )
+	.def ( "__str__", &isis::python::data::Chunk::_toString )
+	.def ( "getProperties", &isis::python::data::Chunk::_getProperties )
 	;
 	//#######################################################################################
 	//  IOFactory

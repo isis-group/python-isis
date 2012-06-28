@@ -64,6 +64,8 @@ list _getMissing( const isis::util::PropertyMap &base );
 
 dict _getDict( const isis::util::PropertyMap &base );
 
+std::string _toString( const isis::util::PropertyMap &base );
+
 } // end namespace PropertyMap
 }
 }

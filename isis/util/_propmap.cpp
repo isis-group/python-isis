@@ -108,6 +108,13 @@ dict _getDict ( const isis::util::PropertyMap& base )
 	return retDict;
 }
 
+std::string _toString ( const isis::util::PropertyMap& base )
+{
+	std::stringstream output;
+	base.print(output);
+	return output.str();
+}
+
 
 } // end namespace PropertyMap
 

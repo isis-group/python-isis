@@ -310,6 +310,18 @@ numeric::array _getArray ( _Chunk& base, image_types image_type )
 	}
 }
 
+isis::util::PropertyMap _getProperties ( const isis::data::Chunk& base )
+{
+	return static_cast<const isis::util::PropertyMap&>( base );
+}
+
+std::string _toString ( const isis::data::Chunk& base )
+{
+	std::stringstream output;
+	output << "ISIS Chunk of size: " << base.getSizeAsString() << " and type: " << base.getTypeName();
+	return output.str();
+}
+
 
 
 

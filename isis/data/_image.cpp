@@ -580,6 +580,12 @@ std::string _toString ( const isis::data::Image& base )
 }
 
 
+isis::util::PropertyMap _getProperties ( const isis::data::Image& base )
+{
+	return static_cast<const isis::util::PropertyMap &>( base );
+}
+
+
 } // end namespace Image
 
 

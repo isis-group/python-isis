@@ -37,13 +37,18 @@ public:
 		tChunk.convertToType( isis::data::ValueArray<TYPE>::staticID );
 		const isis::util::ivector4 size = getSizeAsVector();
 		isis::data::MemChunk<TYPE> mChunk( size[3], size[2], size[1], size[0] );
+
+		TYPE *dest = &static_cast<isis::data::Chunk&>( mChunk ).voxel<TYPE>(0);
+		const TYPE *src = &tChunk.voxel<TYPE>(0);
+		
 		typedef isis::util::ivector4::value_type value_type;
 		for ( value_type t = 0; t < size[3]; t++ ) {
 			for ( value_type z = 0; z < size[2]; z++ ) {
 				for ( value_type y = 0; y < size[1]; y++ ) {
 					for ( value_type x = 0; x < size[0]; x++ ) {
-						static_cast<isis::data::Chunk&>( mChunk ).voxel<TYPE>(t,z,y,x) =
-							tChunk.voxel<TYPE>(x,y,z,t);
+						std::memcpy( dest + t + size[3] * z + size[3] * size[2] * y + size[3] * size[2] * size[1] * x,
+									 src + x + size[0] * y + size[0] * size[1] * z + size[0] * size[1] * size[2] * t,
+									sizeof(TYPE) );
 					}
 				}
 			}
@@ -86,6 +91,10 @@ numeric::array _getArray( isis::python::data::_Chunk &base, isis::python::data::
 
 isis::data::Chunk _createFromArray( const boost::python::numeric::array &arr );
 isis::data::Chunk _createFromArray( const boost::python::numeric::array &arr, const isis::data::Chunk &chunk );
+
+std::string _toString( const isis::data::Chunk &base );
+
+isis::util::PropertyMap _getProperties( const isis::data::Chunk &base );
 
 }
 }

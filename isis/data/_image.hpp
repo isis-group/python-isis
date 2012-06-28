@@ -160,6 +160,8 @@ isis::data::Image _createFromArray(  const boost::python::numeric::array &arr, c
 
 std::string _toString( const isis::data::Image &base );
 
+isis::util::PropertyMap _getProperties( const isis::data::Image &base  );
+
 }
 
 

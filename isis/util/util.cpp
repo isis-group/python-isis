@@ -66,6 +66,7 @@ BOOST_PYTHON_MODULE( _util )
 	.def( "getKeys", &_getKeys )
 	.def( "getMissing", &_getMissing )
 	.def( "getDict", &_getDict )
+	.def( "__str__", &isis::python::util::PropertyMap::_toString )
 	
 	;
 	//#######################################################################################
