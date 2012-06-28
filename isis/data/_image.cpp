@@ -571,6 +571,14 @@ isis::data::Image _createFromArray ( const numeric::array &arr, const isis::data
 	return retImage;
 }
 
+std::string _toString ( const isis::data::Image& base )
+{
+	std::stringstream output;
+	output << "ISIS image of size: " << base.getSizeAsString() << " and type: " << base.getMajorTypeName() << " ( " <<
+		base.copyChunksToVector(false).size() << " chunk(s) )";
+	return output.str();
+}
+
 
 } // end namespace Image
 

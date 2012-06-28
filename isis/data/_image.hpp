@@ -158,7 +158,7 @@ isis::data::Image _createImageFromChunks( const list &chunks );
 isis::data::Image _createFromArray( const boost::python::numeric::array &arr );
 isis::data::Image _createFromArray(  const boost::python::numeric::array &arr, const isis::data::Image &image );
 
-
+std::string _toString( const isis::data::Image &base );
 
 }
 

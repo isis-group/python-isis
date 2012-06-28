@@ -152,6 +152,7 @@ BOOST_PYTHON_MODULE ( _data )
 	.def ( "getCheapCopy", &isis::python::data::Image::_cheapCopy )
 	.def ( "createEmpty", &isis::python::data::Image::_createImage )
 	.staticmethod ( "createEmpty" )
+	.def ( "__str__", &isis::python::data::Image::_toString )
 	
 #ifdef ISIS_PYTHON_MUPARSER_SUPPORT
 	.def( "applyOperation", &isis::python::data::Image::_applyOperation, arg( "operation" ) )
