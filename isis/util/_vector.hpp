@@ -2,6 +2,7 @@
 #define _VECTOR_HPP_
 
 #include "CoreUtils/vector.hpp"
+#include <CoreUtils/value.hpp>
 #include <boost/python.hpp>
 
 using namespace isis::util;
@@ -39,9 +40,10 @@ public:
 		return this->operator []( elem );
 	}
 
-	std::string toString()
+	std::string _toString()
 	{
-		return this->toString();
+		const isis::util::vector4<T> &_vec = static_cast<const isis::util::vector4<T>& >( *this );
+		return isis::util::listToString(_vec.begin(), _vec.end(), "|", "<", ">" );
 	}
 
 private:
