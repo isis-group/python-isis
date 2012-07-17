@@ -123,6 +123,13 @@ struct PyObjectGenerator<false, isis::util::ivector4> : PyObjectGeneratorBase {
 };
 
 template<>
+struct PyObjectGenerator<false, isis::util::dvector3> : PyObjectGeneratorBase {
+	virtual api::object convert( isis::util::ValueBase &value ) {
+		return api::object( value.as<isis::util::dvector3>() );
+	}
+};
+
+template<>
 struct PyObjectGenerator<false, isis::util::dvector4> : PyObjectGeneratorBase {
 	virtual api::object convert( isis::util::ValueBase &value ) {
 		return api::object( value.as<isis::util::dvector4>() );
@@ -133,6 +140,13 @@ template<>
 struct PyObjectGenerator<false, isis::util::fvector4> : PyObjectGeneratorBase {
 	virtual api::object convert( isis::util::ValueBase &value ) {
 		return api::object( value.as<isis::util::fvector4>() );
+	}
+};
+
+template<>
+struct PyObjectGenerator<false, isis::util::fvector3> : PyObjectGeneratorBase {
+	virtual api::object convert( isis::util::ValueBase &value ) {
+		return api::object( value.as<isis::util::fvector3>() );
 	}
 };
 

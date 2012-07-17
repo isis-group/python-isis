@@ -78,6 +78,27 @@ BOOST_PYTHON_MODULE( _util )
 	.def( "set", ( bool ( ::isis::util::Selection:: * ) ( unsigned short ) ) ( &isis::util::Selection::set ) , ( arg( "entry" ) ) )
 	;
 	//#######################################################################################
+	//  Vector3
+	//#######################################################################################
+	class_<isis::util::fvector3, _Vector3<float> >( "fvector3", init<float, float, float>() )
+	.def( init<>() )
+	.def( init<isis::util::fvector3>() )
+	.def( "__setitem__", &_Vector3<float>::setItem )
+	.def( "__getitem__", &_Vector3<float>::getItem )
+	.def( "__iter__", iterator<isis::util::fvector4>() )
+	.def( "__str__", &_Vector3<double>::_toString )
+	.def( "toString", &_Vector3<float>::_toString )
+	;
+	class_<isis::util::dvector3, _Vector3<double> >( "dvector3", init<double, double, double>() )
+	.def( init< isis::util::dvector3>() )
+	.def( "__setitem__", &_Vector3<double>::setItem )
+	.def( "__getitem__", &_Vector3<double>::getItem )
+	.def( "__iter__", iterator<isis::util::dvector4>() )
+	.def( "__str__", &_Vector3<double>::_toString )
+	.def( "toString", &_Vector3<double>::_toString )
+	.def( init<>() )
+	;	
+	//#######################################################################################
 	//  Vector4
 	//#######################################################################################
 	class_<isis::util::fvector4, _Vector4<float> >( "fvector4", init<float, float, float, float>() )

@@ -23,7 +23,7 @@ def swap_axes( image, axis1, axis2, adapt_orientation = True ):
 	swapped_image = data.Image( swapped_ndarray, image )
 	
 	#adapt orientation
-	if( adapt_orientation == True ):
+	if( adapt_orientation == True and axis1 != data.dimensions.TIME_DIM and axis2 != data.dimensions.TIME_DIM  ):
 		vectors = [ image.getProperty("rowVec"), image.getProperty("columnVec"), image.getProperty("sliceVec") ]
 		index_origin = image.getProperty( "indexOrigin" )
 
