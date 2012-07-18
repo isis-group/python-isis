@@ -23,7 +23,7 @@ BOOST_PYTHON_MODULE( _util )
 	def( "setLogger", &isis::python::_setPythonLogger );
 	def( "getLogger", &isis::python::_getPythonLogger );
 	def( "hasLogger", &isis::python::_hasLogger );
-	
+
 	isis::util::Singletons::get<isis::python::util::_internal::TypesMap, 10>().create();
 	//#######################################################################################
 	//  Application
@@ -48,7 +48,7 @@ BOOST_PYTHON_MODULE( _util )
 	void ( *_join2 ) ( isis::util::PropertyMap &, const isis::data::Image &, bool ) = isis::python::util::PropertyMap::_join;
 	void ( *_join3 ) ( isis::util::PropertyMap &, const isis::data::Chunk &, bool ) = isis::python::util::PropertyMap::_join;;
 	class_<isis::util::PropertyMap, isis::python::util::_PropertyMap>( "PropertyMap", init<>() )
-	.def( init<const dict&>() )
+	.def( init<const dict &>() )
 	.def( init<const isis::util::PropertyMap &>() )
 	.def( "hasProperty", &_hasProperty )
 	.def( "hasBranch", &_hasBranch )
@@ -66,15 +66,37 @@ BOOST_PYTHON_MODULE( _util )
 	.def( "getKeys", &_getKeys )
 	.def( "getMissing", &_getMissing )
 	.def( "getDict", &_getDict )
-	
+	.def( "__str__", &isis::python::util::PropertyMap::_toString )
+
 	;
 	//#######################################################################################
 	//  Selection
 	//#######################################################################################
 	class_<isis::util::Selection>( "Selection", init<const char *>() )
 	.def( init<>() )
-	.def( "set", ( bool ( ::isis::util::Selection:: * ) ( const char *) ) ( &isis::util::Selection::set ), ( arg( "entry" ) ) )
+	.def( "set", ( bool ( ::isis::util::Selection:: * ) ( const char * ) ) ( &isis::util::Selection::set ), ( arg( "entry" ) ) )
 	.def( "set", ( bool ( ::isis::util::Selection:: * ) ( unsigned short ) ) ( &isis::util::Selection::set ) , ( arg( "entry" ) ) )
+	;
+	//#######################################################################################
+	//  Vector3
+	//#######################################################################################
+	class_<isis::util::fvector3, _Vector3<float> >( "fvector3", init<float, float, float>() )
+	.def( init<>() )
+	.def( init<isis::util::fvector3>() )
+	.def( "__setitem__", &_Vector3<float>::setItem )
+	.def( "__getitem__", &_Vector3<float>::getItem )
+	.def( "__iter__", iterator<isis::util::fvector4>() )
+	.def( "__str__", &_Vector3<double>::_toString )
+	.def( "toString", &_Vector3<float>::_toString )
+	;
+	class_<isis::util::dvector3, _Vector3<double> >( "dvector3", init<double, double, double>() )
+	.def( init< isis::util::dvector3>() )
+	.def( "__setitem__", &_Vector3<double>::setItem )
+	.def( "__getitem__", &_Vector3<double>::getItem )
+	.def( "__iter__", iterator<isis::util::dvector4>() )
+	.def( "__str__", &_Vector3<double>::_toString )
+	.def( "toString", &_Vector3<double>::_toString )
+	.def( init<>() )
 	;
 	//#######################################################################################
 	//  Vector4
@@ -85,6 +107,8 @@ BOOST_PYTHON_MODULE( _util )
 	.def( "__setitem__", &_Vector4<float>::setItem )
 	.def( "__getitem__", &_Vector4<float>::getItem )
 	.def( "__iter__", iterator<isis::util::fvector4>() )
+	.def( "__str__", &_Vector4<double>::_toString )
+	.def( "toString", &_Vector4<float>::_toString )
 	;
 	class_<isis::util::ivector4, _Vector4<int32_t> >( "ivector4", init<int32_t, int32_t, int32_t, int32_t>() )
 	.def( init< isis::util::ivector4 >() )
@@ -92,12 +116,16 @@ BOOST_PYTHON_MODULE( _util )
 	.def( "__setitem__", &_Vector4<int32_t>::setItem )
 	.def( "__getitem__", &_Vector4<int32_t>::getItem )
 	.def( "__iter__", iterator<isis::util::ivector4>() )
+	.def( "__str__", &_Vector4<double>::_toString )
+	.def( "toString", &_Vector4<int32_t>::_toString )
 	;
 	class_<isis::util::dvector4, _Vector4<double> >( "dvector4", init<double, double, double, double>() )
 	.def( init< isis::util::dvector4>() )
 	.def( "__setitem__", &_Vector4<double>::setItem )
 	.def( "__getitem__", &_Vector4<double>::getItem )
 	.def( "__iter__", iterator<isis::util::dvector4>() )
+	.def( "__str__", &_Vector4<double>::_toString )
+	.def( "toString", &_Vector4<double>::_toString )
 	.def( init<>() )
 	;
 	//#######################################################################################

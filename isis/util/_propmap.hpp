@@ -35,7 +35,7 @@ public:
 private:
 	PyObject *self;
 };
-	
+
 namespace PropertyMap
 {
 
@@ -63,6 +63,8 @@ list _getKeys( const isis::util::PropertyMap &base );
 list _getMissing( const isis::util::PropertyMap &base );
 
 dict _getDict( const isis::util::PropertyMap &base );
+
+std::string _toString( const isis::util::PropertyMap &base );
 
 } // end namespace PropertyMap
 }

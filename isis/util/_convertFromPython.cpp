@@ -10,7 +10,7 @@ namespace _internal
 {
 
 
-const std::list<std::string> ConvertFromPython::knownTypes = isis::util::stringToList<std::string>( "complex datetime.datetime datetime.date bool list str float double int ivector4 dvector4 fvector4 Selection" );
+const std::list<std::string> ConvertFromPython::knownTypes = isis::util::stringToList<std::string>( "complex datetime.datetime datetime.date bool list str float double int ivector4 dvector3 dvector4 fvector3 fvector4 Selection" );
 
 template<>
 void getValueFromPyObject<boost::gregorian::date> ( isis::util::Value<boost::gregorian::date> &ref, api::object value )
@@ -76,9 +76,17 @@ isis::util::PropertyValue ConvertFromPython::convert( api::object value )
 		isis::util::Value<isis::util::ivector4> vRef;
 		getValueFromPyObject<isis::util::ivector4>( vRef, value );
 		return vRef;
+	} else if ( typeName == std::string( "fvector3" ) ) {
+		isis::util::Value<isis::util::fvector3> vRef;
+		getValueFromPyObject<isis::util::fvector3>( vRef, value );
+		return vRef;
 	} else if ( typeName == std::string( "fvector4" ) ) {
 		isis::util::Value<isis::util::fvector4> vRef;
 		getValueFromPyObject<isis::util::fvector4>( vRef, value );
+		return vRef;
+	} else if ( typeName == std::string( "dvector3" ) ) {
+		isis::util::Value<isis::util::dvector3> vRef;
+		getValueFromPyObject<isis::util::dvector3>( vRef, value );
 		return vRef;
 	} else if ( typeName == std::string( "dvector4" ) ) {
 		isis::util::Value<isis::util::dvector4> vRef;
