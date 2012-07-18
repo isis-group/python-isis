@@ -1,3 +1,9 @@
+python-isis (0.11.0-1) UNRELEASED; urgency=low
+
+  * adaptions to libsis-core3
+
+ -- ISIS Group (The friendly isis team) <gr_isis@cbs.mpg.de>  Wed, 18 Jul 2012 09:41:13 +0100
+
 python-isis (0.10.3-1) UNRELEASED; urgency=low
 
   * add image_flip method
