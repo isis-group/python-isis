@@ -39,10 +39,9 @@ public:
 		return this->operator []( elem );
 	}
 
-	std::string _toString()
-	{
+	std::string _toString() {
 		const isis::util::vector3<T> &_vec = static_cast<const isis::util::vector3<T>& >( *this );
-		return isis::util::listToString(_vec.begin(), _vec.end(), "|", "<", ">" );
+		return isis::util::listToString( _vec.begin(), _vec.end(), "|", "<", ">" );
 	}
 
 private:
@@ -75,10 +74,9 @@ public:
 		return this->operator []( elem );
 	}
 
-	std::string _toString()
-	{
+	std::string _toString() {
 		const isis::util::vector4<T> &_vec = static_cast<const isis::util::vector4<T>& >( *this );
-		return isis::util::listToString(_vec.begin(), _vec.end(), "|", "<", ">" );
+		return isis::util::listToString( _vec.begin(), _vec.end(), "|", "<", ">" );
 	}
 
 private:

@@ -36,7 +36,7 @@ template<typename HANDLE> void enableLogGlobalDebug( LogLevel level )
 	ENABLE_LOG( CoreDebug, HANDLE, level );
 	ENABLE_LOG( ImageIoDebug, HANDLE, level );
 	ENABLE_LOG( DataDebug, HANDLE, level );
-	ENABLE_LOG( PythonDebug, HANDLE, level );	
+	ENABLE_LOG( PythonDebug, HANDLE, level );
 }
 
 template <typename TYPE>

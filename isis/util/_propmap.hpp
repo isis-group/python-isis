@@ -35,7 +35,7 @@ public:
 private:
 	PyObject *self;
 };
-	
+
 namespace PropertyMap
 {
 

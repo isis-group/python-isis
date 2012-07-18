@@ -44,7 +44,6 @@ class _Image : public Image, public boost::python::wrapper<Image>
 {
 
 public:
-
 	_Image ( PyObject *p, const Image &base );
 	_Image ( PyObject *p, const boost::python::numeric::array &array );
 	_Image ( PyObject *p, const boost::python::numeric::array &array, const isis::data::Image &image );
@@ -58,39 +57,39 @@ public:
 		const isis::data::TypedImage<TYPE> tImage( *this );
 		const util::ivector4 size = getSizeAsVector();
 		isis::data::MemChunk<TYPE> mChunk( size[3], size[2], size[1], size[0] );
-		TYPE *dest = &static_cast<isis::data::Chunk&>( mChunk ).voxel<TYPE>(0);
+		TYPE *dest = &static_cast<isis::data::Chunk &>( mChunk ).voxel<TYPE>( 0 );
 
-		if( static_cast<const isis::data::Image&>( tImage ).copyChunksToVector(false).size() > 1 ) {
+		if( static_cast<const isis::data::Image &>( tImage ).copyChunksToVector( false ).size() > 1 ) {
 			for ( value_type t = 0; t < size[3]; t++ ) {
 				for ( value_type z = 0; z < size[2]; z++ ) {
 					for ( value_type y = 0; y < size[1]; y++ ) {
 						for ( value_type x = 0; x < size[0]; x++ ) {
-							std::memcpy( dest + t + size[3] * z + size[3] * size[2] * y + size[3] * size[2] * size[1] * x,
-										 &static_cast<const isis::data::Image&>( tImage ).voxel<TYPE>(x,y,z,t),
-										 sizeof(TYPE) );
+							dest[t + size[3] * z + size[3] * size[2] * y + size[3] * size[2] * size[1] * x] =
+								static_cast<const isis::data::Image &>( tImage ).voxel<TYPE>( x, y, z, t );
 						}
 					}
 				}
 			}
 		} else {
-			const TYPE *src = &static_cast<const isis::data::Image&>( tImage ).voxel<TYPE>(0);
+			const TYPE *src = &static_cast<const isis::data::Image &>( tImage ).voxel<TYPE>( 0 );
+
 			for ( value_type t = 0; t < size[3]; t++ ) {
 				for ( value_type z = 0; z < size[2]; z++ ) {
 					for ( value_type y = 0; y < size[1]; y++ ) {
 						for ( value_type x = 0; x < size[0]; x++ ) {
-							std::memcpy( dest + t + size[3] * z + size[3] * size[2] * y + size[3] * size[2] * size[1] * x,
-										 src + x + size[0] * y + size[0] * size[1] * z + size[0] * size[1] * size[2] * t,
-										sizeof(TYPE) );
+							dest[t + size[3] * z + size[3] * size[2] * y + size[3] * size[2] * size[1] * x] =
+								src[x + size[0] * y + size[0] * size[1] * z + size[0] * size[1] * size[2] * t];
 						}
 					}
 				}
 			}
 		}
+
 		contiguousChunkList_.push_back( boost::shared_ptr<isis::data::Chunk>( new isis::data::Chunk( mChunk ) ) );
 	}
 
 
-	
+
 private:
 	PyObject *self;
 };
@@ -103,7 +102,7 @@ namespace Image
 bool _applyOperation( isis::data::Image &base, const std::string &operation );
 #endif
 
-	
+
 api::object _voxel ( const isis::data::Image &base, const isis::util::ivector4 &coord );
 api::object _voxel ( const isis::data::Image &base, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth );
 

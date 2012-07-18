@@ -2,13 +2,15 @@
 #include "../common.hpp"
 #include <DataStorage/common.hpp>
 
-namespace isis {
-namespace python {
-
-void _setPythonLogger ( const boost::python::api::object& mH )
+namespace isis
 {
-	isis::python::enableLogGlobal<isis::python::util::PythonMessageHandler>(isis::notice);
-	isis::python::enableLogGlobalDebug<isis::python::util::PythonMessageHandlerDebug>(isis::notice);
+namespace python
+{
+
+void _setPythonLogger ( const boost::python::api::object &mH )
+{
+	isis::python::enableLogGlobal<isis::python::util::PythonMessageHandler>( isis::notice );
+	isis::python::enableLogGlobalDebug<isis::python::util::PythonMessageHandlerDebug>( isis::notice );
 	isis::python::util::PythonMessageHandler::pythonLogger_ = mH;
 }
 boost::python::api::object _getPythonLogger()
@@ -27,5 +29,6 @@ bool _hasLogger()
 }
 
 
-	
-}}
+
+}
+}

@@ -27,7 +27,7 @@ struct VoxelOp {
 	static boost::python::api::object getVoxelAsPyObject( const isis::data::Image &ob, const unsigned int &typeID, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth ) {
 		switch( typeID ) {
 		case ValueArray<int8_t>::staticID:
-			return api::object(	ob.voxel<int8_t>( first, second, third, fourth ) );
+			return api::object( ob.voxel<int8_t>( first, second, third, fourth ) );
 			break;
 		case ValueArray<uint8_t>::staticID:
 			return api::object( ob.voxel<uint8_t>( first, second, third, fourth ) );
@@ -77,7 +77,7 @@ struct VoxelOp {
 	static boost::python::api::object getVoxelAsPyObject( const isis::data::Chunk &ob, const unsigned int &typeID, const size_t &first, const size_t &second, const size_t &third, const size_t &fourth ) {
 		switch( typeID ) {
 		case ValueArray<int8_t>::staticID:
-			return api::object(	ob.voxel<int8_t>( first, second, third, fourth ) );
+			return api::object( ob.voxel<int8_t>( first, second, third, fourth ) );
 			break;
 		case ValueArray<uint8_t>::staticID:
 			return api::object( ob.voxel<uint8_t>( first, second, third, fourth ) );
@@ -236,29 +236,34 @@ struct VoxelOp {
 	static isis::data::Chunk getSwappedChunk( const isis::data::Chunk &ch, const bool setInitial = true ) {
 		const isis::util::ivector4 size = ch.getSizeAsVector();
 		isis::data::MemChunk<TYPE> mChunk ( size[3], size[2], size[1], size[0] );
-		TYPE *dest = &static_cast<isis::data::Chunk&>( mChunk ).voxel<TYPE>(0);
-		const TYPE *src = &ch.voxel<TYPE>(0);
-		
+		TYPE *dest = &static_cast<isis::data::Chunk &>( mChunk ).voxel<TYPE>( 0 );
+		const TYPE *src = &ch.voxel<TYPE>( 0 );
+
 		typedef isis::util::ivector4::value_type value_type;
+
 		for ( value_type t = 0; t < size[3]; t++ ) {
 			for ( value_type z = 0; z < size[2]; z++ ) {
 				for ( value_type y = 0; y < size[1]; y++ ) {
 					for ( value_type x = 0; x < size[0]; x++ ) {
 						std::memcpy( dest + t + size[3] * z + size[3] * size[2] * y + size[3] * size[2] * size[1] * x,
 									 src + x + size[0] * y + size[0] * size[1] * z + size[0] * size[1] * size[2] * t,
-									sizeof(TYPE) );
+									 sizeof( TYPE ) );
 					}
 				}
 			}
 		}
+
 		if ( setInitial ) {
-			isis::python::data::setInitialProperties(mChunk);
+			isis::python::data::setInitialProperties( mChunk );
 		}
+
 		return mChunk;
 	}
 };
 
-	
-}}}
+
+}
+}
+}
 
 #endif
