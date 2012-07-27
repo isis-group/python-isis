@@ -1,5 +1,6 @@
-import convenience
-import metadata
+from load_from_path_list import load_from_path_list
+from get_missing_properties import get_missing_properties
+from check_properties import check_properties
 from split import split
 from concatenate import concatenate
 from swap_axes import swap_axes
