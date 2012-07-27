@@ -1,3 +1,9 @@
+python-isis (0.11.1-1) UNRELEASED; urgency=low
+
+  * fixed bug in get_missing_properties
+
+ -- ISIS Group (The friendly isis team) <gr_isis@cbs.mpg.de>  Wed, 27 Jul 2012 10:31:38 +0100
+
 python-isis (0.11.0-1) UNRELEASED; urgency=low
 
   * adaptions to libsis-core3
