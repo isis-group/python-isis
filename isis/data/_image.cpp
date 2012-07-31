@@ -35,10 +35,18 @@ _Image::_Image ( PyObject *p, const numeric::array &array, const isis::data::Ima
 	updateOrientationMatrices();
 }
 
+_Image::_Image ( PyObject* p, const numeric::array& array, const isis::util::PropertyMap& map )
+	: boost::python::wrapper< Image >(), self(p)
+{
+	*this = _Image( p, isis::python::data::Image::_createFromArray( array, map ) );
+	updateOrientationMatrices();
+}
+
 _Image::_Image ( PyObject *p, const Chunk &chunk )
 	: boost::python::wrapper< Image >(), self( p )
 {
 	*this = _Image( p, isis::data::Image( chunk ) );
+	updateOrientationMatrices();
 }
 
 
@@ -564,6 +572,13 @@ isis::data::Image _createFromArray( const boost::python::numeric::array &arr )
 		LOG( PythonLog, error ) << "Unregistered datatype: " << PyArray_TYPE( arr.ptr() ) << ". Returning empty image of type double.";
 		return _createImage( DOUBLE, size[3], size[2], size[1], size[0] );
 	}
+}
+
+isis::data::Image _createFromArray ( const numeric::array& arr, const isis::util::PropertyMap& map )
+{
+	isis::data::Image retImage = _createFromArray( arr );
+	retImage.join(map, true );
+	return retImage;
 }
 
 

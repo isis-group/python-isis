@@ -5,7 +5,7 @@ import tools
 
 __all__=['util','data','tools', 'log', 'getVersion']
 
-VERSION = '0.11.1'
+VERSION = '0.12.0'
 VERSION_AS_LIST = tuple(map(int, VERSION.split('.')))
 
 def getVersion():

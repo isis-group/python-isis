@@ -1,4 +1,6 @@
 from load_from_path_list import load_from_path_list
+from load_array_from_path import load_array_from_path
+from write_array_to_path import write_array_to_path
 from get_missing_properties import get_missing_properties
 from check_properties import check_properties
 from split import split

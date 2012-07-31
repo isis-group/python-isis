@@ -47,6 +47,7 @@ public:
 	_Image ( PyObject *p, const Image &base );
 	_Image ( PyObject *p, const boost::python::numeric::array &array );
 	_Image ( PyObject *p, const boost::python::numeric::array &array, const isis::data::Image &image );
+	_Image ( PyObject *p, const boost::python::numeric::array &array, const isis::util::PropertyMap &map );
 	_Image ( PyObject *p, const isis::data::Chunk &chunk );
 
 	std::list<boost::shared_ptr<isis::data::Chunk> > contiguousChunkList_;
@@ -156,6 +157,7 @@ isis::data::Image _createImageFromChunks( const list &chunks );
 
 isis::data::Image _createFromArray( const boost::python::numeric::array &arr );
 isis::data::Image _createFromArray(  const boost::python::numeric::array &arr, const isis::data::Image &image );
+isis::data::Image _createFromArray(  const boost::python::numeric::array &arr, const isis::util::PropertyMap &map );
 
 std::string _toString( const isis::data::Image &base );
 

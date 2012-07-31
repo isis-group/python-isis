@@ -104,10 +104,12 @@ BOOST_PYTHON_MODULE ( _data )
 	boost::python::numeric::array ( *_getArray2 ) ( isis::python::data::_Image &, isis::python::data::image_types ) = isis::python::data::Image::_getArray;
 	isis::data::Image ( *_createFromArray1 ) ( const boost::python::numeric::array & ) = isis::python::data::Image::_createFromArray;
 	isis::data::Image ( *_createFromArray2 ) ( const boost::python::numeric::array &, const isis::data::Image & ) = isis::python::data::Image::_createFromArray;
+	isis::data::Image ( *_createFromArray3 ) ( const boost::python::numeric::array &, const isis::util::PropertyMap & ) = isis::python::data::Image::_createFromArray;
 
 	class_<isis::data::Image, _Image, bases< isis::data::_internal::NDimensional<4>, isis::util::PropertyMap > > ( "Image", init<const isis::data::Image &>() )
 	.def ( init<const boost::python::numeric::array &>() )
 	.def ( init<const boost::python::numeric::array &, const isis::data::Image &>() )
+	.def ( init<const boost::python::numeric::array &, const isis::util::PropertyMap &>() )
 	.def ( init<const isis::data::Chunk &>() )
 	.def ( "checkMakeClean", &isis::data::Image::checkMakeClean )
 	.def ( "getVoxel", _getVoxel1, ( arg ( "coords" ) ) )
@@ -165,6 +167,7 @@ BOOST_PYTHON_MODULE ( _data )
 	.staticmethod( "createFromChunks" )
 	.def ( "createFromArray", _createFromArray1, arg ( "array" ) )
 	.def ( "createFromArray", _createFromArray2, arg( "array" ), arg( "template_image" ) )
+	.def ( "createFromArray", _createFromArray3, arg( "array" ), arg( "template_propmap" ) )
 	.staticmethod( "createFromArray" )
 	.def ( "__iter__", iterator<isis::data::Image>() )
 	;

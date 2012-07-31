@@ -2,6 +2,8 @@ set(DATA_FILES	__init__.py
                 concatenate.py
                 split.py
                 load_from_path_list.py
+                load_array_from_path.py
+                write_array_to_path.py
                 get_missing_properties.py
                 check_properties.py
                 swap_axes.py
