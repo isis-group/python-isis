@@ -92,9 +92,8 @@ bool _removeProperty( isis::util::PropertyMap &base, const std::string &path )
 list _getKeys ( const isis::util::PropertyMap &base )
 {
 	std::list<std::string> keyList;
-	BOOST_FOREACH( isis::util::PropertyMap::KeyList::const_reference key, base.getKeys() )
-	{
-		keyList.push_back(key.c_str());
+	BOOST_FOREACH( isis::util::PropertyMap::KeyList::const_reference key, base.getKeys() ) {
+		keyList.push_back( key.c_str() );
 	}
 	return isis::python::stdIter2PyList<std::list< std::string > >( keyList );
 }
@@ -102,9 +101,8 @@ list _getKeys ( const isis::util::PropertyMap &base )
 list _getMissing ( const isis::util::PropertyMap &base )
 {
 	std::list<std::string> missingList;
-	BOOST_FOREACH( isis::util::PropertyMap::KeyList::const_reference key, base.getMissing() )
-	{
-		missingList.push_back(key.c_str());
+	BOOST_FOREACH( isis::util::PropertyMap::KeyList::const_reference key, base.getMissing() ) {
+		missingList.push_back( key.c_str() );
 	}
 	return isis::python::stdIter2PyList<std::list<std::string> >( missingList );
 }

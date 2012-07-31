@@ -35,8 +35,8 @@ _Image::_Image ( PyObject *p, const numeric::array &array, const isis::data::Ima
 	updateOrientationMatrices();
 }
 
-_Image::_Image ( PyObject* p, const numeric::array& array, const isis::util::PropertyMap& map )
-	: boost::python::wrapper< Image >(), self(p)
+_Image::_Image ( PyObject *p, const numeric::array &array, const isis::util::PropertyMap &map )
+	: boost::python::wrapper< Image >(), self( p )
 {
 	*this = _Image( p, isis::python::data::Image::_createFromArray( array, map ) );
 	updateOrientationMatrices();
@@ -574,10 +574,10 @@ isis::data::Image _createFromArray( const boost::python::numeric::array &arr )
 	}
 }
 
-isis::data::Image _createFromArray ( const numeric::array& arr, const isis::util::PropertyMap& map )
+isis::data::Image _createFromArray ( const numeric::array &arr, const isis::util::PropertyMap &map )
 {
 	isis::data::Image retImage = _createFromArray( arr );
-	retImage.join(map, true );
+	retImage.join( map, true );
 	return retImage;
 }
 
