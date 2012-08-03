@@ -17,3 +17,9 @@ from gaussian_gradient_magnitude_filter import gaussian_gradient_magnitude_filte
 from maximum_filter import maximum_filter
 from minimum_filter import minimum_filter
 from median_filter import median_filter
+from laplace_filter import laplace_filter
+from center_of_mass import center_of_mass
+from standard_deviation import standard_deviation
+from mean import mean
+from remove_outliers import remove_outliers
+from show_histogram import show_histogram
