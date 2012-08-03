@@ -1,7 +1,7 @@
 __author__ = 'tuerke'
 
-from .. import data
 import os
+from .. import data
 
 def load_from_path_list( path_list, warning = True ):
 	'''Load images from a list of paths 'path_list'.

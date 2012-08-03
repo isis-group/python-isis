@@ -1,7 +1,7 @@
 __author__ = 'tuerke'
 
-from .. import data
 import os
+from .. import data
 
 def write_array_to_path(array, path, propmap = 0 ):
 	if( propmap != 0 ):

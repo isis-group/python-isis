@@ -53,7 +53,6 @@ template <typename TYPE>
 std::list<TYPE> pyList2StdList( const boost::python::list &pyList )
 {
 	std::list<TYPE> retList;
-
 	for( unsigned short i = 0; i < boost::python::len( pyList ); i++ ) {
 		retList.push_back( boost::python::extract<TYPE>( pyList[i] ) );
 	}
